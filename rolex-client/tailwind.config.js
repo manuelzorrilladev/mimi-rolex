@@ -12,7 +12,7 @@ export default {
         // 'main-green': '#E9EDE9',
         'main-green': '#ADBAAD',
         'secondary-green': '#adbaad',
-
+        'tudor-red':'#be0100',
         'rolex-green': '#01603a',
         'rolex-green-2':'#29684b',
         'gray-button': '#767676',
@@ -21,8 +21,8 @@ export default {
         'rolex-brown':'#472c20',
         'rolex-dark-grey':'#212121',
         'rolex-grey-light':'#d4d4d4',
-        'rolex-brown-light-1':'#f5efea',
-        'rolex-brown-light-2':'#f9f7f3',
+        'rolex-brown-light-1':'#f5efea', //dark
+        'rolex-brown-light-2':'#f9f7f3', //light
       
 
         'opaco':'rgba(0, 0, 0, 0.5)'
@@ -32,6 +32,7 @@ export default {
         tudor: ["Meta", "sans-serif"],
         montserrat : ["Montserrat","sans-serif"],
         'arial-light': ['Arial Light', 'sans-serif'],
+        'tudor-title': ['Headline-tudor', 'sans-serif'],
         'arial-bold': ['Arial MT', 'sans-serif'],
         'helvetica-bold':['Helvetica-Neue-Bold', 'sans-serif'],
         'helvetica-light':['Helvetica-Light', 'sans-serif'],

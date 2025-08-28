@@ -19,6 +19,7 @@ db.rolex = require("./rolex.model")(sequelize, Sequelize)
 db.store = require("./store.model")(sequelize, Sequelize)
 db.user = require("./user.model")(sequelize, Sequelize)
 db.routes = require("./routes.model")(sequelize, Sequelize)
+db.tracking = require("./tracking.model")(sequelize, Sequelize)
 
 const Cart = db.store.Cart;
 const CartProduct = db.store.CartProduct;
@@ -26,6 +27,7 @@ const Watchmaking = db.store.Watchmaking;
 const User = db.user.User;
 const Bill = db.store.Bill;
 const BillProduct = db.store.BillProduct;
+const TudorCollection = db.store.TudorCollection;
 
 
 Cart.belongsTo(User, { as: 'owner' })
@@ -37,6 +39,7 @@ CartProduct.belongsTo(Watchmaking)
 Cart.hasMany(CartProduct)
 Watchmaking.hasMany(CartProduct)
 
+
 Bill.belongsTo(User, { as: 'owner' })
 
 Watchmaking.belongsToMany(Bill , {through: BillProduct})
@@ -46,6 +49,9 @@ BillProduct.belongsTo(Bill)
 Watchmaking.hasMany(BillProduct)
 BillProduct.belongsTo(Watchmaking)
 
+
+Watchmaking.belongsTo(TudorCollection)
+TudorCollection.hasMany(Watchmaking)
 
 
 

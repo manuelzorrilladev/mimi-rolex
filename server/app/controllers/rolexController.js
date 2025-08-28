@@ -1,8 +1,8 @@
 const db = require("../models");
 const rolex = db.rolex;
-const Op = db.Sequelize.Op;
+// const storagePath = 'https://localhost:3000/storage'
 const storagePath = 'https://mimijoyeria.com/storage'
-const collectionsArray = ["item","cosmograph-daytona", "1908", "yacht-master", "sky-dweller", "gmt-master-ii", "explorer", "oyster-perpetual", "day-date", "datejust", "lady-datejust", "air-king", "submariner", "sea-dweller", "deepsea", "hombres", "mujeres", "oro"]
+const collectionsArray = ["item", "cosmograph-daytona", "1908", "yacht-master", "sky-dweller", "gmt-master-ii", "explorer", "oyster-perpetual", "day-date", "datejust", "lady-datejust", "air-king", "submariner", "sea-dweller", "deepsea", "land-dweller"]
 
 
 function contarGuiones(cadena) {
@@ -15,46 +15,13 @@ function contarGuiones(cadena) {
   return contador;
 }
 
- 
 
-// ROLEX NEW CONTROLLERS
+// Show display of all watches from a single collection
 
-// Show display of all collections
-exports.showDisplayV2 = (req, res) => {
-
-  rolex.RolexCollections.findAll({
-    attributes: ['nombre', 'watch', 'idName']
-  })
-    .then(data => {
-      for (let index = 0; index < data.length; index++) {
-        // Adding images to response
-        data[index].dataValues.file = `${storagePath}/rolex-relojes-new-new/${data[index].dataValues.watch}.avif`
-       
-      }
-
-
-      res.send(data)
-
-    })
-    .catch(err => {
-
-      res.status(500).json({
-
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-
-      });
-    });
-};
-
-
-// Show by especific collection
 exports.getCollectionDetailsV2 = (req, res) => {
 
 
   const collectionId = collectionsArray.indexOf(req.params.id);
-
-
 
   rolex.RolexGetAllV2.findAll({
     where: {
@@ -62,39 +29,32 @@ exports.getCollectionDetailsV2 = (req, res) => {
 
     }
   })
-    .then((data) => {
-    
-
-      res.send(data)
-
-    })
-
-
+    .then((data) => { res.send(data) })
 
 }
 
 exports.getRolexDetailsV2 = async (req, res) => {
 
   let rolexResponseObject = {}
-  let modelName=req.params.id.toString()
-  const numbers =contarGuiones(modelName)
+  let modelName = req.params.id.toString()
+  const numbers = contarGuiones(modelName)
 
-  if(numbers>1){
-    for(let i=1; i<numbers; i++){
-      const position = modelName.indexOf("-")+1
-      modelName = modelName.substring(position,modelName.length)
+  if (numbers > 1) {
+    for (let i = 1; i < numbers; i++) {
+      const position = modelName.indexOf("-") + 1
+      modelName = modelName.substring(position, modelName.length)
     }
   }
-  
-  
+
+
   const findId = await rolex.RolexGetAllV2.findOne({
     where: {
       modelo: modelName
-    } 
-  })    
-  
+    }
+  })
+
   let parsedName = findId
-  
+
 
   parsedName.showcaseIMG = `${storagePath}/rolex-relojes-new/${parsedName.modelo}-showcase.webp`
   parsedName.boxIMG = `${storagePath}/rolex-relojes-new/${parsedName.modelo}_presentation-box.webp`
