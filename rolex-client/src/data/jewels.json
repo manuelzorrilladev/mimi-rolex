@@ -1,0 +1,370 @@
+{
+	"pieces":[
+		{
+			"serie": "anillo-8357",
+			"nombre": "Anillo 22206",
+			"titulo": "Aros Matrimoniales (El Par) en 18 Kilates.",
+			"tipo": "Anillo",
+			"tags": "anillos, compromiso, matrimonio, oro, regalos",
+			"coleccion": "compromiso-y-matrimonio, regalos",
+			"precio": "$619 "
+		},
+		{
+			"serie": "anillo-8358",
+			"nombre": "Anillo 22190",
+			"titulo": "Anillo Solitario en Oro 18 Kilates.",
+			"tipo": "Anillo",
+			"tags": "anillos, compromiso, matrimonio, oro, regalos",
+			"coleccion": "compromiso-y-matrimonio, regalos",
+			"precio": "$249 "
+		},
+		{
+			"serie": "anillo-8361",
+			"nombre": "Anillo 8361",
+			"titulo": "Anillo Solitario en Oro 18 Kilates.",
+			"tipo": "Anillo",
+			"tags": "anillos, compromiso, matrimonio, oro, regalos",
+			"coleccion": "compromiso-y-matrimonio, regalos",
+			"precio": "$149 "
+		},
+		{
+			"serie": "anillo-8362",
+			"nombre": "Anillo 8362",
+			"titulo": "Anillos solitarios en Oro 18 Kilates.",
+			"tipo": "Anillo",
+			"tags": "anillos, compromiso, matrimonio, oro, regalos",
+			"coleccion": "compromiso-y-matrimonio, regalos",
+			"precio": "$193 "
+		},
+		{
+			"serie": "anillo-8439",
+			"nombre": "Anillo 22198",
+			"titulo": "Aros Matrimoniales Anatomicos  en Oro 18 Kilates.",
+			"tipo": "Anillo",
+			"tags": "anillos, compromiso, matrimonio, oro, regalos",
+			"coleccion": "compromiso-y-matrimonio, regalos",
+			"precio": "$1,299 "
+		},
+		{
+			"serie": "argolla-1098",
+			"nombre": "Argolla 1098",
+			"titulo": "Argollas en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$386 "
+		},
+		{
+			"serie": "argolla-1099",
+			"nombre": "Argolla 1099",
+			"titulo": "Argollas Bicolor en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$236 "
+		},
+		{
+			"serie": "argolla-1100",
+			"nombre": "Argolla 1100",
+			"titulo": "Argolla Oro Amarillo en 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$265 "
+		},
+		{
+			"serie": "argolla-8300",
+			"nombre": "Argolla 8400",
+			"titulo": "Argollas Entorchadas en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$217 "
+		},
+		{
+			"serie": "argolla-8387",
+			"nombre": "Argolla 8387",
+			"titulo": "Argollas Diamantadas Oro Amarillo en 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$204 "
+		},
+		{
+			"serie": "argolla-8388",
+			"nombre": "Argolla 8388",
+			"titulo": "Argollas Especiales en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$94 "
+		},
+		{
+			"serie": "argolla-8389",
+			"nombre": "Argolla 8389",
+			"titulo": "Argollas en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$248 "
+		},
+		{
+			"serie": "argolla-8391",
+			"nombre": "Argolla 8391",
+			"titulo": "Huggies 3 Colores en Oro 18 Kilates",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$141 "
+		},
+		{
+			"serie": "argolla-8395",
+			"nombre": "Argolla 8395",
+			"titulo": "Argollas Ovaldas en 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$148 "
+		},
+		{
+			"serie": "argolla-8408",
+			"nombre": "Argolla 8408",
+			"titulo": "Argollas Entorchadas en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$172 "
+		},
+		{
+			"serie": "argolla-8418",
+			"nombre": "Argolla 8418",
+			"titulo": "Argollas con Turquesa en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$51 "
+		},
+		{
+			"serie": "argolla-8419",
+			"nombre": "Argolla 8419",
+			"titulo": "Argollas con Coral en Oro 18 Kilates.",
+			"tipo": "Argolla",
+			"tags": "bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$51 "
+		},
+		{
+			"serie": "copia-de-rosario-8341",
+			"nombre": "Rosario 8341",
+			"titulo": "Rosario en Oro 18 Kilates.",
+			"tipo": "Rosario",
+			"tags": "joyeria, oro, regalos, Rosario",
+			"coleccion": "regalos",
+			"precio": "$345 "
+		},
+		{
+			"serie": "dije-8245",
+			"nombre": "Dije 8245",
+			"titulo": "Medalla Virgen del Valle en 18 Kilates.",
+			"tipo": "Dije",
+			"tags": "bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$153 "
+		},
+		{
+			"serie": "nacimiento-8273",
+			"nombre": "Nacimiento 8273",
+			"titulo": "Oro 18K.",
+			"tipo": "Joyería",
+			"tags": "bautizo, nacimiento",
+			"coleccion": "nacimiento-y-bautizos",
+			"precio": "$153 "
+		},
+		{
+			"serie": "nacimiento-8311",
+			"nombre": "Nacimiento 8311",
+			"titulo": "Oro 18K",
+			"tipo": "Joyería",
+			"tags": "bautizo, bautizo , nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$189 "
+		},
+		{
+			"serie": "nacimiento-8321",
+			"nombre": "Nacimiento 8321",
+			"titulo": "Oro 18K.",
+			"tipo": "Joyería",
+			"tags": "bautizo, bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$101 "
+		},
+		{
+			"serie": "nacimiento-8324",
+			"nombre": "Nacimiento 8324",
+			"titulo": "Oro 18K.",
+			"tipo": "Joyería",
+			"tags": "bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$84 "
+		},
+		{
+			"serie": "nacimiento-8326",
+			"nombre": "Nacimiento 8326",
+			"titulo": "Oro 18K.",
+			"tipo": "Joyería",
+			"tags": "bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$229 "
+		},
+		{
+			"serie": "pulsera-1089",
+			"nombre": "Pulsera 1089",
+			"titulo": "Pulsera Tipo Rosario 3 Colores en Oro 18 Kilates.",
+			"tipo": "Pulsera",
+			"tags": "bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$374 "
+		},
+		{
+			"serie": "pulsera-1092",
+			"nombre": "Pulsera 1091",
+			"titulo": "Pulsera Neopreno Oro Amarillo en 18 Kilates.",
+			"tipo": "Pulsera",
+			"tags": "bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$369 "
+		},
+		{
+			"serie": "pulsera-1094",
+			"nombre": "Pulsera 1094",
+			"titulo": "Pulsera Bicolor en 18 Kilates.",
+			"tipo": "Pulsera",
+			"tags": "bautizo, nacimiento, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$265 "
+		},
+		{
+			"serie": "pulsera-8335",
+			"nombre": "Pulsera 8335",
+			"titulo": "Pulsera con Bolitas y Corazon en Oro 18 kilates.",
+			"tipo": "Pulsera",
+			"tags": "bautizo, joyeria, nacimiento, oro, pulsera, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$224 "
+		},
+		{
+			"serie": "pulsera-8336",
+			"nombre": "Pulsera 8336",
+			"titulo": "Pulsera de Corazones con  3 Colores en Oro 18 Kilates.",
+			"tipo": "Pulsera",
+			"tags": "bautizo, joyeria, nacimiento, oro, pulsera, regalos",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$209 "
+		},
+		{
+			"serie": "rosario-1093",
+			"nombre": "Rosario 1093",
+			"titulo": "Rosario de 3 Colores en Oro 18 Kilates.",
+			"tipo": "Rosario",
+			"tags": "joyeria, oro, regalos, Rosario",
+			"coleccion": "regalos",
+			"precio": "$1,099 "
+		},
+		{
+			"serie": "rosario-1111",
+			"nombre": "Rosario 1111",
+			"titulo": "oro 18k.",
+			"tipo": "Rosario",
+			"tags": "joyeria, oro, regalos, Rosario",
+			"coleccion": "regalos",
+			"precio": "$1,999 "
+		},
+		{
+			"serie": "rosario-8340",
+			"nombre": "Rosario 8340",
+			"titulo": "Rosario 3 Colores en 18 Kilates.",
+			"tipo": "Rosario",
+			"tags": "joyeria, oro, regalos, Rosario",
+			"coleccion": "regalos",
+			"precio": "$499 "
+		},
+		{
+			"serie": "rosario-8342",
+			"nombre": "Rosario 8342",
+			"titulo": "Rosario Oro Amarillo en 18 Kilates.",
+			"tipo": "Rosario",
+			"tags": "joyeria, oro, regalos, Rosario",
+			"coleccion": "regalos",
+			"precio": "$999 "
+		},
+		{
+			"serie": "zarcillo-8294",
+			"nombre": "Zarcillo 8294",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$111 "
+		},
+		{
+			"serie": "zarcillo-8296",
+			"nombre": "Zarcillo 8296",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$88 "
+		},
+		{
+			"serie": "zarcillo-8301",
+			"nombre": "Zarcillo 8301",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$118 "
+		},
+		{
+			"serie": "zarcillo-8425",
+			"nombre": "Zarcillo 8425",
+			"titulo": "Zarcillos de Bolita en 18 Kilates.",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$156 "
+		},
+		{
+			"serie": "zarcillo-8427",
+			"nombre": "Zarcillo 8427",
+			"titulo": "Zarcillos Media Bola Diamantada en Oro 18 Kilates.",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$142 "
+		},
+		{
+			"serie": "zarcillo-8429",
+			"nombre": "Zarcillo 8429",
+			"titulo": "Zarcillos Corazon Oro Amarillo en 18 Kilates.",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$66 "
+		},
+		{
+			"serie": "zarcillo-8433",
+			"nombre": "Zarcillo 8433",
+			"titulo": "Zarcillos de Estrellas en 18 Kilates.",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$85 "
+		},
+		{
+			"serie": "zarcillo-8437",
+			"nombre": "Zarcillo 8437",
+			"titulo": "Zarcillos con Delfin en Oro 18 Kilates.",
+			"tipo": "Zarcillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
+			"coleccion": "nacimiento-y-bautizos, regalos",
+			"precio": "$66"
+		}
+	]
+}

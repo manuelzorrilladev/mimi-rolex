@@ -31,6 +31,8 @@
   --font-helvetica-light: Helvetica-Light, sans-serif;
   --font-helvetica: Helvetica Now Text, sans-serif;
   --font-georgia: Georgia, sans-serif;
+  --font-mimi-head: mimi-head-standard, sans-serif;
+  --font-mimi-head-2: mimi-head-standard-2, sans-serif;
 
   --background-image-rolex-gradient: linear-gradient(
     90deg,
@@ -128,6 +130,18 @@
 @font-face {
     font-family: 'Headline-tudor';
     src: url(/fonts/tudor-headline.ttf) format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'mimi-head-standard';
+    src: url(/fonts/cellien-sans.ttf) format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'mimi-head-standard-2';
+    src: url(/fonts/cellien-script.otf) format("opentype");
     font-weight: 900;
     font-style: normal;
 }
