@@ -365,6 +365,69 @@
 			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Zarcillo",
 			"coleccion": "nacimiento-y-bautizos, regalos",
 			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0002",
+			"nombre": "Anillo G0002",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0003",
+			"nombre": "Anillo G0003",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0004",
+			"nombre": "Anillo G0004",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0005",
+			"nombre": "Anillo G0005",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0006",
+			"nombre": "Anillo G0006",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0007",
+			"nombre": "Anillo G0007",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
+		},
+		{
+			"serie": "anillo-g0008",
+			"nombre": "Anillo G0008",
+			"titulo": "Anillo de Graduación en Acero Inoxidable.",
+			"tipo": "Anillo",
+			"tags": "bautizo, joyeria, nacimiento, oro, regalos, Anillo",
+			"coleccion": "nacimiento-y-bautizos, regalos, graduacion",
+			"precio": "$66"
 		}
 	]
 }
