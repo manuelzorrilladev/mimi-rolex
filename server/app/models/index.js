@@ -20,7 +20,7 @@ db.store = require("./store.model")(sequelize, Sequelize)
 db.user = require("./user.model")(sequelize, Sequelize)
 db.routes = require("./routes.model")(sequelize, Sequelize)
 db.tracking = require("./tracking.model")(sequelize, Sequelize)
-
+db.metrics = require("./metrics.model.js")(sequelize,Sequelize)
 const Cart = db.store.Cart;
 const CartProduct = db.store.CartProduct;
 const Watchmaking = db.store.Watchmaking;
@@ -28,6 +28,7 @@ const User = db.user.User;
 const Bill = db.store.Bill;
 const BillProduct = db.store.BillProduct;
 const TudorCollection = db.store.TudorCollection;
+const Metrics = db.metrics;
 
 
 Cart.belongsTo(User, { as: 'owner' })
@@ -54,9 +55,12 @@ Watchmaking.belongsTo(TudorCollection)
 TudorCollection.hasMany(Watchmaking)
 
 
+Metrics.Visitor.hasMany(Metrics.Visit,{foreignKey:'visitor_id'})
+Metrics.Visit.belongsTo(Metrics.Visitor,{foreignKey:'visitor_id'})
 
 
-
+Metrics.Visit.hasMany(Metrics.PageView,{foreignKey:'visit_id'})
+Metrics.Visit.hasMany(Metrics.MetricEvent,{foreignKey:'visit_id'})
 
 
 
