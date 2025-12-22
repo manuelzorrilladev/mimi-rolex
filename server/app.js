@@ -4,15 +4,15 @@ const express = require("express");
 const app = express();
 const db = require("./app/models");
 
-db.sequelize.sync({ alter: true }).then(() => {
-
-  console.log("Drop and re-sync db.");
-});
-
-// db.sequelize.sync().then(() => {
+// db.sequelize.sync({ alter: true }).then(() => {
 
 //   console.log("Drop and re-sync db.");
 // });
+
+db.sequelize.sync().then(() => {
+
+  console.log("Drop and re-sync db.");
+});
 
 
 
@@ -59,6 +59,7 @@ require('./app/api/mail.routes')(app);
 require('./app/api/payment.routes')(app);
 require('./app/api/routes.routes')(app);
 require('./app/api/tracking.routes')(app);
+require('./app/api/metrics.routes')(app);
 
 
 

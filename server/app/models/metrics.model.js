@@ -19,7 +19,13 @@ module.exports = (sequelize, Sequelize) => {
         first_utm_campaign: {
             type: Sequelize.STRING
         }, // ej: 'promo_navidad'
-        user_agent: {
+        first_browser: {
+            type: Sequelize.STRING
+        },
+        first_os: {
+            type: Sequelize.STRING
+        },
+        first_device: {
             type: Sequelize.STRING
         }
     }, {
@@ -60,12 +66,24 @@ module.exports = (sequelize, Sequelize) => {
         is_paid: {
             type: Sequelize.BOOLEAN, defaultValue: false
         }, // true si hay gclid o cpc
-        ip_address: {
+        city: {
+            type: Sequelize.STRING(45)
+        },
+        country: {
             type: Sequelize.STRING(45)
         },
         entry_path: {
             type: Sequelize.STRING
-        } // Primera página que vió hoy
+        }, // Primera página que vió hoy
+        browser: {
+            type: Sequelize.STRING
+        },
+        os: {
+            type: Sequelize.STRING
+        },
+        device_type: {
+            type: Sequelize.STRING
+        }
 
     }, { timestamps: true, updatedAt: false });
 
@@ -98,10 +116,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         event_name: {
             type: Sequelize.STRING, allowNull: false
-        }, // ej: 'click_whatsapp'
+        },
         label: {
             type: Sequelize.STRING
-        }, // ej: 'Boton Flotante'
+        },
 
     }, { timestamps: true, updatedAt: false });
 
