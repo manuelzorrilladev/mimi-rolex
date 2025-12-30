@@ -10,57 +10,6 @@ const storagePath = process.env.STORAGE_PATH
 
 
 
-/**
- * Verifica si un usuario (basado en un objeto de request) es administrador en la DB.
- * @param {Object} user - El objeto de usuario extraído de la solicitud (asume user.id existe).
- * @returns {Promise<boolean>} - True si el usuario tiene el rol ROLE_ADMIN, false en caso contrario.
- */
-async function isAdmin(user) {
-    // 1. Validación de existencia
-    // Si la autenticación es exitosa, 'user' debería existir. 
-    // Usamos el check de user.id para ser explícitos.
-    if (!user || !user.id) {
-        console.log("Error: Usuario o ID no definido.");
-        return false;
-    }
-
-    try {
-        // 2. Consulta de Sequelize enfocada
-        // Consulta el usuario e incluye los roles asociados.
-        const userWithRoles = await User.findByPk(user.id, {
-            include: [{
-                model: Role,
-                // Solo necesitamos el nombre del rol para la verificación
-                attributes: ['name'],
-                through: { attributes: [] } // Excluye la tabla pivote
-            }],
-            attributes: ['id'] // Solo necesitamos el ID para la consulta
-        });
-
-        // 3. Verificación del rol en la DB
-        if (!userWithRoles) {
-            console.log(`Usuario con ID ${user.id} no encontrado en DB.`);
-            return false;
-        }
-
-        // Verifica si el array de roles incluye el rol "ROLE_ADMIN"
-        const isUserAdmin = userWithRoles.roles.some(role => role.name === "admin");
-
-        if (!isUserAdmin) {
-            console.log(`Usuario ID ${user.id} no es administrador.`);
-            return false;
-        }
-
-        // 4. Éxito
-        console.log("=============");
-        return true;
-
-    } catch (error) {
-        console.error("Error al verificar el rol de administrador:", error);
-        return false;
-    }
-}
-
 // GET WATCHES ANALYTICS
 exports.getStoreAnalytics = async (req, res) => {
     try {
@@ -69,11 +18,7 @@ exports.getStoreAnalytics = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        if (await isAdmin(user) === false) {
-            console.log();
-            return res.status(403).send({ message: "No tienes permisos para realizar esta acción" })
-        }
-        
+     
         const valuesArray = req.body.values.map(item => item.toLowerCase());
         const search = await Store.Watchmaking.findAll({
             attributes: ['id', 'serie', 'disponible'],
@@ -115,10 +60,7 @@ exports.updateStoreAvailability = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        if (await isAdmin(user) === false) {
-            console.log();
-            return res.status(403).send({ message: "No tienes permisos para realizar esta acción" })
-        }
+        
 
 
         const valuesArray = req.body.values.map(item => item.toLowerCase());
@@ -164,10 +106,7 @@ exports.updateStoreAvailabilitySingle = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        if (await isAdmin(user) === false) {
-            console.log();
-            return res.status(403).send({ message: "No tienes permisos para realizar esta acción" })
-        }
+        
 
 
         const itemToSearch = req.body.id
@@ -200,10 +139,7 @@ exports.updateStoreAvailabilitySingleCollection = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        if (await isAdmin(user) === false) {
-            console.log();
-            return res.status(403).send({ message: "No tienes permisos para realizar esta acción" })
-        }
+        
 
 
         const itemToSearch = req.body.id
@@ -240,10 +176,7 @@ exports.updateSingleAvailability = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        if (await isAdmin(user) === false) {
-            console.log();
-            return res.status(403).send({ message: "No tienes permisos para realizar esta acción" })
-        }
+        
 
 
 
@@ -287,10 +220,7 @@ exports.createStoreProduct = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        if (await isAdmin(user) === false) {
-            console.log();
-            return res.status(403).send({ message: "No tienes permisos para realizar esta acción" })
-        }
+        
 
         const data = req.body
 
