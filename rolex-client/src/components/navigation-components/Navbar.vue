@@ -50,7 +50,7 @@ function activateSearch() {
 
 <template>
   <nav class="relative z-30">
-    <div id="top-bar" class="flex justify-around items-center p-2">
+    <div id="top-bar" class="flex justify-around items-center p-2 bg-white">
       <router-link to="/tudor" class="cursor-pointer hidden md:block">
         <img
           src="/assets/tudor-retailer.jpg"

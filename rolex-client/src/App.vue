@@ -1,37 +1,37 @@
 <script setup>
 import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import Cookies from "./components/cards/Cookies.vue";
 import PageLoader from "./components/global-components/PageLoader.vue";
-import Footer from './components/navigation-components/Footer.vue';
-import Navbar from './components/navigation-components/Navbar.vue';
+import Footer from "./components/navigation-components/Footer.vue";
+import Navbar from "./components/navigation-components/Navbar.vue";
 import ShoppingPop from "./components/payout-components/ShoppingPop.vue";
-
 import { auth } from "./store/auth.module";
 import { useLoaderStore } from "./store/loaderState";
+import { useLocationStore } from "./store/locationState";
 
-const route = useRoute()
-
+const route = useRoute();
 const piniaStore = auth();
-const loader = useLoaderStore()
+const loader = useLoaderStore();
 const isUserLogged = storeToRefs(piniaStore);
-</script>   
+
+</script>
 
 <template>
   <div id="app-main">
-    <PageLoader v-if="loader.$state.loader"/>
+    <PageLoader v-if="loader.$state.loader" />
     <Navbar />
-    
+
     <Cookies />
     <ShoppingPop
       v-if="route.path !== '/carrito' && isUserLogged.status.value.loggedIn"
     />
     <div class="correction">
-
-      <RouterView :key="route.fullPath"  />
+      <RouterView :key="route.fullPath" />
     </div>
 
-    <Footer v-once/>
+    <Footer v-once />
   </div>
 </template>
 
