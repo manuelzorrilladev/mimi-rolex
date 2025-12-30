@@ -24,12 +24,13 @@ if (isAdmin.value == false) {
 </script>
 
 <template>
-    <section class="bg-[url(/assets/routes-assets/admin-bg.webp)] bg-cover bg-fixed">
+    <section class="bg-[url(/assets/routes-assets/admin-bg.webp)] bg-cover ">
+        <div class="fixed w-full h-screen bg-neutral-600/50 top-0 blur-2xl"></div>
         
-        <main class="flex">
+        <main class="flex ">
     
     
-            <router-view />
+            <Router-view />
         </main>
 
     </section>
