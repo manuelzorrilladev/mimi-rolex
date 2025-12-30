@@ -11,7 +11,8 @@ module.exports = app => {
     router.post("/metrics/ingest", express.json(), controller.ingest)
     router.post("/metrics/track-event", express.json(), controller.trackEvent)
     router.get('/admin/metrics/summary',isAdmin, controller.getDashboardStats);
-    router.get('/admin/metrics/chart',isAdmin, controller.getVisitsChart);
+    // router.get('/admin/metrics/chart',isAdmin, controller.getVisitsChart);
+    router.get('/admin/metrics/events',isAdmin, controller.getEventStats);
 
 
     app.use('/api', router)
