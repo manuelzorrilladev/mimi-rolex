@@ -1,7 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router"
 import BreadCrumb from "./components/navigation-components/BreadCrumb.vue"
 import { useLoaderStore } from './store/loaderState';
+import { useLocationStore } from './store/locationState';
 import { usePostHog } from './utils/posthog'
+import trackTokenService from "./services/trackTokenService";
+import { useStorage } from "@vueuse/core";
+import GLOBAL_OBJECT from "./utils/globaj";
+import { auth } from "./store/auth.module";
+import { useCookies } from "@vueuse/integrations/useCookies.mjs";
+const cookies = useCookies('_mj_sid')
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -13,7 +21,8 @@ const router = createRouter({
       component: () => import("./views/Home.view.vue"),
       meta: {
         title: "Mimi Joyería | Distribuidor Oficial Rolex",
-        breadcrumb: "HomePage"
+        breadcrumb: "HomePage",
+        description: "Descubra la excelencia de Mimi Joyería, su destino de lujo en Venezuela. Orgullosos Distribuidores Oficiales Rolex, brindando piezas icónicas y mantenimiento experto."
 
       }
     },
@@ -290,7 +299,7 @@ const router = createRouter({
       meta: {
         title: "Rolex SailGP Championship - World Of Rolex | Mimi Joyería ",
         breadcrumb: "WorldOfRolex/SailGP",
-        pageType:"article page"
+        pageType: "article page"
       }
     },
 
@@ -714,16 +723,21 @@ const router = createRouter({
       meta: {
         title: "Panel de control  | Mimi Joyería "
       },
-      children:[
+      children: [
         {
-          path:'',
-          name:'main-dashboard',
-          component:()=>import("./views/Admin/nested/MainDashboard.view.vue")
+          path: '',
+          name: 'main-dashboard',
+          component: () => import("./views/Admin/nested/MainDashboard.view.vue")
         },
         {
-          path:'/agregar-reloj/:serie?',
-          name:'agregar-reloj',
-          component:()=>import("./views/Admin/nested/AddWatch.view.vue")
+          path: 'metricas',
+          name: 'ver-metricas',
+          component: () => import("./views/Admin/nested/Metrics.view.vue")
+        },
+        {
+          path: 'agregar-reloj/:serie?',
+          name: 'agregar-reloj',
+          component: () => import("./views/Admin/nested/AddWatch.view.vue")
         },
 
       ]
@@ -790,19 +804,26 @@ router.beforeEach((to, from, next) => {
   if (pageFamily) {
     document.pageFamily = pageFamily
   }
-  // if (from.path !== to.path) {
-  //   posthog.capture('$pageleave')
-  // }
 
 
-  // window.document.title = toRoute.meta && toRoute.meta.title ? toRoute.meta.title : "Home";
+
+
+
+
+
+
+
+
+
+
+
+
   // Get the page title from the route meta data that we have defined
   // See further down below for how we setup this data
   const title = to.meta.title
   //Take the title from the parameters
   const titleFromParams = to.params.id;
-  const descriptionElement = document.querySelector('meta[name="description"]')
-
+  document.description = description
 
   // If the route has a title, set it as the page title of the document/page
   if (title) {
@@ -816,6 +837,60 @@ router.beforeEach((to, from, next) => {
     document.title = `${parsedTitleFromParams.replaceAll("-", " ")} - ${title}`;
   }
 
+    const authStore = auth()
+
+  if (!cookies.get('_mj_sid') && authStore.$state.status.loggedIn) {
+    authStore.logout()
+  }
+
+
+
+
+  // Register visit
+  const locationStorage = useLocationStore()
+  const { visitorID, sessionID, isNew } = trackTokenService.getTokens()
+  if (isNew) {
+    locationStorage.setToInitial()
+    locationStorage.getLocation()
+  }
+
+
+
+
+  const objectToSendToMetrics = {
+    visitorToken: visitorID,
+    sessionToken: sessionID,
+    path: to.path,
+    title: document.title,
+    referrer: document.referrer,
+    utm_source: to.query["utm_source"],
+    utm_medium: to.query["utm_medium"],
+    utm_campaign: to.query["utm_campaign"],
+    gclid: to.query["gclid"],
+    country: locationStorage.country,
+    city: locationStorage.city
+  }
+
+  if (objectToSendToMetrics.referrer.includes('google.com')) {
+    objectToSendToMetrics.utm_source = 'google'
+    objectToSendToMetrics.utm_medium = 'organic'
+  }
+
+  for (const [key, value] of Object.entries(objectToSendToMetrics)) {
+    if (value == undefined) {
+      objectToSendToMetrics[key] = 'none'
+    }
+  }
+
+  if (!to.path.includes('dashboard')) {
+    trackTokenService.sendVisit(objectToSendToMetrics)
+      .then(() => {
+        console.log("Visita guardada");
+      }).catch((e) => {
+        console.log(e);
+      })
+
+  }
 
 
   // Continue resolving the route
