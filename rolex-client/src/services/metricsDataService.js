@@ -6,9 +6,11 @@ class ChartMetrics {
         return http.get('/admin/metrics/summary',{headers:authHeader()})
     }
 
-    getChart(){
-        return http.get('/admin/metrics/chart',{headers:authHeader()})
+    getEvents(){
+        return http.get('/admin/metrics/events',{headers:authHeader()})
     }
+
+
 
 
 }
