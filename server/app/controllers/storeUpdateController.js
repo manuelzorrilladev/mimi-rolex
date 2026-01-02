@@ -18,8 +18,10 @@ exports.getStoreAnalytics = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
+
      
-        const valuesArray = req.body.values.map(item => item.toLowerCase());
+        const valuesArray = req.body.values.map(item => item.serie.toLowerCase());
+      
         const search = await Store.Watchmaking.findAll({
             attributes: ['id', 'serie', 'disponible'],
             where: {
@@ -56,15 +58,20 @@ exports.updateStoreAvailability = async (req, res) => {
 
     try {
         const user = req.body.user
-        if (!req.body) {
+        if (!req.body || !req.body.values) {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
+
+
+
+        const valuesArray = req.body.values;
+
+        valuesArray.forEach((element)=>{
+            element.disponible = 1
+            element.coleccion = "Tudor"
+        })
         
-
-
-        const valuesArray = req.body.values.map(item => item.toLowerCase());
-
 
         await Store.Watchmaking.update(
             { disponible: 0 },
@@ -72,16 +79,10 @@ exports.updateStoreAvailability = async (req, res) => {
         );
 
 
-        await Store.Watchmaking.update(
-            { disponible: 1 },
-            {
-                where: {
-                    serie: {
-                        [Op.in]: valuesArray
-                    }
-                }
-            }
+        await Store.Watchmaking.bulkCreate(valuesArray,
+            { updateOnDuplicate:['precio','dispnible','coleccion']}
         );
+
 
         res.status(200).send("Disponibilidad actualizada correctamente");
 
@@ -101,13 +102,9 @@ exports.updateStoreAvailabilitySingle = async (req, res) => {
 
     try {
 
-        const user = req.body.user
         if (!req.body) {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
-
-        
-
 
         const itemToSearch = req.body.id
 
