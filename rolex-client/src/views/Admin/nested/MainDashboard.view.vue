@@ -561,6 +561,7 @@ onMounted(() => {
     >
       <WatchesAvailability v-if="modal" v-model="modal" />
     </Transition>
+
   </section>
 </template>
 

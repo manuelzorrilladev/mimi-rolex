@@ -34,7 +34,8 @@ module.exports = (sequelize, Sequelize) => {
 
   const Watchmaking = sequelize.define("watchmaking", {
     serie: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique:true
     }
     ,
     nombre: {

@@ -1,22 +1,23 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { Bar, Chart, Grid, Line, Tooltip } from "vue3-charts";
 import DashboardCard from "../../../components/dashboard/admin/DashboardCard.vue";
 import MetricsDataService from "../../../services/metricsDataService";
+import { all } from "axios";
 
 const check = ref(false);
 const isReady = ref(false);
 const state = ref([]);
 const years = ref([
-  "2025",
-  "2026",
-  "2027",
-  "2027",
-  "2028",
-  "2028",
-  "2029",
-  "2030",
+  2025,
+  2026,
+  2027,
+  2027,
+  2028,
+  2028,
+  2029,
+  2030,
 ]);
 const margin = ref({
   left: 20,
@@ -33,17 +34,44 @@ function getMonthName(monthNo) {
 }
 
 const month = ref(new Date().getMonth());
+const year = ref(new Date().getFullYear());
 
-onMounted(() => {
-  MetricsDataService.getSummary().then((d) => {
+function countTotal(arg) {
+  let sum = 0;
+  arg.forEach((element) => {
+    sum += element.count;
+  });
+  return sum;
+}
+const allDevicesSum = ref({
+  devices: 0,
+  browsers: 0,
+  os: 0,
+});
+
+function averagePercentage(total, part) {
+  return ((part / total) * 100).toFixed(2);
+}
+
+function searchMetrics(){
+    MetricsDataService.getSummary(month.value,year.value).then((d) => {
     isReady.value = true;
     state.value = d.data;
+    allDevicesSum.value.devices = countTotal(state.value.topDevices);
+    allDevicesSum.value.browsers = countTotal(state.value.topBrowsers);
+    allDevicesSum.value.os = countTotal(state.value.topOS);
   });
+}
 
-  // setInterval(() => {
-  //   window.location.href = "/dashboard/metricas";
-  // }, 300000);
+onMounted(() => {
+  searchMetrics()
+
+  setInterval(() => {
+    window.location.href = "/dashboard/metricas";
+  }, 300000);
 });
+
+
 </script>
 
 <template>
@@ -55,7 +83,7 @@ onMounted(() => {
 
   
   </section> -->
- <section class="flex flex-col w-full pt-10 items-center min-h-screen">
+  <section class="flex flex-col w-full pt-10 items-center min-h-screen">
     <DashboardCard class="w-11/12">
       <template #title>
         <div class="flex items-center gap-2">
@@ -72,25 +100,28 @@ onMounted(() => {
       <template #content>
         <div v-if="isReady" class="flex flex-col justify-center gap-3">
           <div class="flex items-center justify-end w-full gap-4">
+          {{ month }} - {{ year }}
             <select
+            v-model="month"
               name="collection"
               class="bg-gray-50 border border-rolex-green text-green-900 text-sm rounded-lg block w-20 p-2.5"
             >
-              <option v-for="value in 12" :key="value" :value="value">
+              <option v-for="value in 12"  :key="value" :value="value-1">
                 {{ getMonthName(value - 1) }}
               </option>
             </select>
             <select
+               v-model="year"
               name="collection"
               class="bg-gray-50 border border-rolex-green text-green-900 text-sm rounded-lg block w-20 p-2.5"
             >
-              <option v-for="value in years" :key="value.id" :value="value.id">
+              <option v-for="value in years" :key="value" :value="value">
                 {{ value }}
               </option>
             </select>
           </div>
           <div class="h-fit">
-            <h2 class="font-bold text-2xl pb-4">Resumen general</h2>
+            <h2 class="font-bold text-2xl pb-4">Resumen general - <span class="capitalize">({{ getMonthName(month) }} - {{ year }})</span></h2>
 
             <ul class="flex justify-between gap-3">
               <li
@@ -149,7 +180,6 @@ onMounted(() => {
                     :dataKeys="['month', 'organicVisits']"
                     :lineStyle="{ stroke: '#5dc38c' }"
                     type="monotone"
-
                   />
                 </template>
 
@@ -168,6 +198,7 @@ onMounted(() => {
                 </template>
               </Chart>
             </div>
+
             <section class="flex gap-9">
               <div>
                 <h2 class="font-bold text-2xl py-4">Pagínas mas vistas</h2>
@@ -180,10 +211,9 @@ onMounted(() => {
                   <template #layers>
                     <Grid strokeDasharray="2,2" />
                     <Bar
-                      :dataKeys="[ 'path','viewCount']"
+                      :dataKeys="['path', 'viewCount']"
                       :barStyle="{ fill: '#01603a ' }"
                     />
-                
                   </template>
 
                   <template #widgets>
@@ -195,15 +225,17 @@ onMounted(() => {
                           color: '#472c20',
                           label: 'URL',
                         },
-                        title:{label: 'Nombre'}
+                        title: { label: 'Nombre' },
                       }"
                     />
                   </template>
                 </Chart>
               </div>
-             
+
               <div>
-                <h2 class="font-bold text-2xl py-4">Ciudades con mas visitas</h2>
+                <h2 class="font-bold text-2xl py-4">
+                  Ciudades con mas visitas
+                </h2>
                 <Chart
                   :data="state.topCities"
                   :size="{ width: 600, height: 400 }"
@@ -213,10 +245,9 @@ onMounted(() => {
                   <template #layers>
                     <Grid strokeDasharray="2,2" />
                     <Bar
-                      :dataKeys="[ 'city','count']"
+                      :dataKeys="['city', 'count']"
                       :barStyle="{ fill: '#01603a ' }"
                     />
-                
                   </template>
 
                   <template #widgets>
@@ -228,21 +259,96 @@ onMounted(() => {
                           color: '#472c20',
                           label: 'Ciudad',
                         },
-                        country:{label:'País'}
+                        country: { label: 'País' },
                       }"
                     />
                   </template>
                 </Chart>
               </div>
-             
+            </section>
+            <h2 class="font-bold text-2xl py-4">Dispositivos usados</h2>
+
+            <section class="flex gap-9 justify-between  items-stretch">
+              <div class="w-1/3 flex flex-col">
+                <h2 class="font-bold text-xl pb-4">Navegadores</h2>
+                <div class="border border-rolex-green bg-white rounded-lg p-2 grow">
+                  <header v-for="(value, key) in state.topBrowsers" :key="key">
+                    <p>
+                      {{ key + 1 }}) {{ value.browser }} :
+                      {{ value.count }} visita(s) ({{
+                        averagePercentage(allDevicesSum.browsers, value.count)
+                      }}%)
+                    </p>
+                  </header>
+                </div>
+              </div>
+
+              <div class="w-1/3 flex flex-col">
+                <h2 class="font-bold text-xl pb-4">Dispositivos</h2>
+                <div class="border border-rolex-green bg-white rounded-lg p-2 grow">
+                  <header v-for="(value, key) in state.topDevices" :key="key">
+                    <p>
+                    <p>
+                      {{ key + 1 }}) {{ value.device_type }} :
+                      {{ value.count }} visita(s) ({{
+                        averagePercentage(allDevicesSum.devices, value.count)
+                      }}%)
+                    </p>
+                    </p>
+                  </header>
+                </div>
+              </div>
+
+              <div class="w-1/3 flex flex-col">
+                <h2 class="font-bold text-xl pb-4">Sistemas operativos</h2>
+                <div class="border border-rolex-green bg-white rounded-lg p-2 grow">
+                  <header v-for="(value, key) in state.topOS" :key="key">
+                    <p>
+                      {{ key + 1 }}) {{ value.os }} :
+                      {{ value.count }} visita(s) ({{
+                        averagePercentage(allDevicesSum.os, value.count)
+                      }}%)
+                    </p>
+                  </header>
+                </div>
+              </div>
+            </section>
+
+            <h2 class="font-bold text-2xl py-4">Origen de la visita</h2>
+
+            <section class="flex gap-9 justify-between">
+              <div class="w-full">
+                    <Chart
+                :data="state.sources"
+                :size="{ width: 1240, height: 400 }"
+                :margin="margin"
+                class="bg-white rounded-xl border border-rolex-green"
+              >
+                <template #layers>
+                  <Grid strokeDasharray="2,2" />
+                  <Bar
+                    :dataKeys="['utm_source','count']"
+                    :barStyle="{ fill: '#472c20 ' }"
+                  />
+                  
+                </template>
+
+                <template #widgets>
+                  <Tooltip
+                    borderColor="#01603A"
+                    :config="{
+                     utm_source:{label: 'Fuente'}
+                    }"
+                  />
+                </template>
+              </Chart>
+              </div>
             </section>
           </div>
-
         </div>
       </template>
     </DashboardCard>
   </section>
- 
 </template>
 
 <style scoped>

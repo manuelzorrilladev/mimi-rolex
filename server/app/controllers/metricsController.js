@@ -10,20 +10,6 @@ const Visit = db.metrics.Visit
 const PageView = db.metrics.PageView
 const Events = db.metrics.MetricEvent
 
-async function isAdmin(user) {
-    if (user.roles[0] != "ROLE_ADMIN") {
-        return false
-    }
-    const userQuery = await User.findByPk(user.id, {
-        include: Role,
-        attributes: { exclude: ['password'] }
-    })
-    if (userQuery.roles[0].name !== "ROLE_ADMIN") {
-        return false
-    }
-
-    return true
-}
 
 
 const parseUA = (ua) => {
@@ -219,21 +205,21 @@ exports.getDashboardStats = async (req, res) => {
                 where: monthlyFilter,
                 group: ['path', 'title'],
                 order: [[literal('viewCount'), 'DESC']],
-                limit: 10, raw: true
+                limit: 5, raw: true
             }),
 
             // Distribución de Dispositivos/Navegadores/OS
             Visit.findAll({
                 attributes: ['device_type', [fn('COUNT', col('id')), 'count']],
-                where: monthlyFilter, group: ['device_type'], limit: 5, raw: true
+                where: monthlyFilter, group: ['device_type'], raw: true
             }),
             Visit.findAll({
                 attributes: ['browser', [fn('COUNT', col('id')), 'count']],
-                where: monthlyFilter, group: ['browser'], limit: 5, raw: true
+                where: monthlyFilter, group: ['browser'], raw: true
             }),
             Visit.findAll({
                 attributes: ['os', [fn('COUNT', col('id')), 'count']],
-                where: monthlyFilter, group: ['os'], limit: 5, raw: true
+                where: monthlyFilter, group: ['os'], raw: true
             }),
 
             // Campañas (Reporte consolidado después)

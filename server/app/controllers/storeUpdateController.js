@@ -19,9 +19,9 @@ exports.getStoreAnalytics = async (req, res) => {
         }
 
 
-     
+
         const valuesArray = req.body.values.map(item => item.serie.toLowerCase());
-      
+
         const search = await Store.Watchmaking.findAll({
             attributes: ['id', 'serie', 'disponible'],
             where: {
@@ -55,47 +55,45 @@ exports.getStoreAnalytics = async (req, res) => {
 
 // UPDATE WATCHES AVAILABILITY
 exports.updateStoreAvailability = async (req, res) => {
-
     try {
-        const user = req.body.user
-        if (!req.body || !req.body.values) {
-            return res.status(400).send({ message: "Faltan los datos para crear el producto" })
-        }
-
-
-
-
         const valuesArray = req.body.values;
-
-        valuesArray.forEach((element)=>{
-            element.disponible = 1
-            element.coleccion = "Tudor"
-        })
-        
+        if (!valuesArray || valuesArray.length === 0) {
+            return res.status(400).send({ message: "No hay datos para actualizar" });
+        }
 
         await Store.Watchmaking.update(
             { disponible: 0 },
             { where: { disponible: 1, coleccion: "Tudor" } }
         );
+        const columns = ['serie', 'precio', 'disponible', 'coleccion'];
+        
+        const placeholders = valuesArray
+            .map(() => `(?, ?, 1, 'Tudor')`) 
+            .join(', ');
 
+        const replacements = valuesArray.flatMap(el => [el.serie, el.precio]);
 
-        await Store.Watchmaking.bulkCreate(valuesArray,
-            { updateOnDuplicate:['precio','dispnible','coleccion']}
-        );
+        const query = `
+            INSERT INTO Watchmakings (serie, precio, disponible, coleccion)
+            VALUES ${placeholders}
+            ON DUPLICATE KEY UPDATE 
+                precio = VALUES(precio),
+                disponible = VALUES(disponible),
+                coleccion = VALUES(coleccion);
+        `;
 
+        await db.sequelize.query(query, {
+            replacements: replacements,
+            type: db.sequelize.QueryTypes.INSERT
+        });
 
-        res.status(200).send("Disponibilidad actualizada correctamente");
-
+        res.status(200).send("Actualización completada con éxito");
 
     } catch (error) {
-        res.status(500).send({
-            message: error.message || "Ocurrió un error al actualizar la disponibilidad."
-        });
+        console.error(error);
+        res.status(500).send({ message: error.message });
     }
-
-
 }
-
 
 
 exports.updateStoreAvailabilitySingle = async (req, res) => {
@@ -136,15 +134,15 @@ exports.updateStoreAvailabilitySingleCollection = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        
+
 
 
         const itemToSearch = req.body.id
-        const collectionToChange = req.body.collection == 'Tudor'? 'Novedades':'Tudor'
+        const collectionToChange = req.body.collection == 'Tudor' ? 'Novedades' : 'Tudor'
 
 
         await Store.Watchmaking.update(
-            { coleccion:collectionToChange },
+            { coleccion: collectionToChange },
             { where: { id: itemToSearch } }
         );
 
@@ -173,7 +171,7 @@ exports.updateSingleAvailability = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        
+
 
 
 
@@ -217,7 +215,7 @@ exports.createStoreProduct = async (req, res) => {
             return res.status(400).send({ message: "Faltan los datos para crear el producto" })
         }
 
-        
+
 
         const data = req.body
 
