@@ -33,17 +33,18 @@ class AdminData {
 
 
   updateSingleWatch(id, user) {
+    console.log(authHeader());
     return http.post("/admin/update/store-availability-single", {
       user: user,
       id: id
-    }), { headers: authHeader() }
+    }, { headers: authHeader() })
   }
   updateCollection(id, collection, user) {
     return http.post("/admin/update/store-availability-single-collection", {
       user: user,
       id: id,
       collection: collection
-    }), { headers: authHeader() }
+    }, { headers: authHeader() })
   }
 
 

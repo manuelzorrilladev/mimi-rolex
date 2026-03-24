@@ -70,13 +70,16 @@ exports.ingest = async (req, res) => {
             utm_source, utm_medium, utm_campaign, gclid, country, city
         } = req.body;
 
+        const isGoogleAds = !!gclid; 
+const finalSource = utm_source || (isGoogleAds ? 'google' : 'direct');
+const finalMedium = utm_medium || (isGoogleAds ? 'cpc' : 'none');
 
         const [visitor] = await Visitor.findOrCreate({
             where: { visitor_token: visitorToken },
             defaults: {
                 first_referrer: referrer,
-                first_utm_source: utm_source || 'direct',
-                first_utm_medium: utm_medium || 'none',
+                first_utm_source: finalSource,
+                first_utm_medium: finalMedium,
                 first_utm_campaign: utm_campaign,
                 first_browser: browser,
                 first_os: os,
@@ -84,16 +87,18 @@ exports.ingest = async (req, res) => {
             }
         });
 
+
+
         const [visit] = await Visit.findOrCreate({
             where: { session_token: sessionToken },
             defaults: {
                 visitor_id: visitor.id,
                 referrer: referrer,
-                utm_source: utm_source || 'direct',
-                utm_medium: utm_medium || 'none',
+                utm_source: finalSource,
+                utm_medium: finalMedium,
                 utm_campaign,
                 gclid,
-                is_paid: utm_medium === 'cpc',
+               is_paid: finalMedium === 'cpc' || isGoogleAds,
                 entry_path: path,
                 city: city,
                 country: country,

@@ -24,19 +24,32 @@ function parseNumber(value) {
 function createArray() {
   list.value = list.value.replaceAll(" ", "");
   watches.value = list.value.split("\n");
+
   watches.value.forEach((element, index) => {
-    const ob = element.split("\t");
-    watches.value[index] = { serie: ob[0].toLowerCase(), precio: parseNumber(ob[1]) };
+    let ob = 0;
+    let series = "";
+    if (element.includes("\t")) {
+      ob = parseNumber(element.split("\t")[1]);
+      series = element.split("\t")[0];
+    } else {
+      series = element;
+    }
+    const objectToInsert = { serie: series.toLocaleLowerCase() };
+    if (ob > 0) {
+      objectToInsert.precio = ob;
+    }
+    watches.value[index] = objectToInsert;
   });
 }
 
 function checkUpdate() {
   loader.value = !loader.value;
   createArray();
+  console.log(watches.value);
   adminDataServices.checkAvailability(watches.value).then((d) => {
     searchResult.value.existing = d.data.existing;
     searchResult.value.nonExisting = d.data.nonExisting;
-
+    
     updateInventory();
   });
 }

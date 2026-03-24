@@ -229,7 +229,7 @@ watch(isReady, () => {
                   </h1>
                   <h1 class="font-thin text-rolex-brown text-sm">{{ state.getAll.cajaDelModelo }}</h1>
                   <h1 class="font-thin text-rolex-brown text-sm">{{ state.getAll.modelo.toUpperCase() }}</h1>
-                  <div v-if="!checkLocation" class="text-rolex-brown flex items-center gap-2">
+                  <div  class="text-rolex-brown flex items-center gap-2">
                     <h2 class="font-light">
                       $ {{ addComma(state.details[0].precio) }}
                     </h2>

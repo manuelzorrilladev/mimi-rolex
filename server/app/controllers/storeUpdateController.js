@@ -55,46 +55,62 @@ exports.getStoreAnalytics = async (req, res) => {
 
 // UPDATE WATCHES AVAILABILITY
 exports.updateStoreAvailability = async (req, res) => {
+    let transaction;
+
     try {
-        const valuesArray = req.body.values;
-        if (!valuesArray || valuesArray.length === 0) {
+        const { values: valuesArray } = req.body;
+
+        if (!valuesArray?.length) {
             return res.status(400).send({ message: "No hay datos para actualizar" });
         }
 
+        transaction = await db.sequelize.transaction();
+
         await Store.Watchmaking.update(
             { disponible: 0 },
-            { where: { disponible: 1, coleccion: "Tudor" } }
+            { 
+                where: { coleccion: "Tudor" }, 
+                transaction 
+            }
         );
-        const columns = ['serie', 'precio', 'disponible', 'coleccion'];
-        
-        const placeholders = valuesArray
-            .map(() => `(?, ?, 1, 'Tudor')`) 
-            .join(', ');
 
-        const replacements = valuesArray.flatMap(el => [el.serie, el.precio]);
+        const seriesToUpdate = valuesArray.map(el => el.serie);
+        let query = `UPDATE Watchmakings SET disponible = 1, coleccion = 'Tudor'`;
+        const replacements = [];
 
-        const query = `
-            INSERT INTO Watchmakings (serie, precio, disponible, coleccion)
-            VALUES ${placeholders}
-            ON DUPLICATE KEY UPDATE 
-                precio = VALUES(precio),
-                disponible = VALUES(disponible),
-                coleccion = VALUES(coleccion);
-        `;
+        if (valuesArray[0].precio !== undefined) {
+            query += `, precio = CASE serie `;
+            valuesArray.forEach(el => {
+                query += `WHEN ? THEN ? `;
+                replacements.push(el.serie, el.precio);
+            });
+            query += `ELSE precio END`;
+        }
 
-        await db.sequelize.query(query, {
-            replacements: replacements,
-            type: db.sequelize.QueryTypes.INSERT
+        query += ` WHERE serie IN (?) AND coleccion = 'Tudor'`;
+        replacements.push(seriesToUpdate);
+
+        const [result, metadata] = await db.sequelize.query(query, {
+            replacements,
+            transaction
         });
 
-        res.status(200).send("Actualización completada con éxito");
+        await transaction.commit();
+
+        return res.status(200).send({ 
+            message: "Actualización exitosa", 
+            actualizados: metadata?.affectedRows || 0 
+        });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: error.message });
+        if (transaction && !transaction.finished) {
+            await transaction.rollback();
+        }
+        
+        console.error("Error en updateStoreAvailability:", error);
+        return res.status(500).send({ message: error.message });
     }
-}
-
+};
 
 exports.updateStoreAvailabilitySingle = async (req, res) => {
 
