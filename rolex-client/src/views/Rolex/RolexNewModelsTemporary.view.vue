@@ -18,8 +18,8 @@ onMounted(() => {
       as: "standalone",
       lang: "es",
       consent: true,
-      legal: "https://mimijoyeria.com/",
-      destination: "new-watches-2025",
+      legal: "https://mimijoyeria.com/rolex/terminos-y-condiciones",
+      destination: "new-watches-2026",
     });
     corner.mount("#rlxCorner");
   };
