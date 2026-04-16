@@ -36,6 +36,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     cajaDelModelo: {
       type: Sequelize.STRING
+    },
+    isRolexSelection: {
+      type: Sequelize.BOOLEAN,
+      default:true
     }
   }, {
     timestamps: false

@@ -3,9 +3,9 @@
 </script>
 
 <template>
-    <div id="terms-n-conditions" class="text-center h-44 overflow-y-scroll border-b border-rolex-green px-4  my-4">  
-        <h2 class="font-bold text-xl">Términos y Condiciones</h2>
-        <p class="text-justify text-sm">POR FAVOR, lea estos términos y condiciones de uso cuidadosamente antes de ingresar al sitio.
+    <div id="terms-n-conditions" class="text-center   px-4  my-4 text-rolex-brown flex flex-col items-center ">  
+        <h2 class="font-bold text-xl w-10/12 pt-8 pb-4">Términos y Condiciones</h2>
+        <p class="text-justify text-sm w-10/12">POR FAVOR, lea estos términos y condiciones de uso cuidadosamente antes de ingresar al sitio.
             Al utilizar www.mimijoyeria.com, (“El Portal”), Ud. acuerda someterse a estos Términos y Condiciones de Uso. Si
             Ud.
             no está de acuerdo con éstos, lo invitamos a abandonar el portal. El uso continuo que Ud. haga del portal luego
@@ -23,13 +23,13 @@
             imprevisto,
             moral o material, que dicha modificación o discontinuidad pudieren producir, incluyendo imprecisiones técnicas o
             errores tipográficos.</p>
-        <h2 class="font-bold text-xl pt-8"> Sección Rolex</h2>
-        <p class="text-justify text-sm">Declaración: Cuando navegue por la sección Rolex de nuestra página web, puede que interactúe con una página web
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12"> Sección Rolex</h2>
+        <p class="text-justify text-sm w-10/12">Declaración: Cuando navegue por la sección Rolex de nuestra página web, puede que interactúe con una página web
             incorporada de www.rolex.com. En tal caso, los Términos de Uso, Aviso de Privacidad y Política de Cookies de
             www.rolex.com son los únicos aplicables.</p>
 
-        <h2 class="font-bold text-xl pt-8">Restricciones de uso</h2>
-        <p class="text-justify text-sm">El portal (www.mimijoyeria.com) es propiedad de INVERSIONES MIMI C.A. y operado por la misma. Los contenidos del
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Restricciones de uso</h2>
+        <p class="text-justify text-sm w-10/12">El portal (www.mimijoyeria.com) es propiedad de INVERSIONES MIMI C.A. y operado por la misma. Los contenidos del
             portal (incluyendo sin limitación a los textos, formatos, imágenes, gráficos, animación, videos, música,
             sonidos,
             marcas, logotipo, nombres comerciales y patentes) están amparados por los derechos de propiedad intelectual
@@ -69,8 +69,8 @@
 
        
 
-        <h2 class="font-bold text-xl pt-8">Cookies</h2>
-        <p class="text-justify text-sm">Este portal web no utiliza cookies (también conocidos como web bugs) para recopilar ni almacenar datos personales
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Cookies</h2>
+        <p class="text-justify text-sm w-10/12">Este portal web no utiliza cookies (también conocidos como web bugs) para recopilar ni almacenar datos personales
             de
             los usuarios, sino que su uso únicamente sirve para facilitar al usuario el acceso al portal web. El uso de
             cookies
@@ -83,8 +83,8 @@
             configurando su navegador, e inhabilitando el código Java Script en la configuración de seguridad.</p>
 
 
-        <h2 class="font-bold text-xl pt-8">Carteleras (Bulletin Boards) y correo electrónico (e-mail)</h2>
-        <p class="text-justify text-sm">INVERSIONES MIMI C.A. puede ofrecer características tales como carteleras o e-mail como parte de cualquier "Medio
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Carteleras (Bulletin Boards) y correo electrónico (e-mail)</h2>
+        <p class="text-justify text-sm w-10/12">INVERSIONES MIMI C.A. puede ofrecer características tales como carteleras o e-mail como parte de cualquier "Medio
             Interactivo". Ud. no puede presentar/enviar material que sea ilegal, perjudicial, intimidatorio, amenazador,
             abusivo, ofensivo, difamatorio, infamante, obsceno, pornográfico, religioso, racista, ofensivo a cualquier
             genero,
@@ -141,8 +141,8 @@
             La información que sea obtenida por usted del portal, no originará garantía alguna que no fuera expresamente la
             señalada en el presente instrumento.</p>
 
-        <h2 class="font-bold text-xl pt-8">Links a/desde otros sitios</h2>
-        <p class="text-justify text-sm">INVERSIONES MIMI C.A. no está afiliado o asociado con los patrocinantes o productores de ningún sitio de terceros
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Links a/desde otros sitios</h2>
+        <p class="text-justify text-sm w-10/12">INVERSIONES MIMI C.A. no está afiliado o asociado con los patrocinantes o productores de ningún sitio de terceros
             que tengan link con el portal. Explícitamente deslindamos toda responsabilidad por la precisión, contenido o
             disponibilidad de información encontrada en sitios que tienen link con el portal desde los sitios de terceros.
             No
@@ -162,8 +162,8 @@
             donde se realice cualquier tipo de transacción entre y/o mediante el usuario y el tercero responsable del sitio
             (“comercio electrónico”).</p>
 
-        <h2 class="font-bold text-xl pt-8">Limitación de responsabilidad</h2>
-        <p class="text-justify text-sm">INVERSIONES MIMI C.A. en ningún caso será responsable por perjuicios directos, indirectos, previstos e
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Limitación de responsabilidad</h2>
+        <p class="text-justify text-sm w-10/12">INVERSIONES MIMI C.A. en ningún caso será responsable por perjuicios directos, indirectos, previstos e
             imprevistos,
             materiales o morales que surgieran del uso o la imposibilidad de uso del portal, aun cuando INVERSIONES MIMI
             C.A. o
@@ -195,8 +195,8 @@
             confidencialidad o secreto, derecho al honor, intimidad e imagen de las personas; y en general la infracción de
             cualquier norma que proteja los derechos pertenecientes a un usuario o tercero.</p>
 
-        <h2 class="font-bold text-xl pt-8">Indemnización</h2>
-        <p class="text-justify text-sm">Ud. defenderá, indemnizará y mantendrá indemne a INVERSIONES MIMI C.A. y sus subsidiarias, afiliados, directores,
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Indemnización</h2>
+        <p class="text-justify text-sm w-10/12">Ud. defenderá, indemnizará y mantendrá indemne a INVERSIONES MIMI C.A. y sus subsidiarias, afiliados, directores,
             funcionarios, agentes, contratistas u otros socios, y empleados, de cualquier responsabilidad, pérdida,
             reclamos,
             demandas, gastos, incluyendo honorarios razonables de abogados, realizados por cualquier tercero debido a o que
@@ -213,8 +213,8 @@
             plazo
             máximo de treinta días contados desde la notificación que se le efectúe al efecto.</p>
 
-        <h2 class="font-bold text-lg">Condiciones Comerciales</h2>
-xl <p class="text-justify text-sm">
+        <h2 class="font-bold text-lg w-10/12">Condiciones Comerciales</h2>
+ <p class="text-justify text-sm w-10/12">
             a. Los precios mostrados en el Portal son solo referenciales y aproximados, y podrán sufrir cambios sin previo
             aviso.
             <br>
@@ -231,8 +231,8 @@ xl <p class="text-justify text-sm">
         </p>
 
 
-        <h2 class="font-bold text-xl pt-8">Confidencialidad de la información</h2>
-        <p class="text-justify text-sm">INVERSIONES MIMI C.A. no venderá, alquilará o compartirá la Información Personal excepto en las formas
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Confidencialidad de la información</h2>
+        <p class="text-justify text-sm w-10/12">INVERSIONES MIMI C.A. no venderá, alquilará o compartirá la Información Personal excepto en las formas
             establecidas
             en estas políticas. Haremos todo lo que esté a nuestro alcance para proteger la privacidad de la información.
             Puede
@@ -243,8 +243,8 @@ xl <p class="text-justify text-sm">
             responderá
             por la información que sea revelada.</p>
 
-        <h2 class="font-bold text-xl pt-8">Orden de autoridades competentes - Requerimientos Legales</h2>
-        <p class="text-justify text-sm">INVERSIONES MMI C.A. coopera con las autoridades competentes y con otros terceros para garantizar el cumplimiento
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Orden de autoridades competentes - Requerimientos Legales</h2>
+        <p class="text-justify text-sm w-10/12">INVERSIONES MMI C.A. coopera con las autoridades competentes y con otros terceros para garantizar el cumplimiento
             de
             las leyes, por ejemplo en materia de protección de derechos de propiedad industrial e intelectual, prevención
             del
@@ -260,8 +260,8 @@ xl <p class="text-justify text-sm">
             el
             fin de salvaguardar la integridad y la seguridad de la Comunidad y la de sus usuarios.</p>
 
-        <h2 class="font-bold text-xl pt-8">Seguridad de la información</h2>
-        <p class="text-justify text-sm">INVERSIONES MIMI C.A. está obligado a cumplir con toda la normativa aplicable en materia de medidas de seguridad
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Seguridad de la información</h2>
+        <p class="text-justify text-sm w-10/12">INVERSIONES MIMI C.A. está obligado a cumplir con toda la normativa aplicable en materia de medidas de seguridad
             aplicables a la Información Personal. Adicionalmente, INVERSIONES MIMI C.A., usa los estándares de la industria
             entre materia de protección de la confidencialidad de su Información Personal, incluyendo, en otras medidas,
             cortafuegos ("firewalls") y Secure Socket Layers ("SSL"). INVERSIONES MIMI, C.A. considera a los datos de sus
@@ -275,8 +275,8 @@ xl <p class="text-justify text-sm">
             datos por parte de personas no autorizadas ni tampoco se hace responsable por la indebida utilización de la
             información obtenida por esos medios.</p>
 
-        <h2 class="font-bold text-xl pt-8">Varios</h2>
-        <p class="text-justify text-sm">Estos Términos y Condiciones de Uso se regirán por las leyes de la República Bolivariana de Venezuela, y los
+        <h2 class="font-bold text-xl pt-8 pb-4 w-10/12">Varios</h2>
+        <p class="text-justify text-sm w-10/12">Estos Términos y Condiciones de Uso se regirán por las leyes de la República Bolivariana de Venezuela, y los
         tratados internacionales válidamente suscritos por la República. Ud. acuerda que toda acción legal que surgiera o se
         relacionara con estos Términos y Condiciones de Uso se presentará ante los tribunales ordinarios de justicia de la
         República Bolivariana de Venezuela y por el presente consiente y se somete a la jurisdicción y competencia de dichos

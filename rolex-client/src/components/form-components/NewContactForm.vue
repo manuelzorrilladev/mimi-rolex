@@ -2,11 +2,11 @@
 import { ref, watch } from "vue";
 import Terms from "../global-components/Terms.vue";
 import RegionsInput from "../../components/form-components/RegionsInput.vue";
-
 import { ErrorMessage, Field, Form } from "vee-validate";
 import * as yup from "yup";
 
 import SelectInput from "./SelectInput.vue";
+import { RouterLink } from "vue-router";
 
 defineProps({
   Color: String,
@@ -218,9 +218,9 @@ function sendMail() {
         />
         <label for="terms">
           *He leído y acepto los
-          <span class="underline cursor-pointer" @click="showTerms">
+          <a href="/rolex/terminos-y-condiciones" target="_blank" class="underline cursor-pointer" >
             Términos y Condiciones y la Política de Privacidad.
-          </span>
+          </a>
         </label>
         <br />
         <ErrorMessage name="terms" class="text-red-700" />

@@ -60,7 +60,7 @@ const router = createRouter({
         title: "Accesorios Rolex  | Mimi Joyería",
         description: " Explore los accesorios Rolex en línea en Mimi Joyería, un Distribuidor Oficial Rolex autorizado para vender accesorios Rolex.",
         breadcrumb: "Accesorios",
-        pageType: "accessories model page"
+        pageType: "accessories page"
       }
 
     },
@@ -114,14 +114,27 @@ const router = createRouter({
     }
     ,
     {
-      path: "/rolex/seleccion-para-las-fiestas",
-      name: "rolex-seleccion-festiva",
-      component: () => import("./views/Rolex/RolexFestiveSelection.view.vue"),
+      path: "/rolex/rolex-en-mimi-joyeria",
+      name: "rolex-en-mimi-joyeria",
+      component: () => import("./views/Rolex/RolexMimi.view.vue"),
       meta: {
-        title: "Selección Rolex para las fiestas | Mimi Joyería",
+        title: "Rolex en Mimi Joyería",
         description: "Para las fiestas, Rolex presenta una selección especial de distintivos y refinados relojes y exclusivos accesorios. Descúbralos en Mimi Joyería, su Distribuidor Oficial Rolex en Venezuela.",
-        breadcrumb: "SeleccionFestiva",
-        pageType: "festive page"
+        breadcrumb: "RolexEnMimi",
+        pageType: "showroom"
+
+      }
+    }
+    ,
+    {
+      path: "/rolex/terminos-y-condiciones",
+      name: "rolex-terminos-y-condiciones",
+      component: () => import("./views/Rolex/RolexTerms.view.vue"),
+      meta: {
+        title: "Terminos y condiciones",
+        description: "",
+        breadcrumb: "Terminos",
+        pageType: "terms"
 
       }
     }
@@ -134,7 +147,7 @@ const router = createRouter({
         title: "Contacto Mimi Joyería en Venezuela - Distribuidor Oficial Rolex",
         meta: "Póngase en contacto con Mimi Joyería y deje que le ayudemos a escoger un Rolex o a dar respuestas a sus consultas.",
         breadcrumb: "Contacto",
-        pageType: "contact page"
+        pageType: "store contact page"
 
       }
     }
@@ -157,9 +170,9 @@ const router = createRouter({
     {
       path: "/rolex/nuevos-relojes",
       name: "rolex-nuevos-modelos",
-      component: () => import("./views/Rolex/RolexNewModels.view.vue"),
+      component: () => import("./views/Rolex/RolexNewModelsTemporary.view.vue"),
       meta: {
-        title: "Nuevos Modelos Rolex 2025  | Mimi Joyería ",
+        title: "Nuevos Modelos Rolex 2026  | Mimi Joyería ",
         description: "Mimi Joyería presenta la última colección de relojes de lujo suizos de Rolex. Descubra las características únicas de los nuevos modelos de este año.",
         breadcrumb: "NuevosModelos",
         pageType: "new watches page"
@@ -890,6 +903,15 @@ router.beforeEach((to, from, next) => {
         console.log(e);
       })
 
+  }
+
+
+  if (to.name === 'relojes-rolex') {
+    to.meta.pageFamily = to.params.collectionName;
+    to.meta.productRMC = to.params.id;
+    
+    // Opcional: Actualizar el título de la pestaña dinámicamente
+    document.title = `${to.meta.title} - ${to.params.collectionName}`;
   }
 
 

@@ -42,10 +42,10 @@ const sliderItems = [
 
     },
     {
-        "src": "festive",
-        "link": "rolex-seleccion-festiva",
-        "alt": "Rolex-seleccion-festiva",
-        "title": "Selección Festiva Rolex"
+        "src": "showroom",
+        "link": "rolex-en-mimi-joyeria",
+        "alt": "Rolex-en-mimi-joyeria",
+        "title": "Rolex en Mimi Joyería"
 
     },
     {

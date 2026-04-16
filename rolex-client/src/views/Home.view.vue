@@ -20,7 +20,7 @@ const links = [
   "/rolex/submariner",
   "/rolex/accesorios",
   "/novedades/tudor",
-  "/novedades/tudor",
+
 ]
 function checkClick(pos) {
   router.push(links[pos]);
@@ -91,8 +91,7 @@ function changeCounter(direction) {
             src="/assets/routes-assets/headers/2-desktop.webp" alt="headers-2-desktop" />
           <img @click="checkClick(counter)" rel="preload" fetchpriority="low" as="image"
             src="/assets/routes-assets/headers/3-desktop.webp" alt="headers-3-desktop" />
-          <img @click="checkClick(counter)" rel="preload" fetchpriority="low" as="image"
-            src="/assets/routes-assets/headers/4-desktop.webp" alt="headers-4-desktop" />
+    
         </div>
       </div>
       <div v-else class="min-h-[300px]  h-fit ">
@@ -100,7 +99,6 @@ function changeCounter(direction) {
           <img @click="checkClick(counter)" src="/assets/routes-assets/headers/1-mobile.webp" alt="headers-1-mobile" />
           <img @click="checkClick(counter)" src="/assets/routes-assets/headers/2-mobile.webp" alt="headers-2-mobile" />
           <img @click="checkClick(counter)" src="/assets/routes-assets/headers/3-mobile.webp" alt="headers-3-mobile" />
-          <img @click="checkClick(counter)" src="/assets/routes-assets/headers/4-mobile.webp" alt="headers-4-mobile" />
         </div>
       </div>
 

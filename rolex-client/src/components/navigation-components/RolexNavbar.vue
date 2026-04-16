@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
 
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import searchResults from "../../data/searchResults.json";
 const route = useRoute();
 
@@ -50,11 +50,28 @@ watch(input, () => {
     searchInResults();
   }
 });
+
+const canShow = ref(false);
+const TARGET_DATE = {
+  year: 2026,
+  month: 3,
+  day: 14,
+};
+
+const isTargetDate = computed(() => {
+  const today = new Date();
+  return (
+    today.getFullYear() === TARGET_DATE.year &&
+    today.getMonth() === TARGET_DATE.month &&
+    today.getDate() === TARGET_DATE.day
+  );
+});
+
+
 </script>
 
 <template>
   <nav class="relative">
- 
     <div
       id="navigation-bar"
       :class="activate"
@@ -69,7 +86,6 @@ watch(input, () => {
           class="w-20 md:w-24 lg:w-0"
         />
         <div class="flex items-center gap-4">
-          
           <div
             class="flex items-center gap-2 justify-center h-2 hover:text-rolex-green-3 duration-200 cursor-pointer"
             @click="collapseNav"
@@ -111,14 +127,9 @@ watch(input, () => {
           :to="{ name: 'rolex-nuevos-modelos' }"
           class="pr-6 font-bold md:font-normal py-4 text-xl lg:text-xs pl-6 md:pl-16 lg:pl-6 hover:text-rolex-green-3 duration-200 w-full lg:w-fit lg:text-center"
         >
-          <h2>Nuevos Modelos 2025</h2>
+          <h2>Nuevos Modelos 2026</h2>
         </router-link>
-        <router-link
-          :to="{ name: 'rolex-seleccion-festiva' }"
-          class="pr-6 font-bold md:font-normal py-4 text-xl lg:text-xs pl-6 md:pl-16 lg:pl-6 hover:text-rolex-green-3 duration-200 w-full lg:w-fit lg:text-center"
-        >
-          <h2>Selección para las fiestas</h2>
-        </router-link>
+
         <router-link
           :to="{ name: 'rolex-accesorios' }"
           class="pr-6 font-bold md:font-normal py-4 text-xl lg:text-xs pl-6 md:pl-16 lg:pl-6 hover:text-rolex-green-3 duration-200 w-full lg:w-fit lg:text-center"
@@ -146,6 +157,12 @@ watch(input, () => {
         >
           <h2>World of Rolex</h2>
         </router-link>
+        <!-- <router-link
+          :to="{ name: 'rolex-en-mimi-joyeria' }"
+          class="pr-6 font-bold md:font-normal py-4 text-xl lg:text-xs pl-6 md:pl-16 lg:pl-6 hover:text-rolex-green-3 duration-200 w-full lg:w-fit lg:text-center"
+        >
+          <h2>Rolex en Mimi Joyería</h2>
+        </router-link> -->
 
         <router-link
           :to="{ name: 'rolex-contacto' }"
@@ -153,10 +170,7 @@ watch(input, () => {
         >
           <h2>Contacto</h2>
         </router-link>
-       
       </div>
     </div>
   </nav>
 </template>
-
-
