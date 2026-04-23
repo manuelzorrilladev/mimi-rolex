@@ -6,6 +6,7 @@ import { ErrorMessage, Field, Form } from "vee-validate";
 import * as yup from "yup";
 
 import mailDataService from "../../services/mailDataService";
+import { useHead } from "@unhead/vue";
 
 const { message, watch, modelo, cajaDelModelo } = defineProps([
   "message",
@@ -69,7 +70,11 @@ function sendValue(value) {
 
   mailDataService
     .rolexMail(data)
-    .then((data) => console.log("email sended"))
+    .then((data) => {
+      useHead({
+        script: _satellite.track("pageView"),
+      });
+    })
     .catch((error) => console.log(error));
 }
 </script>

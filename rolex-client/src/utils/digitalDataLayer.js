@@ -1,13 +1,13 @@
 
 
-function digitalDataLayer(family,rmc){
+function digitalDataLayer(family,rmc, pageType = 'model page'){
     var layer = {
         environment: {
             environmentVersion: "V7",
             coBrandedVersion: "Bespoke",
         },
         page: {
-            pageType: "model page",
+            pageType: pageType,
             pageFamilyName:family
         },
         products:{

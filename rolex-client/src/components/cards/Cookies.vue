@@ -1,62 +1,77 @@
 <script setup>
 import { useCookies } from "@vueuse/integrations/useCookies";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import routerFile from "../../router";
+import GLOBAL_OBJECT from "../../utils/globaj";
+import router from "../../router";
 
-const router = useRoute();
-
-const cookies = useCookies();
+const route = useRoute();
+const cookies = useCookies(['rlx-consent', 'rlx-marketing']);
 const checkOpen = ref(false);
 const cookieLog = ref(false);
 
-let externalScript = document.createElement("script");
-externalScript.setAttribute(
-  "src",
-  "//assets.adobedtm.com/7e3b3fa0902e/7ba12da1470f/launch-5de25e657d80.min.js"
-);
+const SCRIPT_ID = "rolex-tracking-script";
 
-// externalScript.setAttribute('src', '//assets.adobedtm.com/7e3b3fa0902e/7ba12da1470f/launch-73c56043319a-staging.min.js')
+const manageExternalScript = (shouldInject) => {
+  const existingScript = document.getElementById(SCRIPT_ID);
+  if (shouldInject) {
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = SCRIPT_ID;
+      script.src = GLOBAL_OBJECT.TRACK_SCRIPT_URL;
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  } else if (existingScript) {
+    existingScript.remove();
+  }
+};
 
-if (cookies.get("rlx-consent") === undefined) {
-  cookies.set("rlx-consent", "false");
-}
-if (cookies.get("rlx-consent") === false) {
+/**
+ * Lógica de Consentimiento: Ahora depende de ambas cookies
+ */
+const hasConsent = computed(() => cookies.get("rlx-consent") === true && cookies.get("rlx-marketing") === true);
+
+const isRolexRoute = computed(() => {
+  return route.fullPath.includes("rolex") && route.name !== 'rolex-nuevos-modelos';
+});
+
+const cookieOptions = { path: '/', maxAge: 60 * 60 * 24 * 360 };
+
+if (cookies.get("rlx-consent") === undefined || cookies.get("rlx-marketing") === undefined) {
+  if (cookies.get("rlx-consent") === undefined) cookies.set("rlx-consent", false, cookieOptions);
+  if (cookies.get("rlx-marketing") === undefined) cookies.set("rlx-marketing", false, cookieOptions);
+  checkOpen.value = true;
+} else if (cookies.get("rlx-consent") === false || cookies.get("rlx-marketing") === false) {
   checkOpen.value = true;
 }
 
-function checkCookies() {
-  if (cookies.get("rlx-consent") && router.fullPath.includes("rolex")) {
-    document.head.appendChild(externalScript);
-  }
-}
-checkCookies();
+watch(
+  [hasConsent, isRolexRoute],
+  ([consent, onRoute]) => {
+    manageExternalScript(consent && onRoute);
+  },
+  { immediate: true }
+);
 
-const isOpenUp = computed(() => {
-  return checkOpen.value ? "bottom-0" : "-bottom-3/4";
-});
+const isOpenUp = computed(() => (checkOpen.value ? "bottom-0" : "-bottom-3/4"));
 
-function openUp() {
+function togglePanel() {
   checkOpen.value = !checkOpen.value;
 }
 
+/**
+ * Actualiza ambas cookies simultáneamente
+ */
 function changeCookie(value) {
-  if (cookies.get("rlx-consent") === value) {
+  cookies.set("rlx-consent", value, cookieOptions);
+  cookies.set("rlx-marketing", value, cookieOptions);
+  if (value === true) {
     checkOpen.value = false;
-  } else {
-    cookies.set("rlx-consent", value);
-    openUp();
-    checkCookies();
-    if (!cookies.get("rlx-consent")) {
-      routerFile.go();
-    }
   }
 }
-
-watchEffect(() => {
-  checkCookies();
-});
 </script>
+
 
 <template>
   <div :class="isOpenUp" class="fixed z-30 h-fit duration-500" v-if="router.path != '/dashboard'">
@@ -66,7 +81,7 @@ watchEffect(() => {
     >
       <div
         class="group border-l border-r border-t rounded-t-md shadow-md shadow-rolex-green border-rolex-green cursor-pointer p-4 fixed flex pt-5 gap-2 bg-white hover:text-rolex-green duration-100 h-40"
-        @click="openUp">
+        @click="togglePanel">
         <font-awesome-icon :icon="['fas', 'gear']" class="group-hover:animate-spin" />
         <h2>Cookies</h2>
       </div>
@@ -99,6 +114,11 @@ watchEffect(() => {
                 <h2 class="pl-2 text-sm font-bold border border-rolex-green">Duración</h2>
                 <h2 class="pl-2 text-sm font-bold border border-rolex-green">Descripción</h2>
                 <h2 class="pl-2 text-sm border border-rolex-green">'rlx-consent'</h2>
+                <h2 class="pl-2 text-sm border border-rolex-green">360 Días</h2>
+                <h2 class="pl-2 text-sm border border-rolex-green">
+                  Cookie analítica de Rolex
+                </h2>
+                <h2 class="pl-2 text-sm border border-rolex-green">'rlx-marketing'</h2>
                 <h2 class="pl-2 text-sm border border-rolex-green">360 Días</h2>
                 <h2 class="pl-2 text-sm border border-rolex-green">
                   Cookie analítica de Rolex

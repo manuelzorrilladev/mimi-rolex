@@ -5,52 +5,75 @@ import RolexNavbar from "../../components/navigation-components/RolexNavbar.vue"
 import SliderNavigationRolex from "../../components/navigation-components/SliderNavigationRolex.vue";
 import BreadCrumb from "../../components/navigation-components/BreadCrumb.vue";
 import { useLoaderStore } from "../../store/loaderState";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useHead } from '@unhead/vue'
+
 const route = useRoute();
-console.log(route);
 const loader = useLoaderStore();
-const checkIfFamily = computed(() => {
-  return route.meta.pageFamily ? true : false;
+const breadcrumbValidator = ref(false);
+
+/**
+ * 1. Computamos los datos dinámicos según la ruta actual
+ */
+
+ 
+const digitalDataLayer = computed(() => {
+  const data = {
+    environment: {
+      environmentVersion: "V7",
+      coBrandedVersion: "Bespoke",
+    },
+    page: {
+      pageType: route.meta.pageType || "default",
+    },
+  };
+
+  if (route.meta.pageFamily) {
+    data.page.pageFamilyName = route.meta.pageFamily;
+  }
+  
+  return data;
 });
-const checkIfModel = computed(() => {
-  return route.meta.pageType === "model page" ? true : false;
-});
-const breadcrumbValidator = ref(false)
-const digitalDataLayerTemplate = {
-  environment: {
-    environmentVersion: "V7",
-    coBrandedVersion: "Bespoke",
-  },
-  page: {
-    pageType: route.meta.pageType,
-  },
+
+/**
+ * 2. Función para disparar el rastreo
+ * Se encarga de actualizar el objeto global y avisar a Adobe (_satellite)
+ */
+const triggerRolexTracking = () => {
+  if (!route.fullPath.includes("rolex")) {
+    return;
+  }
+
+  window.digitalDataLayer = digitalDataLayer.value;
+
+  if (window._satellite && typeof window._satellite.track === 'function') {
+    setTimeout(() => {
+      window._satellite.track('pageView');
+      console.log('Rolex Tracked:', route.path);
+    }, 100);
+  }
 };
 
-const digitalDataLayerFamily = ref(digitalDataLayerTemplate);
-digitalDataLayerFamily.value.page.pageFamilyName = route.params.id;
+watch(
+  () => route.fullPath,
+  () => {
+    useHead({
+      script: [
+        {
+          id: 'rolex-datalayer-sync',
+          innerHTML: `window.digitalDataLayer = ${JSON.stringify(digitalDataLayer.value)};`,
+        }
+      ]
+    });
 
-const digitalDataLayer = computed(()=>{
-  if(checkIfFamily.value==true){
-    return digitalDataLayerFamily.value
-  }
-  if(checkIfModel.value==false){
-    return digitalDataLayerTemplate
-  }
-})
-// const digitalDataLayerModel = ref(digitalDataLayerTemplate);
-// digitalDataLayerModel.value.page.pageFamilyName = route.meta.pageFamily;
-// digitalDataLayerModel.value.products = {};
-// digitalDataLayerModel.value.products.productRMC = route.meta.pageFamily;
-if(checkIfModel.value==false){
-  useHead({
-    script:[`var digitalDataLayer = ${JSON.stringify(digitalDataLayer.value)}; `]
-  })
-}
+    triggerRolexTracking();
+  },
+  { immediate: true }
+);
 
-onMounted(()=>{
-  breadcrumbValidator.value = true
-})
+onMounted(() => {
+  breadcrumbValidator.value = true;
+});
 </script>
 
 <template>

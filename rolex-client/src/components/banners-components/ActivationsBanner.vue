@@ -7,10 +7,10 @@ import { computed } from "vue";
 const sliderItems = [
   
   {
-    src: "submariner",
-    link: {name:'rolex-coleccion-submariner'},
-    alt: "Submariner banner",
-    title: "Submariner Banner",
+    src: "nuevos-modelos",
+    link: {name:'rolex-nuevos-modelos'},
+    alt: "nuevos modelos banner",
+    title: "Nuevos modelos Banner",
   },  
   {
     src: "accesorios",
@@ -18,12 +18,7 @@ const sliderItems = [
     alt: "accesorios",
     title: "Accesorios Banner",
   },  
-  {
-    src: "sailgp-championship",
-    link: {name:'world-of-rolex-article-11'},
-    alt: "sailgp-championship",
-    title: "Sail GP Championship Banner",
-  },  
+
   {
     src: "watchmaking",
     link: {name:'rolex-watchmaking'},

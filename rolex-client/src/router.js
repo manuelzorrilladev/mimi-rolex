@@ -1,13 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router"
-import BreadCrumb from "./components/navigation-components/BreadCrumb.vue"
+import { useCookies } from "@vueuse/integrations/useCookies.mjs";
+import { createRouter, createWebHistory } from "vue-router";
+import trackTokenService from "./services/trackTokenService";
+import { auth } from "./store/auth.module";
 import { useLoaderStore } from './store/loaderState';
 import { useLocationStore } from './store/locationState';
-import { usePostHog } from './utils/posthog'
-import trackTokenService from "./services/trackTokenService";
-import { useStorage } from "@vueuse/core";
-import GLOBAL_OBJECT from "./utils/globaj";
-import { auth } from "./store/auth.module";
-import { useCookies } from "@vueuse/integrations/useCookies.mjs";
 const cookies = useCookies('_mj_sid')
 
 const router = createRouter({
@@ -60,7 +56,9 @@ const router = createRouter({
         title: "Accesorios Rolex  | Mimi Joyería",
         description: " Explore los accesorios Rolex en línea en Mimi Joyería, un Distribuidor Oficial Rolex autorizado para vender accesorios Rolex.",
         breadcrumb: "Accesorios",
-        pageType: "accessories page"
+        pageType: "accessories page",
+        pageFamily: "cufflinks"
+
       }
 
     },
@@ -72,7 +70,8 @@ const router = createRouter({
         title: "Accesorios Rolex  | Mimi Joyería",
         description: "Descubra los accesorios en Mimi Joyería, un Distribuidor Oficial, autorizado para vender accesorios Rolex.",
         breadcrumb: "Accesorios",
-        pageType: "accessories model page"
+        pageType: "accessories model page",
+        pageFamily: "cufflinks"
       }
 
     },
@@ -84,7 +83,7 @@ const router = createRouter({
         title: "Procedimiento de mantenimiento Rolex | Mimi Joyería",
         description: "Explore el procedimiento del mantenimiento Rolex en Mimi Joyería, su Distribuidor Oficial Rolex para el cuidado y el mantenimiento experto de su reloj Rolex.",
         breadcrumb: "Mantenimiento",
-        pageType: "servicing your rolex page"
+        pageType: "servicing procedure page"
       }
 
     },
@@ -121,7 +120,7 @@ const router = createRouter({
         title: "Rolex en Mimi Joyería",
         description: "Para las fiestas, Rolex presenta una selección especial de distintivos y refinados relojes y exclusivos accesorios. Descúbralos en Mimi Joyería, su Distribuidor Oficial Rolex en Venezuela.",
         breadcrumb: "RolexEnMimi",
-        pageType: "showroom"
+        pageType: "showroom page"
 
       }
     }
@@ -134,7 +133,7 @@ const router = createRouter({
         title: "Terminos y condiciones",
         description: "",
         breadcrumb: "Terminos",
-        pageType: "terms"
+        pageType: "terms page"
 
       }
     }
@@ -160,7 +159,7 @@ const router = createRouter({
         title: "Formulario de contacto | Mimi Joyería",
         meta: "Póngase en contacto con su Distribuidor Oficial Rolex Mimi Joyería para obtener más información sobre nuestros servicios o cualquier consulta sobre Rolex que pueda tener",
         breadcrumb: "FormularioContacto",
-        pageType: "article page"
+        pageType: "contact form page"
 
       },
       props: true
@@ -180,13 +179,13 @@ const router = createRouter({
       }
     },
     {
-      path: "/rolex/nuevos-modelos-2025/:id",
-      name: "rolex-nuevos-modelos-2025",
+      path: "/rolex/nuevos-modelos-2026/:id",
+      name: "rolex-nuevos-modelos-2026",
       component: () => import("./views/Rolex/NewModelCollection.view.vue"),
       meta: {
-        title: " Nuevos Modelos 2024  | Mimi Joyería ",
+        title: " Nuevos Modelos 2026  | Mimi Joyería ",
         breadcrumb: "NuevosModelos",
-        pageType: "family page 2025",
+        pageType: "family page 2026",
         pageFamily: true
 
       }
@@ -381,6 +380,17 @@ const router = createRouter({
         pageFamily: "yacht-master"
       }
     },
+    {
+      path: "/rolex/yacht-master-ii",
+      name: "rolex-coleccion-yacht-master-ii",
+      component: () => import("./views/Rolex/RolexWatchCollection.view.vue"),
+      meta: {
+        title: "Mimi Joyería ",
+        breadcrumb: "ColeccionRolex",
+        pageType: "family page",
+        pageFamily: "yacht-master-ii"
+      }
+    },
 
     {
       path: "/rolex/sky-dweller",
@@ -408,6 +418,17 @@ const router = createRouter({
     {
       path: "/rolex/explorer",
       name: "rolex-coleccion-explorer",
+      component: () => import("./views/Rolex/RolexWatchCollection.view.vue"),
+      meta: {
+        title: "Mimi Joyería ",
+        breadcrumb: "ColeccionRolex",
+        pageType: "family page",
+        pageFamily: "explorer"
+      }
+    },
+    {
+      path: "/rolex/explorer-ii",
+      name: "rolex-coleccion-explorer-ii",
       component: () => import("./views/Rolex/RolexWatchCollection.view.vue"),
       meta: {
         title: "Mimi Joyería ",
@@ -527,7 +548,7 @@ const router = createRouter({
       meta: {
         title: "Busqueda | Mimi Joyería ",
         breadcrumb: "Busqueda",
-        pageType: ""
+        pageType: "search page"
 
       },
       props: route => ({ query: route.query.q })
@@ -646,16 +667,7 @@ const router = createRouter({
       },
 
     }
-    // ,
-    // {
-    //   path: "/testing/",
-    //   name: "relojProductoasd",
-    //   component: () => import("./views/Rolex/Testing.view.vue"),
-    //   meta: {
-    //     title: "  Mimi Joyería "
-    //   },
-
-    // }
+ 
     ,
     {
       path: "/joyeria/:serie/:id",
@@ -719,15 +731,7 @@ const router = createRouter({
     }
     ,
 
-    {
-      path: "/logout",
-      name: "logout",
-      component: () => import("./views/Admin/Logout.view.vue"),
-      meta: {
-        title: "Registrar  | Mimi Joyería "
-      }
-    }
-    ,
+  
 
     {
       path: "/dashboard",
@@ -779,10 +783,7 @@ const router = createRouter({
 
 
 
-    // ,
-    // ****************
-    // PAYMENT ROUTES
-
+ 
 
 
   ],
@@ -796,7 +797,6 @@ const router = createRouter({
 
 })
 
-// const { posthog } = usePostHog()
 
 
 
@@ -822,28 +822,14 @@ router.beforeEach((to, from, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
-  // Get the page title from the route meta data that we have defined
-  // See further down below for how we setup this data
   const title = to.meta.title
-  //Take the title from the parameters
   const titleFromParams = to.params.id;
   document.description = description
 
-  // If the route has a title, set it as the page title of the document/page
   if (title) {
     document.title = title
   }
-  // If we have a title from the params, extend the title with the title
-  // from our params
+
   if (titleFromParams) {
     const parsedTitleFromParams = titleFromParams.charAt(0).toUpperCase() + titleFromParams.slice(1)
 
@@ -906,28 +892,22 @@ router.beforeEach((to, from, next) => {
   }
 
 
-  if (to.name === 'relojes-rolex') {
-    to.meta.pageFamily = to.params.collectionName;
-    to.meta.productRMC = to.params.id;
-    
-    // Opcional: Actualizar el título de la pestaña dinámicamente
-    document.title = `${to.meta.title} - ${to.params.collectionName}`;
-  }
 
 
-  // Continue resolving the route
+
   next()
 })
+
+
 router.afterEach((to, from, next) => {
   const store = useLoaderStore()
   if (to.name != from.name) {
     store.change()
 
   }
-  // posthog.capture('$pageview')
 
 
-  // Continue resolving the route
+
 })
 
 export default router

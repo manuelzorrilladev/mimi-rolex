@@ -1,15 +1,13 @@
 <script setup>
 import { Head } from "@unhead/vue/components";
+import { useElementHover } from "@vueuse/core";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import PageBanner from "../../components/banners-components/PageBanner.vue";
-import WatchCard from "../../components/cards/WatchCard.vue";
-import PageLoader from "../../components/global-components/PageLoader.vue";
 import RolexHeader from "../../components/RolexHeader.vue";
-import RolexTemplate from "../Rolex/RolexTemplate.view.vue";
-import GLOBAL_OBJECT from "../../utils/globaj";
-import { onMounted, ref } from "vue";
 import rolexDataService from "../../services/rolexDataService";
-import { useElementHover } from "@vueuse/core";
+import GLOBAL_OBJECT from "../../utils/globaj";
+import RolexTemplate from "../Rolex/RolexTemplate.view.vue";
 
 const myHoverableElement = ref();
 const isHovered = useElementHover(myHoverableElement);
@@ -31,9 +29,7 @@ function getAllAccesories() {
       console.log(e);
     });
 }
-onMounted(() => {
-  getAllAccesories();
-});
+getAllAccesories();
 </script>
 
 <template>

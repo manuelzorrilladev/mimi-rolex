@@ -1,156 +1,113 @@
 <script setup>
 import { useElementVisibility, useWindowSize } from "@vueuse/core";
-import { computed, onMounted, ref, useTemplateRef } from "vue";
+import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import { useRouter } from "vue-router";
 import POSBanner from '../components/banners-components/POSBanner.vue';
 
-
 const { width } = useWindowSize();
-const target = useTemplateRef("target")
-const targetIsVisible = useElementVisibility(target)
-const checkWindowSize = computed(() => {
-  if (width.value < 768) {
-    return true;
-  }
-  return false;
-});
+const target = useTemplateRef("target");
+const targetIsVisible = useElementVisibility(target);
+
+// Optimizamos la detección de móvil (evita computedspesados si no cambian)
+const isMobile = computed(() => width.value < 768);
 
 const router = useRouter();
-const links = [
-  "/rolex/submariner",
-  "/rolex/accesorios",
-  "/novedades/tudor",
+const links = ["/rolex/nuevos-relojes", "/rolex/accesorios", "/novedades/tudor"];
 
-]
-function checkClick(pos) {
-  router.push(links[pos]);
-}
-
-// Carousel Logic
 const counter = ref(0);
-const classes = ref([
-  "translate-x-0",
-  "-translate-x-[100%]",
-  "-translate-x-[200%]",
-  "-translate-x-[300%]",
-]);
+const IMAGE_QUANTITY = links.length;
+let carouselInterval = null;
 
-
-let carouselInterval;
-const IMAGE_QUANTITY = links.length
-
-function startCarousel() {
-  if (carouselInterval) clearInterval(carouselInterval)
-
+const startCarousel = () => {
+  stopCarousel();
   carouselInterval = setInterval(() => {
-    if (counter.value == IMAGE_QUANTITY - 1) {
-      counter.value = 0;
-    } else {
-      counter.value++;
-    }
-  }, 5000)
-}
-function stopCarousel() {
-  clearInterval(carouselInterval)
-}
+    counter.value = (counter.value + 1) % IMAGE_QUANTITY;
+  }, 5000);
+};
 
+const stopCarousel = () => { if (carouselInterval) clearInterval(carouselInterval); };
 
-onMounted(() => {
-  startCarousel()
-});
-
-function changeCounter(direction) {
-  if (direction == 'r') {
-    if (counter.value == IMAGE_QUANTITY - 1) {
-      counter.value = 0
-    } else {
-      counter.value++
-    }
+const changeCounter = (direction) => {
+  if (direction === 'r') {
+    counter.value = (counter.value + 1) % IMAGE_QUANTITY;
   } else {
-    if (counter.value == 0) {
-      counter.value = IMAGE_QUANTITY - 1
-    } else {
-      counter.value--
-    }
-
+    counter.value = (counter.value - 1 + IMAGE_QUANTITY) % IMAGE_QUANTITY;
   }
-}
+};
 
+onMounted(startCarousel);
+onUnmounted(stopCarousel); 
+
+const checkClick = (pos) => router.push(links[pos]);
+
+const trackStyle = computed(() => ({
+  transform: `translateX(-${counter.value * 100}%)`
+}));
 </script>
 
 <template>
   <div id="main-content" class="font-montserrat">
-
-    <div class="relative z-0 h-[300px] md:h-[650px] w-full pb-20">
-      <div v-if="!checkWindowSize" class="overflow-hidden">
-        <div class="duration-500 flex cursor-pointer" :class="classes[counter]" @mouseenter="stopCarousel"
-          @mouseleave="startCarousel">
-          <img @click="checkClick(counter)" rel="preload" fetchpriority="high" as="image"
-            src="/assets/routes-assets/headers/1-desktop.webp" alt="headers-1-desktop" />
-          <img @click="checkClick(counter)" rel="preload" fetchpriority="low" as="image"
-            src="/assets/routes-assets/headers/2-desktop.webp" alt="headers-2-desktop" />
-          <img @click="checkClick(counter)" rel="preload" fetchpriority="low" as="image"
-            src="/assets/routes-assets/headers/3-desktop.webp" alt="headers-3-desktop" />
-    
+    <div class="relative z-0 h-[300px] md:h-[650px] w-full pb-20 overflow-hidden">
+      
+      <div class="flex duration-500 ease-in-out h-full cursor-pointer" 
+           :style="trackStyle"
+           @mouseenter="stopCarousel" 
+           @mouseleave="startCarousel">
+        
+        <div v-for="(link, index) in links" :key="index" class="min-w-full h-full" @click="checkClick(index)">
+          <picture>
+            <source media="(min-width: 768px)" 
+                    :srcset="`/assets/routes-assets/headers/${index + 1}-desktop.webp`" />
+            <img :src="`/assets/routes-assets/headers/${index + 1}-mobile.webp`" 
+                 :alt="`Rolex Header ${index + 1}`"
+                 class="w-full h-full object-cover"
+                 :fetchpriority="index === 0 ? 'high' : 'auto'"
+                 :loading="index === 0 ? 'eager' : 'lazy'" />
+          </picture>
         </div>
       </div>
-      <div v-else class="min-h-[300px]  h-fit ">
-        <div class="duration-500 flex" :class="classes[counter]">
-          <img @click="checkClick(counter)" src="/assets/routes-assets/headers/1-mobile.webp" alt="headers-1-mobile" />
-          <img @click="checkClick(counter)" src="/assets/routes-assets/headers/2-mobile.webp" alt="headers-2-mobile" />
-          <img @click="checkClick(counter)" src="/assets/routes-assets/headers/3-mobile.webp" alt="headers-3-mobile" />
-        </div>
-      </div>
 
-
-
-      <button aria-label="Previous"
-        class="absolute top-[45%] md:left-10 md:bg-main-green w-8 h-8 rounded-full md:border border-main-green md:hover:bg-white duration-200 "
-        @click="changeCounter('l')">
+      <button aria-label="Previous" @click="changeCounter('l')"
+        class="absolute top-[45%] left-2 md:left-10 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/50 md:bg-main-green hover:bg-white duration-200">
         <font-awesome-icon :icon="['fas', 'chevron-left']" class="text-rolex-green" />
       </button>
-      <button aria-label="Next"
-        class="absolute top-[45%] right-0 md:right-10 md:bg-main-green w-8 h-8 rounded-full md:border border-main-green md:hover:bg-white duration-200 "
-        @click="changeCounter('r')">
+      <button aria-label="Next" @click="changeCounter('r')"
+        class="absolute top-[45%] right-2 md:right-10 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/50 md:bg-main-green hover:bg-white duration-200">
         <font-awesome-icon :icon="['fas', 'chevron-right']" class="text-rolex-green" />
       </button>
     </div>
-    <main  class=" pt-14 ">
-      <section>
-        <div id="joyeria" class="md:h-64 mt-8 flex flex-col items-center justify-start pt-10 mb-20 text-neutral-600">
-          <div class="mb-4 flex flex-col md:flex-row items-center justify-center w-full">
-            <!-- The left line -->
-            <span class="block h-px w-1/3 md:w-1/6 bg-neutral-300"></span>
-            <!-- Your text here -->
-            <h1 class="text-center text-3xl tracking-widest mx-4 my-4 font-medium">
-              PRESENTE EN TUS MOMENTOS ESPECIALES
-            </h1>
 
-            <!-- The right line -->
+    <main class="pt-14">
+      <section>
+        <div id="joyeria" class="mt-8 flex flex-col items-center justify-start pt-10 mb-20 text-neutral-600">
+          <div class="mb-4 flex flex-col md:flex-row items-center justify-center w-full">
+            <span class="block h-px w-1/3 md:w-1/6 bg-neutral-300"></span>
+            <h1 class="text-center text-2xl md:text-3xl tracking-widest mx-4 my-4 font-medium uppercase">
+              Presente en tus momentos especiales
+            </h1>
             <span class="block h-px w-1/3 md:w-1/6 bg-neutral-300"></span>
           </div>
         </div>
-        <div ref="target">
 
-          <div  v-if="targetIsVisible" id="home-section"
-            class="flex flex-col  md:flex-row items-center justify-evenly gap-10 text-neutral-700 w-full ">
-            <div class="w-3/4 md:w-1/3 ">
-              <img class="w-full duration-500 hover:scale-105" v-lazy="'/assets/routes-assets/Home/home-1.webp'"
-                alt="mujer-gargantilla" />
+        <div ref="target">
+          <div v-if="targetIsVisible" id="home-section" class="flex flex-col md:flex-row items-center justify-evenly gap-10 text-neutral-700 w-full px-4">
+            <div class="w-full md:w-1/3 overflow-hidden">
+              <img class="w-full duration-500 hover:scale-105" 
+                   loading="lazy"
+                   src="/assets/routes-assets/Home/home-1.webp" 
+                   alt="Colección Joyería" />
             </div>
-            <div class="w-3/4 md:w-1/3 text-center">
-              <h2 class="my-4 text-3xl">UNA JOYA QUE TE COMPLEMENTA</h2>
-              <p class="mb-8 text-xl">
-                Descubre un mundo de opciones en joyería para ti.
-              </p>
-              <router-link to="/joyeria"
-                class="bg-neutral-500 px-6 py-4 my-4 rounded-lg text-white shadow-2xl hover:bg-neutral-600">DESCUBRIR</router-link>
+            <div class="w-full md:w-1/3 text-center">
+              <h2 class="my-4 text-3xl uppercase">Una joya que te complementa</h2>
+              <p class="mb-8 text-xl">Descubre un mundo de opciones en joyería para ti.</p>
+              <router-link to="/joyeria" class="inline-block bg-neutral-500 px-8 py-4 rounded-lg text-white shadow-lg hover:bg-neutral-600 transition-colors">
+                DESCUBRIR
+              </router-link>
             </div>
           </div>
 
-          <POSBanner class="mt-36 mb-10  md:mb-0" />
-
-          <div id="home-section-2"
+          <POSBanner v-if="targetIsVisible" class="mt-36 mb-10" />
+            <div id="home-section-2"
             class="flex flex-col md:flex-row-reverse items-center justify-evenly gap-8 h-screen text-neutral-700">
             <img class="w-3/4 md:w-1/3 duration-500 hover:scale-110" v-lazy="'/assets/routes-assets/Home/home-2.webp'"
               alt="brazaletes-oro" />
