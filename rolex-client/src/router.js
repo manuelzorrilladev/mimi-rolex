@@ -113,7 +113,7 @@ const router = createRouter({
     }
     ,
     {
-      path: "/rolex/rolex-en-mimi-joyeria",
+      path: "/testing-route/rolex/rolex-en-mimi-joyeria",
       name: "rolex-en-mimi-joyeria",
       component: () => import("./views/Rolex/RolexMimi.view.vue"),
       meta: {

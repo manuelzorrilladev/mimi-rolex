@@ -32,7 +32,7 @@ function goBack() {
 
 function sendMessage(state) {
     const message = `Quisiera saber mas informacion acerca del modelo ${state[0].nombre}, por favor.`
-    return `https://wa.me/584122909996/?text=${message}`
+    return `https://wa.me/584143092501/?text=${message}`
 }
 
 </script>
