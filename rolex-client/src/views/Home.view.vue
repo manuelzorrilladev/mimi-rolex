@@ -8,11 +8,10 @@ const { width } = useWindowSize();
 const target = useTemplateRef("target");
 const targetIsVisible = useElementVisibility(target);
 
-// Optimizamos la detección de móvil (evita computedspesados si no cambian)
 const isMobile = computed(() => width.value < 768);
 
 const router = useRouter();
-const links = ["/rolex/nuevos-relojes", "/rolex/accesorios", "/novedades/tudor"];
+const links = ["/rolex/nuevos-relojes", "/rolex/rolex-en-mimi-joyeria", "/novedades/tudor"];
 
 const counter = ref(0);
 const IMAGE_QUANTITY = links.length;

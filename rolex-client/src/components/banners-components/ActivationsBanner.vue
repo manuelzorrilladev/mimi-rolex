@@ -13,10 +13,10 @@ const sliderItems = [
     title: "Nuevos modelos Banner",
   },  
   {
-    src: "accesorios",
-    link: {name:'rolex-accesorios'},
-    alt: "accesorios",
-    title: "Accesorios Banner",
+    src: "showroom",
+    link: {name:'rolex-en-mimi-joyeria'},
+    alt: "showroom",
+    title: "Showroom Banner",
   },  
 
   {

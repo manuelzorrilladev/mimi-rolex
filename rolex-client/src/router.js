@@ -113,14 +113,14 @@ const router = createRouter({
     }
     ,
     {
-      path: "/testing-route/rolex/rolex-en-mimi-joyeria",
+      path: "/rolex/rolex-en-mimi-joyeria",
       name: "rolex-en-mimi-joyeria",
       component: () => import("./views/Rolex/RolexMimi.view.vue"),
       meta: {
         title: "Rolex en Mimi Joyería",
         description: "Para las fiestas, Rolex presenta una selección especial de distintivos y refinados relojes y exclusivos accesorios. Descúbralos en Mimi Joyería, su Distribuidor Oficial Rolex en Venezuela.",
         breadcrumb: "RolexEnMimi",
-        pageType: "showroom page"
+        pageType: "rolex at page"
 
       }
     }

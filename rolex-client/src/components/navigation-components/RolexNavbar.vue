@@ -157,12 +157,12 @@ const isTargetDate = computed(() => {
         >
           <h2>World of Rolex</h2>
         </router-link>
-        <!-- <router-link
+        <router-link
           :to="{ name: 'rolex-en-mimi-joyeria' }"
           class="pr-6 font-bold md:font-normal py-4 text-xl lg:text-xs pl-6 md:pl-16 lg:pl-6 hover:text-rolex-green-3 duration-200 w-full lg:w-fit lg:text-center"
         >
           <h2>Rolex en Mimi Joyería</h2>
-        </router-link> -->
+        </router-link>
 
         <router-link
           :to="{ name: 'rolex-contacto' }"
