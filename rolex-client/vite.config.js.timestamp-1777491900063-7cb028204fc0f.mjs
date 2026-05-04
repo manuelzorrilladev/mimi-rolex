@@ -1,0 +1,22 @@
+// vite.config.js
+import { defineConfig } from "file:///C:/Users/mzorr/Documents/GitHub/mimi-rolex/rolex-client/node_modules/vite/dist/node/index.js";
+import vue from "file:///C:/Users/mzorr/Documents/GitHub/mimi-rolex/rolex-client/node_modules/@vitejs/plugin-vue/dist/index.mjs";
+import viteCompression from "file:///C:/Users/mzorr/Documents/GitHub/mimi-rolex/rolex-client/node_modules/vite-plugin-compression/dist/index.mjs";
+var vite_config_default = defineConfig({
+  build: {
+    assetsInlineLimit: 1024,
+    minify: "esbuild"
+    // 1kb
+  },
+  plugins: [
+    vue({
+      script: {
+        defineModel: true
+      }
+    })
+  ]
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcuanMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJDOlxcXFxVc2Vyc1xcXFxtem9yclxcXFxEb2N1bWVudHNcXFxcR2l0SHViXFxcXG1pbWktcm9sZXhcXFxccm9sZXgtY2xpZW50XCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ZpbGVuYW1lID0gXCJDOlxcXFxVc2Vyc1xcXFxtem9yclxcXFxEb2N1bWVudHNcXFxcR2l0SHViXFxcXG1pbWktcm9sZXhcXFxccm9sZXgtY2xpZW50XFxcXHZpdGUuY29uZmlnLmpzXCI7Y29uc3QgX192aXRlX2luamVjdGVkX29yaWdpbmFsX2ltcG9ydF9tZXRhX3VybCA9IFwiZmlsZTovLy9DOi9Vc2Vycy9tem9yci9Eb2N1bWVudHMvR2l0SHViL21pbWktcm9sZXgvcm9sZXgtY2xpZW50L3ZpdGUuY29uZmlnLmpzXCI7aW1wb3J0IHsgZGVmaW5lQ29uZmlnIH0gZnJvbSAndml0ZSdcclxuaW1wb3J0IHZ1ZSBmcm9tICdAdml0ZWpzL3BsdWdpbi12dWUnXHJcbmltcG9ydCB2aXRlQ29tcHJlc3Npb24gZnJvbSAndml0ZS1wbHVnaW4tY29tcHJlc3Npb24nO1xyXG4vLyBpbXBvcnQgdnVlRGV2VG9vbHMgZnJvbSAndml0ZS1wbHVnaW4tdnVlLWRldnRvb2xzJ1xyXG4vLyBpbXBvcnQgU2l0ZW1hcCBmcm9tICd2aXRlLXBsdWdpbi1zaXRlbWFwJ1xyXG5cclxuXHJcbi8vIGh0dHBzOi8vdml0ZWpzLmRldi9jb25maWcvXHJcbmV4cG9ydCBkZWZhdWx0IGRlZmluZUNvbmZpZyh7XHJcbiAgXHJcbiAgYnVpbGQ6IHtcclxuICAgIGFzc2V0c0lubGluZUxpbWl0OiAxMDI0LFxyXG4gICAgbWluaWZ5Oidlc2J1aWxkJyAvLyAxa2JcclxuICAgIFxyXG5cclxuICB9LFxyXG4gIHBsdWdpbnM6IFt2dWUoe1xyXG4gICAgc2NyaXB0OiB7XHJcbiAgICAgIGRlZmluZU1vZGVsOiB0cnVlXHJcbiAgICB9XHJcbiAgfSksXHJcbiBcclxuICBdLFxyXG59KVxyXG4iXSwKICAibWFwcGluZ3MiOiAiO0FBQXFXLFNBQVMsb0JBQW9CO0FBQ2xZLE9BQU8sU0FBUztBQUNoQixPQUFPLHFCQUFxQjtBQU01QixJQUFPLHNCQUFRLGFBQWE7QUFBQSxFQUUxQixPQUFPO0FBQUEsSUFDTCxtQkFBbUI7QUFBQSxJQUNuQixRQUFPO0FBQUE7QUFBQSxFQUdUO0FBQUEsRUFDQSxTQUFTO0FBQUEsSUFBQyxJQUFJO0FBQUEsTUFDWixRQUFRO0FBQUEsUUFDTixhQUFhO0FBQUEsTUFDZjtBQUFBLElBQ0YsQ0FBQztBQUFBLEVBRUQ7QUFDRixDQUFDOyIsCiAgIm5hbWVzIjogW10KfQo=

@@ -11,7 +11,7 @@ const targetIsVisible = useElementVisibility(target);
 const isMobile = computed(() => width.value < 768);
 
 const router = useRouter();
-const links = ["/rolex/nuevos-relojes", "/rolex/rolex-en-mimi-joyeria", "/novedades/tudor"];
+const links = ["/rolex/nuevos-relojes", "/rolex/rolex-en-mimi-joyeria", "/novedades/tudor","/novedades/tudor"];
 
 const counter = ref(0);
 const IMAGE_QUANTITY = links.length;
@@ -46,7 +46,7 @@ const trackStyle = computed(() => ({
 
 <template>
   <div id="main-content" class="font-montserrat">
-    <div class="relative z-0 h-[300px] md:h-[650px] w-full pb-20 overflow-hidden">
+    <div class="relative z-0 h-[480px] md:h-[650px] w-full pb-20 overflow-hidden">
       
       <div class="flex duration-500 ease-in-out h-full cursor-pointer" 
            :style="trackStyle"
