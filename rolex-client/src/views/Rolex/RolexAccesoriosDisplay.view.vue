@@ -15,7 +15,8 @@ import NewContactForm from "../../components/form-components/NewContactForm.vue"
 import SectionNavigationCard from "../../components/cards/SectionNavigationCard.vue";
 import { injectHead, useHead } from "@unhead/vue";
 import digitalDataLayer from "../../utils/digitalDataLayer";
-const head = injectHead()
+import router from "../../router";
+const head = injectHead();
 const deskWatchDetails = ref({
   esfera: "Lacada negra",
   esferaDetalles:
@@ -27,6 +28,9 @@ const deskWatchDetails = ref({
   arquitectura:
     "Caja hemisférica sobre una base que permite que el reloj se oriente en la dirección deseada",
   hermeticidad: "No hermético",
+});
+const contactRoute = computed(() => {
+  return "/rolex/contacto";
 });
 const storageRoute = ref(GLOBAL_OBJECT.STORAGE_URL + "rolex-relojes-new");
 const route = useRoute();
@@ -106,42 +110,53 @@ function sendMessage() {
       moveForm(2);
     });
 }
-
+console.log(contactRoute.value);
 
 function CTATrack(type) {
   let link = "";
-  let track = ""
+  let track = "";
   switch (type) {
     case "call":
       link = "tel:582123008742";
-      track = "contactCall"
+      track = "contactCall";
       break;
 
     case "whatsappCall":
       link = "https://wa.me/584143092501";
-      track = "whatsappContact"
+      track = "whatsappContact";
       break;
 
     case "mail":
-      link = "mailto:info@mimijoyeria.com";
-      track = ""
+      link = contactRoute.value;
+      track = "contactForm";
       break;
 
     case "direction":
       link = "https://maps.app.goo.gl/zHybs3yrhhvvHeiP8";
-      track = "getDirections"
+      track = "getDirections";
       break;
 
     default:
       break;
   }
-  if (window._satellite && typeof window._satellite.track === "function" && track != "") {
+  if (
+    window._satellite &&
+    typeof window._satellite.track === "function" &&
+    track != ""
+  ) {
     setTimeout(() => {
       window._satellite.track(track);
     }, 100);
   }
 
-  window.open(link, "_blank");
+  if(type === 'mail'){
+    router.push({name:"rolex-contacto"})
+
+  }else{
+    window.open(link,"_blank");
+
+  }
+
 }
 
 onMounted(() => {
@@ -161,14 +176,13 @@ watch(accesories, () => {
   useHead(
     {
       script: [
-        `var digitalDataLayer = ${JSON.stringify(digitalDataLayer("cufflinks", route.params.id,'accessories model page'))}; `,
+        `var digitalDataLayer = ${JSON.stringify(digitalDataLayer("cufflinks", route.params.id, "accessories model page"))}; `,
       ],
     },
     { head },
   );
   messageInfo.value.message = `Estoy interesado(a) en el accesorio Rolex ${accesories.value.modelo}`;
 });
-
 </script>
 
 <template>
@@ -242,29 +256,48 @@ watch(accesories, () => {
                   </Transition>
                   <br />
                   <div class="space-y-2 text-sm text-rolex-brown">
-                    <div class="grid grid-cols-4 w-full md:grid-cols-2  md:grid-rows-2 md:gap-y-2">
-                      <button @click="CTATrack('call')" class="flex items-center gap-4">
-                        <font-awesome-icon :icon="['fas', 'phone']"
-                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full" />
+                    <div
+                      class="grid grid-cols-4 w-full md:grid-cols-2 md:grid-rows-2 md:gap-y-2"
+                    >
+                      <button
+                        @click="CTATrack('call')"
+                        class="flex items-center gap-4"
+                      >
+                        <font-awesome-icon
+                          :icon="['fas', 'phone']"
+                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
+                        />
                         <p v-if="isDesktop">+58 212-3008742</p>
                       </button>
-                      <button @click="CTATrack('whatsappCall')"  class="flex items-center gap-4">
-                        <font-awesome-icon :icon="['fab', 'whatsapp']"
-                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full" />
+                      <button
+                        @click="CTATrack('whatsappCall')"
+                        class="flex items-center gap-4"
+                      >
+                        <font-awesome-icon
+                          :icon="['fab', 'whatsapp']"
+                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
+                        />
                         <p v-if="isDesktop">Chat</p>
                       </button>
 
-                      <button @click="CTATrack('mail')" class="flex items-center gap-4">
-                        <font-awesome-icon :icon="['fas', 'envelope']"
-                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full" />
+                      <button
+                        @click="CTATrack('mail')"
+                        class="flex items-center gap-4"
+                      >
+                        <font-awesome-icon
+                          :icon="['fas', 'envelope']"
+                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
+                        />
                         <p v-if="isDesktop">Envíenos un mensaje</p>
                       </button>
-                      <button 
-                      @click="CTATrack('direction')"
-                      class="flex items-center gap-4"
-                        >
-                        <font-awesome-icon :icon="['fas', 'location-arrow']"
-                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full" />
+                      <button
+                        @click="CTATrack('direction')"
+                        class="flex items-center gap-4"
+                      >
+                        <font-awesome-icon
+                          :icon="['fas', 'location-arrow']"
+                          class="text-md bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
+                        />
                         <p v-if="isDesktop">Conseguir la dirección</p>
                       </button>
                     </div>

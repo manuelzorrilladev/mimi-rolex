@@ -1,7 +1,7 @@
 <script setup>
 import { Head } from "@unhead/vue/components";
 import { useAsyncState } from "@vueuse/core";
-import { computed, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useRoute } from "vue-router";
 import collectionsCopy from "../../data/collectionsCopy.json";
 import PageBanner from "../../components/banners-components/PageBanner.vue";
@@ -10,40 +10,43 @@ import RolexHeader from "../../components/RolexHeader.vue";
 import RolexDataServices from "../../services/rolexDataService";
 import RolexTemplate from "../Rolex/RolexTemplate.view.vue";
 import PageLoader from '../../components/global-components/PageLoader.vue';
+import router from "../../router";
+
 const route = useRoute();
 const currentRoute = route.fullPath.substring(7);
 const currentData = collectionsCopy[currentRoute];
-console.log(currentRoute);
+
+if (!currentData) {
+  router.push({ name: 'coleccion-rolex' });
+}
+
 const currentPage = ref(1);
-const totalPages = ref(1);
 const itemsPerPage = 6;
+const totalPages = ref(1);
 
 const { state, isLoading, isReady, execute } = useAsyncState(
   RolexDataServices.getByCollection(currentRoute)
-    .then((d) => {
-      console.log(d.data);
-      totalPages.value = Math.ceil(d.data.length / 6);
-      return d.data;
+    .then((response) => {
+      const data = response.data || [];
+      totalPages.value = Math.ceil(data.length / itemsPerPage);
+      console.log(data);
+      return data;
     })
     .catch((e) => {
-      console.log("error: ", e.message);
-    })
+      console.error("Error cargando relojes:", e.message);
+      return [];
+    }),
+  [] 
 );
+
 const itemsToShow = computed(() => {
   return currentPage.value * itemsPerPage;
 });
 
 function filterItems() {
-  let items = [];
-  for (let index = 0; index < state.value.length; index++) {
-    if (index < itemsToShow.value) {
-      items.push(state.value[index]);
-    }
-  }
-  return items;
+  if (!state.value) return [];
+  return state.value.slice(0, itemsToShow.value);
 }
-
-
 
 </script>
 
@@ -61,10 +64,10 @@ function filterItems() {
             {{ currentData.headerSection.sub }}
           </template>
           <template #title>
-            <span> Rolex {{ currentData.name }} </span>
+             <span v-html="currentData.headerSection.title"></span> 
           </template>
           <template #text>
-            <span v-html="currentData.headerSection.text"></span>
+            <span class="text-black" v-html="currentData.headerSection.text"></span>
           </template>
         </RolexHeader>
   
@@ -84,7 +87,7 @@ function filterItems() {
                 <div
                   v-for="(item, key) in filterItems()"
                   :key="key"
-                  class="border h-[500px]"
+                  class=" h-[500px]"
                   :class="key < itemsToShow ? 'h-[500px]' : 'h-0'"
                 >
                   <WatchCard :item="item" :collection="currentRoute" />
@@ -104,6 +107,7 @@ function filterItems() {
   
   
         <div
+         v-if="currentData.mainSection.videoEmbed"
           class="video-frame flex bg-rolex-brown-light-2 justify-center pb-[10vh]"
         >
           <div class="w-11/12 aspect-w-16 aspect-h-9">
@@ -117,7 +121,7 @@ function filterItems() {
           </div>
         </div>
   
-        <section :class="currentData.mainSection.backgroundColor">
+        <section v-if="currentData.mainSection.videoEmbed" :class="currentData.mainSection.backgroundColor">
           <header
             class="flex flex-col gap-8 justify-around items-center text-rolex-brown h-fit pb-[10vh]"
           >
@@ -142,6 +146,18 @@ function filterItems() {
             >
               <span v-html="currentData.mainSection.text"></span>
             </p>
+
+             <h1
+              v-if="currentData.mainSection.subTitle"
+              :class="
+                currentData.mainSection.type
+                  ? 'font-georgia text-black '
+                  : 'font-helvetica font-bold'
+              "
+              class="text-3xl md:text-5xl w-10/12 md:w-1/2 pt-[10vh]"
+            >
+              <span v-html="currentData.mainSection.subTitle"></span>
+            </h1>
           </header>
         </section>
   
@@ -165,12 +181,13 @@ function filterItems() {
             
             <div
               v-else
-              class="flex justify-center"
+              class="flex justify-center "
               :class="[
                 item.backgroundColor,
                 item.imgSize == 'w-full' ? 'pb-[10vh]' : 'py-[10vh]',
               ]"
             >
+  
               <img
               v-if="item.imgSize"
                 :src="`/assets/routes-assets/collections/${currentRoute}/collections-${currentRoute}-${
@@ -204,7 +221,7 @@ function filterItems() {
   
                 <p
                   v-if="item.text"
-                  class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
+                  class="w-10/12 md:w-1/2 text-xl font-helvetica font-thin text-justify md:text-left "
                 >
                   <span v-html="item.text"></span>
                 </p>

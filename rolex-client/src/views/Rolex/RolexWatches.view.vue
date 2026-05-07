@@ -16,15 +16,16 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
             <RolexHeader color="bg-rolex-brown-light-1">
 
+               
                 <template #title>
                     Relojes Rolex en Mimi Joyería en Venezuela
                 </template>
                 <template #text>
-                    <strong>Esta selección de modelos Rolex proviene del catálogo oficial y no representa las
-                        existencias
-                        disponibles en la joyería.</strong>
+                    <strong>Esta selección de modelos Rolex proviene del catálogo oficial y no representa las existencias disponibles en la joyería.</strong>
                     Si quiere realizar una consulta sobre algún reloj en particular,
                     no dude en ponerse en contacto con nosotros.
+
+
 
                 </template>
 
@@ -35,8 +36,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                 <div class="w-10/12">
                     <SectionNavigationCard img="watches/banner-button" :link="{ name: 'rolex-nuevos-modelos' }"
                         class="w-full ">
-                        <template #sub>Nuevos modelos 2025</template>
-                        <template #title>Expandiendo nuevos horizontes.</template>
+                        <template #sub>Nuevos modelos 2026</template>
+                
+                        <template #title>El origen de un nuevo mundo.</template>
 
                         <template #button>Más información</template>
 
@@ -50,6 +52,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                 <div id="rolex-container"
                     class="grid grid-cols-2 place-items-center md:grid-cols-3 w-10/12 gap-x-2 gap-y-10">
                     <ModelsCard img="watches/rolex-watches-land-dweller" :link="{ name: 'rolex-coleccion-land-dweller' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Land-Dweller
                         </template>
@@ -57,6 +62,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     </ModelsCard>
                     <ModelsCard img="watches/rolex-watches-day-date" :link="{ name: 'rolex-coleccion-day-date' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Day-Date
                         </template>
@@ -65,6 +73,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                     </ModelsCard>
 
                     <ModelsCard img="watches/rolex-watches-sky-dweller" :link="{ name: 'rolex-coleccion-sky-dweller' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Sky-Dweller
                         </template>
@@ -74,6 +85,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     <ModelsCard img="watches/rolex-watches-lady-datejust"
                         :link="{ name: 'rolex-coleccion-lady-datejust' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Lady-Datejust
                         </template>
@@ -81,6 +95,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     </ModelsCard>
                     <ModelsCard img="watches/rolex-watches-datejust" :link="{ name: 'rolex-coleccion-datejust' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Datejust
                         </template>
@@ -90,6 +107,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     <ModelsCard img="watches/rolex-watches-oyster-perpetual"
                         :link="{ name: 'rolex-coleccion-oyster-perpetual' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Oyster Perpetual
                         </template>
@@ -108,6 +128,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                     class="grid grid-cols-2 place-items-center md:grid-cols-3 w-10/12 gap-x-2 gap-y-10">
                     <ModelsCard img="watches/rolex-watches-cosmograph-daytona"
                         :link="{ name: 'rolex-coleccion-cosmograph-daytona' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Cosmograph Daytona
                         </template>
@@ -115,6 +138,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     </ModelsCard>
                     <ModelsCard img="watches/rolex-watches-submariner" :link="{ name: 'rolex-coleccion-submariner' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Submariner
                         </template>
@@ -122,6 +148,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     </ModelsCard>
                     <ModelsCard img="watches/rolex-watches-sea-dweller" :link="{ name: 'rolex-coleccion-sea-dweller' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Sea-Dweller
                         </template>
@@ -129,6 +158,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     </ModelsCard>
                     <ModelsCard img="watches/rolex-watches-deepsea" :link="{ name: 'rolex-coleccion-deepsea' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Deepsea
                         </template>
@@ -137,6 +169,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                     </ModelsCard>
                     <ModelsCard img="watches/rolex-watches-gmt-master-ii"
                         :link="{ name: 'rolex-coleccion-gmt-master-ii' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             GMT-Master II
                         </template>
@@ -146,15 +181,32 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
 
 
-                    <ModelsCard img="watches/rolex-watches-yatch-master" :link="{ name: 'rolex-coleccion-yacht-master' }">
+                    <ModelsCard img="watches/rolex-watches-yacht-master" :link="{ name: 'rolex-coleccion-yacht-master' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Yacht-Master
                         </template>
 
 
                     </ModelsCard>
+                    <ModelsCard img="watches/rolex-watches-yacht-master-ii" :link="{ name: 'rolex-coleccion-yacht-master-ii' }">
+                        <template #sub>
+                            Rolex
+                        </template>
+                        <template #title>
+                            Yacht-Master II
+                        </template>
+
+
+                    </ModelsCard>
+                  
 
                     <ModelsCard img="watches/rolex-watches-explorer" :link="{ name: 'rolex-coleccion-explorer' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Explorer
                         </template>
@@ -162,8 +214,22 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
 
                     </ModelsCard>
 
+                    <ModelsCard img="watches/rolex-watches-explorer-ii" :link="{ name: 'rolex-coleccion-explorer-ii' }">
+                        <template #sub>
+                            Rolex
+                        </template>
+                        <template #title>
+                            Explorer II
+                        </template>
+
+
+                    </ModelsCard>
+
 
                     <ModelsCard img="watches/rolex-watches-air-king" :link="{ name: 'rolex-coleccion-air-king' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             Air-King
                         </template>
@@ -180,6 +246,9 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                 <div id="rolex-container"
                     class="grid grid-cols-2 place-items-center md:grid-cols-3 w-10/12 gap-x-2 gap-y-10">
                     <ModelsCard img="watches/rolex-watches-1908" :link="{ name: 'rolex-coleccion-1908' }">
+                        <template #sub>
+                            Rolex
+                        </template>
                         <template #title>
                             1908
                         </template>

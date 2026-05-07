@@ -28,11 +28,16 @@ exports.getCollectionDetailsV2 = (req, res) => {
     return res.status(400).send({ message: "Invalid collection id" })
   }
 
-  rolex.RolexGetAllV2.findAll({
+ rolex.RolexGetAllV2.findAll({
     where: {
       RolexCollectionId: collectionId
-
-    }
+    },
+    include: [
+      {
+        model: rolex.RolexDetailsV2,
+        attributes: ['precio'] 
+      }
+    ]
   })
     .then((data) => { return res.send(data) })
     .catch((error) => { return res.status(500).send({ message: "Error retrieving collection", error }) })

@@ -1,16 +1,12 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { routerKey, RouterLink, useRoute, useRouter } from "vue-router";
-import breadcrumb from "../../data/breadcrumb.json";
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import breadcrumbData from "../../data/breadcrumb.json";
 
 const route = useRoute();
 const router = useRouter();
-const actual = ref(breadcrumb[route.name]);
-const routesToShow = ref()
-console.log(`${route.name}-${route.params.id}`);
-console.log(actual.value);
 
-const routeArray = ref(route.fullPath.split("/"));
+// Configuración de rutas padre
 const parentRoutes = {
   "Mantenimiento Rolex": "mantenimiento-rolex",
   "Contacto": "rolex-contacto",
@@ -19,94 +15,56 @@ const parentRoutes = {
   "Colección Rolex": "coleccion-rolex",
   "Accesorios Rolex": "rolex-accesorios"
 };
-function generateLink(pos) {
-  if (actual.value[pos] == actual.value[actual.value.length - 1]) {
-    router.go();
+
+const capitalize = (str) => str.replace(/\b\w/g, (char) => char.toUpperCase());
+
+const breadcrumbs = computed(() => {
+  let list = [...(breadcrumbData[route.name] || [])];
+
+  // 2. Lógica específica según la ruta
+  const pathSegments = route.fullPath.split("/");
+  const lastSegment = pathSegments[pathSegments.length - 1];
+
+  if (route.name === "relojes-rolex" || route.name === "rolex-accesorios-display") {
+    const parts = lastSegment.split("-");
+    const collection = parts.slice(-2).join("-").toUpperCase();
+    const model = capitalize(parts.slice(0, -2).join(" "));
+    list.push(model, collection);
+  } 
+  else if (route.name === "rolex-coleccion") {
+    list.push(capitalize(lastSegment));
+  } 
+  else if (route.name === "rolex-nuevos-modelos-2026") {
+    const specificBreadcrumb = breadcrumbData[`${route.name}-${route.params.id}`];
+    if (specificBreadcrumb) list = [...specificBreadcrumb];
+    list.push(capitalize(lastSegment));
   }
-  if (actual.value[pos] == actual.value[0]) {
-    router.push({ name: parentRoutes[actual.value[0]] });
+
+  // 3. Limpieza final: Eliminar vacíos y DUPLICADOS
+  // Usamos un Set para asegurar que cada texto sea único
+  return [...new Set(list.filter(str => str && str.trim() !== ""))];
+});
+
+// Navegación manual mejorada
+function handleNavigation(index) {
+  const list = breadcrumbs.value;
+  const isLast = index === list.length - 1;
+  const isFirst = index === 0;
+
+  if (isLast) {
+    router.go(0); 
+    return;
   }
-  if (
-    actual.value.length == 3 &&
-    actual.value[pos] == actual.value[actual.value.length - 2]
-  ) {
+
+  if (isFirst && parentRoutes[list[0]]) {
+    router.push({ name: parentRoutes[list[0]] });
+    return;
+  }
+
+  if (list.length === 3 && index === 1) {
     router.go(-1);
   }
 }
-
-function capitalizeFirstLetterOfEachWord(string) {
-  return string.replace(/\b\w/g, (char) => char.toUpperCase());
-}
-function getModelName() {
-  if (route.name == "relojes-rolex" || route.name == "rolex-accesorios-display") {
-    actual.value = [];
-    actual.value = breadcrumb[route.name];
-    let string = route.fullPath;
-    string = string.split("/");
-    string = string[string.length - 1].split("-");
-    let collection = string.slice(string.length - 2).join(" ");
-    collection = collection.replace(/\s/g, "-").toUpperCase();
-    string = capitalizeFirstLetterOfEachWord(
-      string.slice(string[0], string.length - 2).join(" ")
-    );
-
-    actual.value.push(string);
-    actual.value.push(collection);
-  }
-}
-
-function getCollectionName() {
-  if (route.name == "rolex-coleccion") {
-    actual.value = [];
-    actual.value = breadcrumb[route.name];
-    let string = route.fullPath;
-    string = string.split("/");
-
-    actual.value.push(
-      capitalizeFirstLetterOfEachWord(string[string.length - 1])
-    );
-  }
-}
-function getNewModelsName() {
-
-  if (route.name == "rolex-nuevos-modelos-2025") {
-    console.log("executed!");
-    actual.value = [];
-    actual.value = breadcrumb[`${route.name}-${route.params.id}`];
-    let string = route.fullPath;
-    string = string.split("/");
-
-    actual.value.push(
-      capitalizeFirstLetterOfEachWord(string[string.length - 1])
-    );
-
-    
-
-  }
-}
-
-function filterBreadcrumb() {
-  if (route.name === 'rolex-accesorios-display') {
-
-  } else {
-    console.log(actual.value);
-    const breadcrumbArray = actual.value
-    console.log(breadcrumbArray);
-    breadcrumbArray.filter((value, index, self) => self.indexOf(value) === index)
-    return breadcrumbArray
-
-  }
-}
-
-onMounted(() => {
-  getCollectionName();
-  getNewModelsName()
-  getModelName();
-  filterBreadcrumb();
-  const removedDuplicates = actual.value.filter((str)=>str !== "")
-  routesToShow.value = new Set(removedDuplicates)
-  
-});
 </script>
 
 <template>
@@ -117,11 +75,11 @@ onMounted(() => {
       </router-link>
     </div>
 
-    <div v-for="(item, index) in routesToShow" :key="index">
+    <div v-for="(item, index) in breadcrumbs" :key="index">
       <div class="hidden md:flex gap-4 pr-4">
         <font-awesome-icon :icon="['fas', 'chevron-right']" class="py-1 text-white" />
 
-        <div @click="generateLink(index)" class="text-white hover:underline cursor-pointer">
+        <div @click="handleNavigation(index)" class="text-white hover:underline cursor-pointer">
           {{ item }}
         </div>
       </div>

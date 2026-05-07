@@ -4,12 +4,18 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import { filename } from 'pathe/utils'
 import { useWindowSize } from '@vueuse/core'
-
+import { useRoute } from 'vue-router'
+const route = useRoute()
 const { width } = useWindowSize()
 const isDesktop = computed(() => {
     return width.value >= 1024 ? true : false
 })
-
+const isCollectionPage = computed(()=>{
+    if(route.meta.pageType == "family page" ||route.meta.pageType == "model page" ){
+        return true
+    }
+    return false
+})
 const currentSlide = ref(0)
 
 const breakpoints = {
@@ -52,7 +58,7 @@ const sliderItems = [
         "src": "nuevos-modelos",
         "link": "rolex-nuevos-modelos",
         "alt": "Rolex-nuevos-modelos",
-        "title": "Nuevos modelos 2025"
+        "title": "Nuevos modelos 2026"
 
     },
     
@@ -98,15 +104,123 @@ const sliderItems = [
 ]
 
 
+const collectionSliderItem=[
+    {
+        "src": "collection-1908",
+        "link": "rolex-coleccion-1908",
+        "alt": "collection-banner-1908",
+        "title": "1908"
+    },
+    {
+        "src": "collection-air-king",
+        "link": "rolex-coleccion-air-king",
+        "alt": "collection-banner-air-king",
+        "title": "Air-King"
+    },
+    {
+        "src": "collection-cosmograph-daytona",
+        "link": "rolex-coleccion-cosmograph-daytona",
+        "alt": "collection-banner-cosmograph-daytona",
+        "title": "Cosmograph Daytona"
+    },
+    {
+        "src": "collection-datejust",
+        "link": "rolex-coleccion-datejust",
+        "alt": "collection-banner-datejust",
+        "title": "Datejust"
+    },
+    {
+        "src": "collection-day-date",
+        "link": "rolex-coleccion-day-date",
+        "alt": "collection-banner-day-date",
+        "title": "Day-Date"
+    },
+    {
+        "src": "collection-deepsea",
+        "link": "rolex-coleccion-deepsea",
+        "alt": "collection-banner-deepsea",
+        "title": "Deepsea"
+    },
+    {
+        "src": "collection-explorer",
+        "link": "rolex-coleccion-explorer",
+        "alt": "collection-banner-explorer",
+        "title": "Explorer"
+    },
+    {
+        "src": "collection-explorer-ii",
+        "link": "rolex-coleccion-explorer-ii",
+        "alt": "collection-banner-explorer-ii",
+        "title": "Explorer II"
+    },
+    {
+        "src": "collection-gmt-master-ii",
+        "link": "rolex-coleccion-gmt-master-ii",
+        "alt": "collection-banner-gmt-master-ii",
+        "title": "GMT-Master II"
+    },
+    {
+        "src": "collection-lady-datejust",
+        "link": "rolex-coleccion-lady-datejust",
+        "alt": "collection-banner-lady-datejust",
+        "title": "Lady Datejust"
+    },
+    {
+        "src": "collection-land-dweller",
+        "link": "rolex-coleccion-land-dweller",
+        "alt": "collection-banner-land-dweller",
+        "title": "Land-Dweller"
+    },
+    {
+        "src": "collection-oyster-perpetual",
+        "link": "rolex-coleccion-oyster-perpetual",
+        "alt": "collection-banner-oyster-perpetual",
+        "title": "Oyster Perpetual"
+    },
+    {
+        "src": "collection-sea-dweller",
+        "link": "rolex-coleccion-sea-dweller",
+        "alt": "collection-banner-sea-dweller",
+        "title": "Sea-Dweller"
+    },
+    {
+        "src": "collection-sky-dweller",
+        "link": "rolex-coleccion-sky-dweller",
+        "alt": "collection-banner-sky-dweller",
+        "title": "Sky-Dweller"
+    },
+    {
+        "src": "collection-submariner",
+        "link": "rolex-coleccion-submariner",
+        "alt": "collection-banner-submariner",
+        "title": "Submariner"
+    },
+    {
+        "src": "collection-yacht-master",
+        "link": "rolex-coleccion-yacht-master",
+        "alt": "collection-banner-yacht-master",
+        "title": "Yacht Master"
+    },
+    {
+        "src": "collection-yacht-master-ii",
+        "link": "rolex-coleccion-yacht-master-ii",
+        "alt": "collection-banner-yacht-master-ii",
+        "title": "Yacht Master II"
+    }
+]
+
 const carouselNavigation = computed(() => {
-    return isDesktop.value ? sliderItems.length - 3 : sliderItems.length - 2
+    return isDesktop.value ? sliderInfo.value.length - 4 : sliderInfo.value.length - 2
 })
 
+const sliderInfo = computed(()=>{
+    return isCollectionPage.value? collectionSliderItem : sliderItems
+})
 
 
 function updateSlide(dir) {
     if (dir === 'next') {
-        if (currentSlide.value < sliderItems.length - (isDesktop.value ? 4 : 2)) {
+        if (currentSlide.value < sliderInfo.value.length - (isDesktop.value ? 4 : 2)) {
             currentSlide.value++
         } else {
             currentSlide.value = 0
@@ -115,7 +229,7 @@ function updateSlide(dir) {
         if (currentSlide.value > 0) {
             currentSlide.value--
         } else {
-            currentSlide.value = sliderItems.length - (isDesktop.value ? 4 : 2)
+            currentSlide.value = sliderInfo.value.length - (isDesktop.value ? 4 : 2)
         }
     }
 }
@@ -138,7 +252,7 @@ setInterval(() => {
 
             <carousel :items-to-show="isDesktop ? 4 : 2" :snap-align="'start'" v-model="currentSlide" :itemsToScroll="1"
                 :transition="600" class="w-11/12 md:w-full  ">
-                <slide v-for="slide in sliderItems" :key="slide">
+                <slide v-for="slide in sliderInfo" :key="slide">
                     <router-link :to="{ name: slide.link }" class="mx-1 group ">
                         <img v-if="isDesktop" :src="`/assets/routes-assets/rolex-slider/${slide.src}.webp`"
                             :alt="slide.alt" class="w-full lg:w-full">
@@ -159,7 +273,7 @@ setInterval(() => {
         </div>
 
 
-        <div class="flex gap-2 my-4">
+        <div v-if="isDesktop" class="flex gap-2 my-4">
             <div v-for="(item, index) in carouselNavigation" :key="item" class="h-6 flex items-center"
                 @click="currentSlide = index">
                 <div class="duration-200  h-1 block rounded-sm hover:bg-rolex-green active:bg-rolex-green"

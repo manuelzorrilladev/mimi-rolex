@@ -48,7 +48,7 @@ getAllAccesories();
           <!-- {{ currentData.headerSection.sub }} -->
         </template>
         <template #title>
-          <span>Accesorios Rolex </span>
+          <span>Accesorios Rolex  </span>
         </template>
         <template #text>
           <strong>Gemelos elegantes y exclusivos de Rolex.</strong>
@@ -66,10 +66,10 @@ getAllAccesories();
           class="flex justify-center bg-rolex-brown-light-2 text-rolex-brown pb-[10vh]"
         >
           <div class="grid grid-cols-2 md:grid-cols-3 w-10/12 md:w-8/12 gap-2">
-            <a
+            <router-link
               v-for="item in accesories"
               :key="item"
-              :href="`/rolex/accesorios/${item.modelo}`"
+              :to="`/rolex/accesorios/${item.modelo}`"
               class="bg-rolex-brown-light-1 h-full flex flex-col items-center justify-center pb-6 cursor-pointer group"
             >
               <img
@@ -85,7 +85,7 @@ getAllAccesories();
                   {{ item.sub }}
                 </p>
               </div>
-            </a>
+            </router-link>
           </div>
         </div>
         <section class="bg-rolex-brown-light-1 py-[10vh]">

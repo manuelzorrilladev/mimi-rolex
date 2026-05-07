@@ -34,32 +34,36 @@ if (day == 7) {
 
 function CTATrack(type) {
   let link = "";
-  let track = ""
+  let track = "";
   switch (type) {
     case "call":
       link = "tel:582123008742";
-      track = "contactCall"
+      track = "contactCall";
       break;
 
     case "whatsappCall":
       link = "https://wa.me/584143092501";
-      track = "whatsappContact"
+      track = "whatsappContact";
       break;
 
     case "mail":
       link = "mailto:info@mimijoyeria.com";
-      track = ""
+      track = "";
       break;
 
     case "direction":
       link = "https://maps.app.goo.gl/zHybs3yrhhvvHeiP8";
-      track = "getDirections"
+      track = "getDirections";
       break;
 
     default:
       break;
   }
-  if (window._satellite && typeof window._satellite.track === "function" && track != "") {
+  if (
+    window._satellite &&
+    typeof window._satellite.track === "function" &&
+    track != ""
+  ) {
     setTimeout(() => {
       window._satellite.track(track);
     }, 100);
@@ -87,29 +91,25 @@ function CTATrack(type) {
           </template>
         </RolexHeader>
 
-        <section class="flex justify-center w-full bg-rolex-brown-light-2">
+        <section class="flex justify-center bg-rolex-brown-light-2 w-full pb-[20vh]">
           <div
-            class="flex w-10/12 flex-col-reverse md:flex-row items-center justify-center h-fit md:h-[90vh] mb-[20vh] md:pb-[10vh]"
+            class="flex md:w-10/12 flex-col-reverse md:flex-row items-center justify-center overflow-y-hidden h-fit md:h-[90vh] "
           >
-            <div
-              class="flex w-full h-full bg-rolex-brown-light-2 justify-center overflow-hidden"
-            >
+            <div class="md:w-2/3 h-full">
               <img
                 src="/assets/routes-assets/contact-rolex/map-desktop.webp"
                 alt="map-store"
-                class="w-full hidden md:block"
+                class="h-full hidden md:block"
               />
               <img
                 src="/assets/routes-assets/contact-rolex/map-mobile.webp"
                 alt="map-store"
-                class="w-full block md:hidden"
+                class="block md:hidden"
               />
             </div>
 
-            <div
-              class="w-full md:w-1/2 bg-white h-full flex flex-col justify-center items-center gap-2 font-helvetica font-bold py-5 text-rolex-brown"
-            >
-              <div class="w-[70%]">
+            <div class="w-full md:w-1/3 bg-white h-full flex flex-col justify-center items-center gap-2 font-helvetica font-bold py-5 text-rolex-brown">
+              <div class="w-10/12">
                 <h2>Distribuidor Oficial Rolex</h2>
                 <h2 class="text-3xl">Mimi Joyería C.A.</h2>
                 <div class="py-3">
@@ -117,6 +117,7 @@ function CTATrack(type) {
                   <h2 class="font-light">1080, Caracas</h2>
                   <h2 class="font-light">Venezuela</h2>
                 </div>
+
                 <div class="flex text-sm gap-10 pb-4 relative w-full">
                   <h2
                     :class="
@@ -163,60 +164,59 @@ function CTATrack(type) {
                   </div>
                 </div>
 
-                <div class="space-y-2">
-                  <div class="text-sm">
+                 <div
+                  class="space-y-2 text-sm text-rolex-brown w-full  overflow-x-auto md:overflow-visible no-scrollbar"
+                >
+                  <div
+                    class="flex flex-row md:flex-col flex-nowrap gap-4 md:gap-y-2 pb-4 md:pb-0"
+                  >
                     <button
                       @click="CTATrack('call')"
-                      class="flex items-center gap-4"
+                      class="flex items-center gap-4 w-fit flex-shrink-0 pr-4 md:pr-0 bg-white md:bg-transparent rounded-2xl"
                     >
                       <font-awesome-icon
                         :icon="['fas', 'phone']"
-                        class="text-rolex-bronw bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
+                        class="text-md bg-white md:bg-rolex-brown-light-1 cursor-pointer p-3 rounded-full w-fit"
                       />
-                      <p>+58 212-3008742</p>
+                      <p class="whitespace-nowrap">+58 212-3008742</p>
                     </button>
-                  </div>
-                  <div class="text-sm">
-                    <button
-                      @click="CTATrack('mail')"
-                      class="flex items-center gap-4"
-                    >
-                      <font-awesome-icon
-                        :icon="['fas', 'envelope']"
-                        class="text-rolex-bronw bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
-                      />
-                      <p>Envíenos un mensaje</p>
-                    </button>
-                  </div>
-                  <div class="= text-sm">
-                    <button
-                      @click="CTATrack('direction')"
-                      href="https://maps.app.goo.gl/vs6G2L9WLxmvYatQAhttps://maps.app.goo.gl/vs6G2L9WLxmvYatQA"
-                      class="flex items-center gap-4"
-                      target="_blank"
-                    >
-                      <font-awesome-icon
-                        :icon="['fas', 'location-arrow']"
-                        class="text-rolex-bronw bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
-                      />
-                      <p>Conseguir la dirección</p>
-                    </button>
-                  </div>
-                  <div class="text-sm">
+
                     <button
                       @click="CTATrack('whatsappCall')"
-                      href="https://wa.me/584143092501"
-                      target="_blank"
-                      class="flex items-center gap-4"
+                      class="flex items-center gap-4 w-fit flex-shrink-0 pr-4 md:pr-0 bg-white md:bg-transparent rounded-2xl"
                     >
                       <font-awesome-icon
                         :icon="['fab', 'whatsapp']"
-                        class="text-rolex-bronw bg-rolex-brown-light-1 hover:bg-rolex-brown hover:text-white duration-200 cursor-pointer p-3 rounded-full"
+                        class="text-md bg-white md:bg-rolex-brown-light-1 duration-200 cursor-pointer p-3 rounded-full"
                       />
-                      <p>Enviar un Whatsapp</p>
+                      <p class="whitespace-nowrap">Chat</p>
+                    </button>
+
+                    <button
+                      @click="CTATrack('mail')"
+                      class="flex items-center gap-4 w-fit flex-shrink-0 pr-4 md:pr-0 bg-white md:bg-transparent rounded-2xl"
+                    >
+                      <font-awesome-icon
+                        :icon="['fas', 'envelope']"
+                        class="text-md bg-white md:bg-rolex-brown-light-1 duration-200 cursor-pointer p-3 rounded-full"
+                      />
+                      <p class="whitespace-nowrap">Envíenos un mensaje</p>
+                    </button>
+
+                    <button
+                      @click="CTATrack('direction')"
+                      class="flex items-center gap-4 w-fit flex-shrink-0 pr-4 md:pr-0 bg-white md:bg-transparent rounded-2xl"
+                    >
+                      <font-awesome-icon
+                        :icon="['fas', 'location-arrow']"
+                        class="text-md bg-white md:bg-rolex-brown-light-1 duration-200 cursor-pointer p-3 rounded-full"
+                      />
+                      <p class="whitespace-nowrap">Conseguir la dirección</p>
                     </button>
                   </div>
                 </div>
+
+               
               </div>
             </div>
           </div>
@@ -259,3 +259,19 @@ function CTATrack(type) {
     </RolexTemplate>
   </div>
 </template>
+
+
+
+<style lang="css">
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+</style>

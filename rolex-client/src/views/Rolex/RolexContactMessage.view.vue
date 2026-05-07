@@ -93,7 +93,7 @@ function resetForm() {
   <div id="new-models">
     <RolexTemplate>
       <template #content>
-        <PageBanner type="rolex-contact" />
+        <PageBanner type="rolex-contact-message" />
         <main class="w-full overflow-hidden">
           <div :class="position" class="flex w-[300%] duration-300">
             <section

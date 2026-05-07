@@ -169,7 +169,7 @@ const router = createRouter({
     {
       path: "/rolex/nuevos-relojes",
       name: "rolex-nuevos-modelos",
-      component: () => import("./views/Rolex/RolexNewModelsTemporary.view.vue"),
+      component: () => import("./views/Rolex/RolexNewModels.view.vue"),
       meta: {
         title: "Nuevos Modelos Rolex 2026  | Mimi Joyería ",
         description: "Mimi Joyería presenta la última colección de relojes de lujo suizos de Rolex. Descubra las características únicas de los nuevos modelos de este año.",

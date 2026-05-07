@@ -88,15 +88,6 @@ import TwoSectionCard from '../../components/cards/TwoSectionCard.vue'
                 </TwoSectionCard>
 
 
-                <div class="video-frame flex bg-rolex-brown-light-2 justify-center pb-10">
-                    <div class="w-11/12  aspect-w-16 aspect-h-9 ">
-                        <iframe src="https://www.youtube.com/embed/aHNEZg35ok8?si=gUxeirwi5sb3AfOv"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </div>
-
-                </div>
 
                 <TwoSectionCard img-src="watchmaking/watchmaking-3" alt-text="watchmaking-rolex-3" type="normal" img-size="w-10/12">
                     <template #title>
@@ -138,15 +129,7 @@ import TwoSectionCard from '../../components/cards/TwoSectionCard.vue'
                 </TwoSectionCard>
 
 
-                <div class="video-frame flex bg-rolex-brown-light-2 justify-center pb-10">
-                    <div class="w-11/12  aspect-w-16 aspect-h-9 ">
-                        <iframe src="https://www.youtube.com/embed/wclKW2Gprco?si=ZB0ycpT5OFfL5JBv"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </div>
-
-                </div>
+            
 
                 <TwoSectionCard img-src="watchmaking/watchmaking-5" alt-text="watchmaking-rolex-5" type="reverse">
                     <template #title>

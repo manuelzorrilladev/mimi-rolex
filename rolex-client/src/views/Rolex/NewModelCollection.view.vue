@@ -9,7 +9,6 @@ const route = useRoute();
 const currentRoute = route.params.id
 const currentData = newModelsCopy[currentRoute];
 
-console.log(currentData);
 
 
 </script>
@@ -53,7 +52,7 @@ console.log(currentData);
   
         <section :class="currentData.mainSection.backgroundColor">
           <header
-            class="flex flex-col gap-8 justify-around items-center text-rolex-brown h-fit pb-[10vh]"
+            class="flex flex-col gap-8 justify-around items-center text-rolex-brown h-fit "
           >
             <h1
               v-if="currentData.mainSection.title"
@@ -98,13 +97,15 @@ console.log(currentData);
             </div>
             
             <div
-              v-else
+              v-if="!item.hasVideo && item.imgSize"
               class="flex justify-center"
               :class="[
                 item.backgroundColor,
                 item.imgSize == 'w-full' ? 'pb-[10vh]' : 'py-[10vh]',
               ]"
             >
+
+          
               <img
               v-if="item.imgSize"
                 :src="`/assets/routes-assets/new-watches/${currentRoute}/new-watches-${currentRoute}-${
@@ -115,6 +116,7 @@ console.log(currentData);
                 :class="item.imgSize"
               />
               <img
+                v-if="item.imgSize"
                 :src="`/assets/routes-assets/new-watches/${currentRoute}/new-watches-${currentRoute}-${
                   index + 1
                 }-mobile.webp`"
