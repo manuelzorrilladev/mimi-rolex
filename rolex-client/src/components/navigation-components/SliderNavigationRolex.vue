@@ -85,11 +85,10 @@ const sliderItems = [
 
     },
     {
-        "src": "world-of-rolex",
-        "link": "world-of-rolex-hub",
-        "alt": "world-of-rolex",
-        "title": "World of Rolex"
-
+        "src": "oyster-story",
+        "link": "rolex-oyster-story",
+        "alt": "oyster-story",
+        "title": "Oyster Story"
     },
 
 
@@ -244,7 +243,7 @@ setInterval(() => {
 
 <template>
     <section id="rolex-footer-slider" class=" my-8 py-4 w-full flex flex-col items-center justify-center ">
-        <h2 class="font-bold mb-4 w-9/12 text-4xl font-helvetica-bold text-rolex-brown">Explorar Más </h2>
+        <h2 class="font-bold mb-4 w-9/12 text-4xl font-helvetica text-rolex-brown">Explorar Más </h2>
         <div id="carousel" class="w-full md:w-10/12 flex items-center justify-center gap-4">
             <font-awesome-icon v-if="isDesktop" :icon="['fas', 'chevron-left']"
                 class="bg-rolex-grey-light h-4 w-4 px-4 py-3 cursor-pointer rounded-full duration-200 hover:bg-rolex-green hover:text-white  "

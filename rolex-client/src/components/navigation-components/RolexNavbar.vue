@@ -152,10 +152,10 @@ const isTargetDate = computed(() => {
         </router-link>
 
         <router-link
-          :to="{ name: 'world-of-rolex-hub' }"
+          :to="{ name: 'rolex-oyster-story' }"
           class="pr-6 font-bold md:font-normal py-4 text-xl lg:text-xs pl-6 md:pl-16 lg:pl-6 hover:text-rolex-green-3 duration-200 w-full lg:w-fit lg:text-center"
         >
-          <h2>World of Rolex</h2>
+          <h2>Oyster Story</h2>
         </router-link>
         <router-link
           :to="{ name: 'rolex-en-mimi-joyeria' }"

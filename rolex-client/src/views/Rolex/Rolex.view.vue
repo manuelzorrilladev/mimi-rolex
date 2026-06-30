@@ -3,7 +3,7 @@ import RolexTemplate from '../Rolex/RolexTemplate.view.vue'
 import RolexHeader from '../../components/RolexHeader.vue'
 import ActivationsBanner from '../../components/banners-components/ActivationsBanner.vue'
 import SectionNavigationCard from '../../components/cards/SectionNavigationCard.vue'
-
+import RolexWatchesSlider from '../../components/cards/RolexWatchesSlider.vue'
 </script>
 
 <template>
@@ -25,6 +25,8 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
                 </template>
 
             </RolexHeader>
+
+            <RolexWatchesSlider class="bg-rolex-brown-light-2"/>
   
             <section class="bg-rolex-brown-light-2 flex flex-col justify-center items-center pb-[10vh]">
                 <h2 class="w-11/12 pb-4 font-helvetica font-bold text-rolex-brown text-2xl md:text-4xl">Relojes Rolex
@@ -70,10 +72,10 @@ import SectionNavigationCard from '../../components/cards/SectionNavigationCard.
             <section class="bg-rolex-brown-light-2 flex flex-col justify-center items-center pb-10">
                 <h2 class="w-11/12 pb-4 font-helvetica font-bold text-rolex-brown text-4xl">Descubre Rolex</h2>
                 <div class="w-11/12 flex flex-col md:flex-row gap-2">
-                    <SectionNavigationCard img="discover-rolex/discover-rolex-4" :link="{name:'world-of-rolex-hub'}"
+                    <SectionNavigationCard img="discover-rolex/discover-rolex-4" :link="{name:'rolex-oyster-story'}"
                         class="w-full md:w-1/3 ">
-                        <template #sub>Un compromiso con la excelencia</template>
-                        <template #title>World Of Rolex</template>
+                        <template #sub>100 años del Oyster</template>
+                        <template #title>Oyster Story</template>
                         <template #button>Explorar</template>
 
                     </SectionNavigationCard>

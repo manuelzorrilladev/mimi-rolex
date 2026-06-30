@@ -11,7 +11,7 @@ const targetIsVisible = useElementVisibility(target);
 const isMobile = computed(() => width.value < 768);
 
 const router = useRouter();
-const links = ["/rolex/nuevos-relojes", "/rolex/rolex-en-mimi-joyeria", "/novedades/tudor","/novedades/tudor"];
+const links = ["/rolex/explorer","/novedades/tudor","/novedades/tudor"];
 
 const counter = ref(0);
 const IMAGE_QUANTITY = links.length;

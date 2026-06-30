@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const db = require("../models");
 const Routes = db.routes;
 const Op = db.Sequelize.Op;
@@ -63,7 +66,62 @@ exports.searchValidate = (req, res) => {
 
 
 // SEO ROUTES
+exports.imgValidation = async (req, res) => {
+    const imgResponse = []
+    const carpetaStorage = path.join(__dirname, '../../storage/rolex-relojes-new/');
+  
+    try {
+        const rolexRoutes = await db.rolex.RolexGetAllV2.findAll(
+            {
+                include: [
+                   
+                    {
+                        model: db.rolex.RolexHeadersV2,
+                        attributes: ['imagen1', 'imagen2', 'imagen3']
+                    }
+                ],
+                attributes:['id','modelo']
+            })
 
+        for(let i = 0; i < rolexRoutes.length; i++) {
+
+            const imgObject = {
+                model:rolexRoutes[i].modelo,
+                showcase:fs.existsSync(carpetaStorage + rolexRoutes[i].modelo + "-showcase.webp"),
+                slider:[
+                    fs.existsSync(carpetaStorage + rolexRoutes[i].modelo + "-slider-1.webp"),
+                    fs.existsSync(carpetaStorage + rolexRoutes[i].modelo + "-slider-2.webp"),
+                    fs.existsSync(carpetaStorage + rolexRoutes[i].modelo + "-slider-3.webp"),
+                ],
+                desktop:{
+                    header:[
+                        fs.existsSync(carpetaStorage + rolexRoutes[i]['rolex-headers-v2'].imagen1+".webp"),
+                        fs.existsSync(carpetaStorage + rolexRoutes[i]['rolex-headers-v2'].imagen2+".webp"),
+                        fs.existsSync(carpetaStorage + rolexRoutes[i]['rolex-headers-v2'].imagen3+".webp"),
+                    ]
+                },
+                mobile:{
+                    header:[
+                        fs.existsSync(carpetaStorage + rolexRoutes[i]['rolex-headers-v2'].imagen1+"-mobile.webp"),
+                        fs.existsSync(carpetaStorage + rolexRoutes[i]['rolex-headers-v2'].imagen2+"-mobile.webp"),
+                        fs.existsSync(carpetaStorage + rolexRoutes[i]['rolex-headers-v2'].imagen3+"-mobile.webp"),
+                    ]
+                },
+            }
+            if(!imgObject.showcase || imgObject.slider.includes(false) || imgObject.desktop.header.includes(false) || imgObject.mobile.header.includes(false)) {
+
+                imgResponse.push(imgObject)
+            }
+            
+        }
+
+        res.send(imgResponse)
+
+
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
 
 
 exports.getMetaBreadcrumbs = async (req, res) => {

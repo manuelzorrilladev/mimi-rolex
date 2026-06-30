@@ -87,8 +87,8 @@ function filterItems() {
                 <div
                   v-for="(item, key) in filterItems()"
                   :key="key"
-                  class=" h-[500px]"
-                  :class="key < itemsToShow ? 'h-[500px]' : 'h-0'"
+                  class=" h-106"
+                  :class="key < itemsToShow ? 'h-106' : 'h-0'"
                 >
                   <WatchCard :item="item" :collection="currentRoute" />
                 </div>

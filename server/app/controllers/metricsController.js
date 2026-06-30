@@ -70,9 +70,9 @@ exports.ingest = async (req, res) => {
             utm_source, utm_medium, utm_campaign, gclid, country, city
         } = req.body;
 
-        const isGoogleAds = !!gclid; 
-const finalSource = utm_source || (isGoogleAds ? 'google' : 'direct');
-const finalMedium = utm_medium || (isGoogleAds ? 'cpc' : 'none');
+        const isGoogleAds = !!gclid;
+        const finalSource = utm_source || (isGoogleAds ? 'google' : 'direct');
+        const finalMedium = utm_medium || (isGoogleAds ? 'cpc' : 'none');
 
         const [visitor] = await Visitor.findOrCreate({
             where: { visitor_token: visitorToken },
@@ -96,9 +96,9 @@ const finalMedium = utm_medium || (isGoogleAds ? 'cpc' : 'none');
                 referrer: referrer,
                 utm_source: finalSource,
                 utm_medium: finalMedium,
-                utm_campaign,
-                gclid,
-               is_paid: finalMedium === 'cpc' || isGoogleAds,
+                utm_campaign: utm_campaign,
+                gclid: gclid,
+                is_paid: finalMedium === 'cpc' || isGoogleAds,
                 entry_path: path,
                 city: city,
                 country: country,
@@ -123,6 +123,7 @@ const finalMedium = utm_medium || (isGoogleAds ? 'cpc' : 'none');
 };
 
 
+
 exports.trackEvent = async (req, res) => {
     try {
         const { sessionToken, eventName, label } = req.body;
@@ -143,6 +144,99 @@ exports.trackEvent = async (req, res) => {
     }
 };
 
+exports.getYearlyGeneralStats = async (req, res) => {
+    try {
+        // 1. Configuración del año actual (o el enviado por query)
+        const year = parseInt(req.query.year) || new Date().getFullYear();
+        const startOfYear = new Date(`${year}-01-01T00:00:00Z`);
+        const endOfYear = new Date(`${year}-12-31T23:59:59Z`);
+        
+        const yearlyFilter = { 
+            createdAt: { [Op.between]: [startOfYear, endOfYear] } 
+        };
+
+        // 2. Consultas en paralelo para optimizar el rendimiento
+        const [visitsStats, visitorsStats] = await Promise.all([
+            // Conteo de Visitas totales por combinación de UTMs
+            Visit.findAll({
+                attributes: [
+                    'utm_source',
+                    'utm_medium',
+                    'utm_campaign',
+                    [fn('COUNT', col('id')), 'totalVisits']
+                ],
+                where: yearlyFilter,
+                group: ['utm_source', 'utm_medium', 'utm_campaign'],
+                raw: true
+            }),
+            // Conteo de Visitantes Únicos por combinación de UTMs
+            Visit.findAll({
+                attributes: [
+                    'utm_source',
+                    'utm_medium',
+                    'utm_campaign',
+                    [fn('COUNT', fn('DISTINCT', col('visitor_id'))), 'uniqueVisitors']
+                ],
+                where: yearlyFilter,
+                group: ['utm_source', 'utm_medium', 'utm_campaign'],
+                raw: true
+            })
+        ]);
+
+        // 3. Unificar los mapas usando una llave compuesta única (source | medium | campaign)
+        const statsMap = new Map();
+
+        // Procesar primero las visitas totales
+        visitsStats.forEach(item => {
+            const key = `${item.utm_source || 'none'}_${item.utm_medium || 'none'}_${item.utm_campaign || 'none'}`;
+            statsMap.set(key, {
+                utm_source: item.utm_source || 'none',
+                utm_medium: item.utm_medium || 'none',
+                utm_campaign: item.utm_campaign || 'none',
+                totalVisits: parseInt(item.totalVisits) || 0,
+                uniqueVisitors: 0 // Se llenará en el siguiente paso
+            });
+        });
+
+        // Combinar e integrar los visitantes únicos en el mismo canal
+        visitorsStats.forEach(item => {
+            const key = `${item.utm_source || 'none'}_${item.utm_medium || 'none'}_${item.utm_campaign || 'none'}`;
+            
+            if (statsMap.has(key)) {
+                const existingEntry = statsMap.get(key);
+                existingEntry.uniqueVisitors = parseInt(item.uniqueVisitors) || 0;
+                statsMap.set(key, existingEntry);
+            } else {
+                // Caso preventivo por si existiera inconsistencia temporal
+                statsMap.set(key, {
+                    utm_source: item.utm_source || 'none',
+                    utm_medium: item.utm_medium || 'none',
+                    utm_campaign: item.utm_campaign || 'none',
+                    totalVisits: 0,
+                    uniqueVisitors: parseInt(item.uniqueVisitors) || 0
+                });
+            }
+        });
+
+        // 4. Retornar los datos limpios ordenados por volumen de visitas
+        const finalReport = Array.from(statsMap.values()).sort((a, b) => b.totalVisits - a.totalVisits);
+
+        res.json({
+            success: true,
+            queriedYear: year,
+            totalRows: finalReport.length,
+            marketingReport: finalReport
+        });
+
+    } catch (error) {
+        console.error("Yearly Stats Error:", error);
+        res.status(500).json({ 
+            error: "Error interno al procesar estadísticas anuales", 
+            detail: error.message 
+        });
+    }
+};
+
 
 exports.getDashboardStats = async (req, res) => {
     try {
@@ -158,7 +252,6 @@ exports.getDashboardStats = async (req, res) => {
         const monthlyFilter = { createdAt: { [Op.gte]: startMonth, [Op.lt]: endMonth } };
         const yearlyFilter = { createdAt: { [Op.between]: [startOfYear, endOfYear] } };
 
-        // 2. Ejecución Concurrente de Consultas
         const [
             monthlySummary,
             totalPageViews,

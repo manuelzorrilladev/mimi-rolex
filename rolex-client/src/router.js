@@ -22,6 +22,40 @@ const router = createRouter({
 
       }
     },
+    {
+      path: "/test",
+      name: "Test",
+      component: () => import("./views/TEST.view.vue"),
+      meta: {
+        title: "Mimi Joyería | Distribuidor Oficial Rolex",
+        breadcrumb: "HomePage",
+        description: "Descubra la excelencia de Mimi Joyería, su destino de lujo en Venezuela. Orgullosos Distribuidores Oficiales Rolex, brindando piezas icónicas y mantenimiento experto."
+
+      }
+    },
+    {
+      path: "/rolex/seleccion-rolex",
+      name: "filters",
+      component: () => import("./views/Rolex/RolexFilter.view.vue"),
+      meta: {
+        title: "Mimi Joyería | Distribuidor Oficial Rolex",
+        breadcrumb: "HomePage",
+        description: "Descubra la excelencia de Mimi Joyería, su destino de lujo en Venezuela. Orgullosos Distribuidores Oficiales Rolex, brindando piezas icónicas y mantenimiento experto.",
+        pageType: "selection page"
+      }
+    },
+    {
+      path: "/rolex/oyster-story",
+      name: "rolex-oyster-story",
+      component: () => import("./views/Rolex/RolexOyster.view.vue"),
+      meta: {
+        title: "Mimi Joyería | Distribuidor Oficial Rolex",
+        breadcrumb: "Oyster",
+        description: "Precisión cronométrica, hermeticidad y cuerda automática: estos tres desafíos clave y logros relojeros fundamentales consolidarían el éxito de un visionario y su marca. Descubra la historia del Oyster, el primer reloj de pulsera hermético del mundo, en Mimi Joyería, su Distribuidor Oficial Rolex en Venezuela.",
+        pageType: "article page"
+      }
+    },
+
     // ROLEX STATIC ROUTES
     {
       path: "/rolex/descubre-rolex",
@@ -779,6 +813,15 @@ const router = createRouter({
         title: 'Compra exitosa  | Mimi Joyería '
       }
     }
+    ,
+    {
+      path: "/special/link-maker",
+      name: "link-maker",
+      component: () => import('./views/Admin/URLMaker.view.vue'),
+      meta: {
+        title: 'Creador de Enlaces Especiales  | Mimi Joyería '
+      }
+    }
 
 
 
@@ -845,51 +888,6 @@ router.beforeEach((to, from, next) => {
 
 
 
-  // Register visit
-  const locationStorage = useLocationStore()
-  const { visitorID, sessionID, isNew } = trackTokenService.getTokens()
-  if (isNew) {
-    locationStorage.setToInitial()
-    locationStorage.getLocation()
-  }
-
-
-
-
-  const objectToSendToMetrics = {
-    visitorToken: visitorID,
-    sessionToken: sessionID,
-    path: to.path,
-    title: document.title,
-    referrer: document.referrer,
-    utm_source: to.query["utm_source"],
-    utm_medium: to.query["utm_medium"],
-    utm_campaign: to.query["utm_campaign"],
-    gclid: to.query["gclid"],
-    country: locationStorage.country,
-    city: locationStorage.city
-  }
-
-  if (objectToSendToMetrics.referrer.includes('google.com')) {
-    objectToSendToMetrics.utm_source = 'google'
-    objectToSendToMetrics.utm_medium = 'organic'
-  }
-
-  for (const [key, value] of Object.entries(objectToSendToMetrics)) {
-    if (value == undefined) {
-      objectToSendToMetrics[key] = 'none'
-    }
-  }
-
-  if (!to.path.includes('dashboard')) {
-    trackTokenService.sendVisit(objectToSendToMetrics)
-      .then(() => {
-        console.log("Visita guardada");
-      }).catch((e) => {
-        console.log(e);
-      })
-
-  }
 
 
 
@@ -899,12 +897,67 @@ router.beforeEach((to, from, next) => {
 })
 
 
-router.afterEach((to, from, next) => {
+router.afterEach(async (to, from, next) => {
   const store = useLoaderStore()
   if (to.name != from.name) {
     store.change()
 
   }
+
+  // 1. Evitamos disparar la métrica si la ruta de origen y destino es exactamente la misma
+  if (to.path === from.path && Object.keys(to.query).length === 0) return;
+
+  // 2. Saltarse el dashboard
+  if (to.path.includes('dashboard')) return;
+
+  const locationStorage = useLocationStore() 
+  const { visitorID, sessionID, isNew } = trackTokenService.getTokens()
+
+  // 3. Manejo correcto y asíncrono de la geolocalización si la sesión es nueva
+  if (isNew) {
+    locationStorage.setToInitial()
+    // Si getLocation devuelve una Promesa, esperamos a que termine para tener datos reales
+    await locationStorage.getLocation().catch(e => console.error("Error obteniendo ubicación", e))
+  }
+
+  // 4. Construcción del objeto (¡Ahora document.title ya cambió!)
+  const objectToSendToMetrics = {
+    visitorToken: visitorID,
+    sessionToken: sessionID,
+    path: to.path,
+    title: document.title || 'Sin título', 
+    referrer: document.referrer || 'direct',
+    utm_source: to.query["utm_source"],
+    utm_medium: to.query["utm_medium"],
+    utm_campaign: to.query["utm_campaign"],
+    gclid: to.query["gclid"],
+    country: locationStorage.country,
+    city: locationStorage.city
+  }
+
+  // 5. Atribución orgánica de Google
+  if (objectToSendToMetrics.referrer.includes('google.com')) {
+    objectToSendToMetrics.utm_source = 'google'
+    objectToSendToMetrics.utm_medium = 'organic'
+  }
+
+  // 6. Limpieza de indefinidos
+  for (const [key, value] of Object.entries(objectToSendToMetrics)) {
+    if (value === undefined || value === null || value === '') {
+      objectToSendToMetrics[key] = 'none'
+    }
+  }
+
+  console.log("Enviando a métricas:", objectToSendToMetrics)
+
+  // 7. Envío limpio al backend
+  trackTokenService.sendVisit(objectToSendToMetrics)
+    .then(() => {
+      console.log("Visita guardada con éxito");
+    })
+    .catch((e) => {
+      console.error("Error al guardar visita:", e);
+    })
 
 
 

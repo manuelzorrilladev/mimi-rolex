@@ -39,7 +39,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     isRolexSelection: {
       type: Sequelize.BOOLEAN,
-      default:true
+      default: true
     }
   }, {
     timestamps: false
@@ -149,6 +149,15 @@ module.exports = (sequelize, Sequelize) => {
     timestamps: false
   })
 
+
+  const RolexTags = sequelize.define("rolex-tags", {
+    tag: {
+      type: Sequelize.STRING
+    }
+  }, {
+    timestamps: false
+  })
+
   RolexCollections.hasOne(RolexGetAllV2)
   RolexGetAllV2.belongsTo(RolexCollections)
   RolexGetAllV2.hasOne(RolexDetailsV2)
@@ -160,11 +169,17 @@ module.exports = (sequelize, Sequelize) => {
   RolexCollections.hasOne(RolexAccesories)
   RolexAccesories.belongsTo(RolexCollections)
 
+  RolexGetAllV2.belongsToMany(RolexTags,{ through:"rolex-get-all-v2-tags"})
+  RolexTags.belongsToMany(RolexGetAllV2,{ through:"rolex-get-all-v2-tags"})
+
+
+
   return {
     RolexGetAllV2,
     RolexDetailsV2,
     RolexHeadersV2,
     RolexCollections,
-    RolexAccesories
+    RolexAccesories,
+    RolexTags
   };
 };

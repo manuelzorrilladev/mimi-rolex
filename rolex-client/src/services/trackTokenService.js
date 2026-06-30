@@ -12,7 +12,7 @@ class TrackingTokenService {
             secure: window.location.protocol === 'https:'
         }
 
-        this.VISITOR_EXPIRY_DAYS = 730
+        this.VISITOR_EXPIRY_DAYS = 30
         this.SESSION_EXPIRY_MINUTES = 30
     }
 
@@ -52,21 +52,18 @@ class TrackingTokenService {
         if (!sessionID) {
             sessionID = crypto.randomUUID()
             isNew = true
+
+            const expiry = new Date()
+            expiry.setMinutes(expiry.getMinutes() + this.SESSION_EXPIRY_MINUTES)
+
+            this.cookies.set('_mj_sid', sessionID, {
+                ...this.cookieOptions,
+                expires: expiry
+            })
         }
 
 
-        const expiry = new Date()
-        expiry.setDate(expiry.getDate() + this.SESSION_EXPIRY_MINUTES)
-        // expiry.setMinutes(expiry.getMinutes() + this.SESSION_EXPIRY_MINUTES)
-
-        this.cookies.set('_mj_sid', sessionID, {
-            ...this.cookieOptions,
-            expires: expiry
-        })
-
-
         return { sessionID, isNew }
-
     }
 
     getTokens() {
@@ -78,19 +75,3 @@ class TrackingTokenService {
 }
 export default new TrackingTokenService()
 
-// function getLocation() {
-//   console.log("===");
-
-//   axios
-//     .get("https://ipinfo.io/json?token=4ee0a261f56090")
-//     .then(function (response) {
-//       // handle success
-//       locationCountry.value = response.data.country;
-//       locationCity.value = response.data.city;
-//     })
-//     .catch(function (error) {
-//       // handle error
-//       location.value.country = "Desconocido";
-//       location.value.city = "Desconocido";
-//     });
-// }

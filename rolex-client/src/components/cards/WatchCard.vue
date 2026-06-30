@@ -19,24 +19,31 @@ function addComma(price) {
 <template>
   <router-link
     :to="`/rolex/${collection}-${item.modelo}`"
-    class="bg-rolex-brown-light-1 h-full flex flex-col items-center justify-center py-0 cursor-pointer group"
+    class="bg-rolex-brown-light-1 w-full h-106 flex flex-col items-center justify-center  cursor-pointer group"
   >
-    <img
-      :src="`${GLOBAL_OBJECT.STORAGE_URL}rolex-relojes-new/${item.modelo}-showcase.webp`"
-      :alt="item.modelo"
-      class="w-full md:w-1/2 lg:w-[55%] xl:w-[60%] duration-200 ease-in-out group-hover:scale-110"
-    />
-    <div class="w-9/12">
-      <p class="font-helvetica font-bold text-[14px]">Rolex</p>
-      <p class="font-helvetica font-bold text-[24px]">{{ item.nombre }}</p>
-      <p class="font-helvetica font-light text-[14px] text-black">
+    <div class="flex justify-center items-center w-full h-72  overflow-hidden">
+      <img
+        :src="`${GLOBAL_OBJECT.STORAGE_URL}rolex-relojes-new/${item.modelo}-showcase.webp`"
+        :alt="item.modelo"
+        class=" h-full duration-200 ease-in-out group-hover:scale-110 "
+      />
+    </div>
+    <div class="w-full md:min-w-72 py-1 px-6 h-36 ">
+      <p
+        class="font-helvetica font-bold text-[14px] leading-2 text-rolex-brown"
+      >
+        Rolex
+      </p>
+      <p class="font-helvetica font-bold text-[24px] text-rolex-brown">
+        {{ item.nombre }}
+      </p>
+      <p class="font-helvetica font-light text-[14px] text-rolex-brown w-full">
         {{ item.cajaDelModelo }}
       </p>
-      <div class="text-black flex items-center gap-2">
+      <div class="text-rolex-brown flex items-center gap-2">
         <h2 class="font-light">
           $ {{ item["rolex-details-v2"].precio.toLocaleString("us-US") }}
         </h2>
-      
       </div>
     </div>
   </router-link>

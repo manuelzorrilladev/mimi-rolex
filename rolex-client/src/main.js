@@ -56,7 +56,9 @@ import {
     faTrashCan,
     faXmark,
     faChartColumn,
-    faDollarSign
+    faDollarSign,
+    faArrowRotateLeft,
+    faFilePdf
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebookF, faInstagram, faPinterest, faWhatsapp, faXTwitter } from '@fortawesome/free-brands-svg-icons'
@@ -103,7 +105,9 @@ library.add(
     faArrowUpAZ,
     faArrowDownZA,
     faChartColumn,
-    faDollarSign
+    faDollarSign,
+    faArrowRotateLeft,
+    faFilePdf
 )
 // Defining pinia
 const pinia = createPinia()

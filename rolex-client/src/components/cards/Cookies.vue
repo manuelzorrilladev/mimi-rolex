@@ -6,7 +6,7 @@ import GLOBAL_OBJECT from "../../utils/globaj";
 import router from "../../router";
 
 const route = useRoute();
-const cookies = useCookies(['rlx-consent', 'rlx-marketing']);
+const cookies = useCookies(["rlx-consent", "rlx-marketing"]);
 const checkOpen = ref(false);
 const cookieLog = ref(false);
 
@@ -30,19 +30,40 @@ const manageExternalScript = (shouldInject) => {
 /**
  * Lógica de Consentimiento: Ahora depende de ambas cookies
  */
-const hasConsent = computed(() => cookies.get("rlx-consent") === true && cookies.get("rlx-marketing") === true);
+
+const cookieExists = computed(() => {
+  return (
+    cookies.get("rlx-consent") !== undefined ||
+    cookies.get("rlx-marketing") !== undefined
+  );
+});
+const hasConsent = computed(
+  () =>
+    cookies.get("rlx-consent") === true &&
+    cookies.get("rlx-marketing") === true,
+);
 
 const isRolexRoute = computed(() => {
-  return route.fullPath.includes("rolex") && route.name !== 'rolex-nuevos-modelos';
+  return (
+    route.fullPath.includes("rolex") && route.name !== "rolex-nuevos-modelos"
+  );
 });
 
-const cookieOptions = { path: '/', maxAge: 60 * 60 * 24 * 360 };
+const cookieOptions = { path: "/", maxAge: 60 * 60 * 24 * 360 };
 
-if (cookies.get("rlx-consent") === undefined || cookies.get("rlx-marketing") === undefined) {
-  if (cookies.get("rlx-consent") === undefined) cookies.set("rlx-consent", false, cookieOptions);
-  if (cookies.get("rlx-marketing") === undefined) cookies.set("rlx-marketing", false, cookieOptions);
+if (
+  cookies.get("rlx-consent") === undefined ||
+  cookies.get("rlx-marketing") === undefined
+) {
+  if (cookies.get("rlx-consent") === undefined)
+    cookies.set("rlx-consent", false, cookieOptions);
+  if (cookies.get("rlx-marketing") === undefined)
+    cookies.set("rlx-marketing", false, cookieOptions);
   checkOpen.value = true;
-} else if (cookies.get("rlx-consent") === false || cookies.get("rlx-marketing") === false) {
+} else if (
+  cookies.get("rlx-consent") === false ||
+  cookies.get("rlx-marketing") === false
+) {
   checkOpen.value = true;
 }
 
@@ -51,7 +72,7 @@ watch(
   ([consent, onRoute]) => {
     manageExternalScript(consent && onRoute);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const isOpenUp = computed(() => (checkOpen.value ? "bottom-0" : "-bottom-3/4"));
@@ -66,99 +87,188 @@ function togglePanel() {
 function changeCookie(value) {
   cookies.set("rlx-consent", value, cookieOptions);
   cookies.set("rlx-marketing", value, cookieOptions);
-  if (value === true) {
-    checkOpen.value = false;
-  }
+  checkOpen.value = false;
+
 }
 </script>
 
-
 <template>
-  <div :class="isOpenUp" class="fixed z-30 h-fit duration-500" v-if="router.path != '/dashboard'">
-    <div
-      :class="checkOpen ? 'bottom-[70%] md:bottom-1/2' : 'bottom-0'"
-      class="h-[10vh] duration-500 flex justify-end fixed z-20 left-[98%] right-4 mr-16 border"
-    >
+  <div v-if="router.path != '/dashboard'">
+    <Transition name="slide-up">
       <div
-        class="group border-l border-r border-t rounded-t-md shadow-md shadow-rolex-green border-rolex-green cursor-pointer p-4 fixed flex pt-5 gap-2 bg-white hover:text-rolex-green duration-100 h-40"
-        @click="togglePanel">
+        v-if="!cookieExists"
+        class="fixed bottom-8 right-8 z-50 bg-white w-[350px] rounded-xl shadow-2xl border border-gray-100 p-6 flex flex-col antialiased"
+      >
+        <div class="flex items-center justify-between mb-4 px-2">
+          <img
+            src="/assets/mimi-logo-gray.svg"
+            alt="Logo Mimi"
+            class="h-8 object-contain"
+          />
+          <div class="h-8 w-[1px] bg-gray-200"></div>
+          <img
+            src="/assets/svg-badge-rolex.svg"
+            alt="Logo Rolex"
+            class="h-10 object-contain"
+          />
+        </div>
+
+        <p class="text-sm leading-relaxed text-gray-600 mb-6 text-justify">
+          Para brindar las mejores experiencias, utilizamos tecnologías como
+          cookies para mejorar su navegación. El consentimiento nos permite
+          procesar datos de comportamiento de manera segura y exclusiva.
+        </p>
+
+        <div class="flex flex-col w-full gap-2">
+          <button
+            @click="changeCookie(true)"
+            class="w-full bg-rolex-green py-1 text-white rounded border border-rolex-green duration-200 hover:bg-white hover:text-rolex-green cursor-pointer"
+          >
+            Aceptar todo
+          </button>
+          <button
+            @click="togglePanel"
+            class="w-full py-1 rounded border border-rolex-green duration-200 bg-white text-rolex-green cursor-pointer hover:border-gray-400"
+          >
+            Preferencias
+          </button>
+          <button
+            @click="changeCookie(false)"
+            class="w-full py-1 rounded border border-rolex-green duration-200 bg-white text-rolex-green cursor-pointer hover:border-gray-400"
+          >
+            Rechazar todo
+          </button>
+        </div>
+      </div>
+    </Transition>
+    <Transition name="slide-up">
+      <div
+        class="group border rounded-full shadow-md shadow-rolex-green border-rolex-green cursor-pointer p-4 fixed bottom-4 right-4 flex items-center gap-2 bg-white hover:text-rolex-green duration-100  z-50"
+        @click="togglePanel" v-if="!checkOpen && cookieExists">
         <font-awesome-icon :icon="['fas', 'gear']" class="group-hover:animate-spin" />
         <h2>Cookies</h2>
       </div>
-    </div>
-    <div class="h-[70vh] lg:h-[50vh] relative w-full border z-40">
-      <div id="content"
-        class="border-2 bg-white border-rolex-green h-full w-full relative flex flex-col md:flex-row items-center">
-        <div
-          class="md:w-2/3 overflow-y-scroll md:overflow-y-hidden h-4/5 md:h-full flex flex-col justify-start md:justify-center items-center">
-          <div class="flex items-center gap-10 pb-10">
-            <img src="/assets/mimi-logo-gray.svg" alt="Logo mimi joyeria" class="w-32" />
-            <img src="/assets/svg-badge-rolex.svg" alt="Logo rolex" class="w-32" />
-          </div>
-          <div class="flex flex-col items-center overflow-scroll">
-            <h2 class="w-10/12 text-justify text-xs md:text-sm">
-              Para brindar las mejores experiencias, utilizamos tecnologías como
-              cookies para almacenar y/o acceder a información del dispositivo.
-              Dar su consentimiento a estas tecnologías nos permitirá procesar
-              datos como el comportamiento de navegación o identificaciones
-              únicas en este sitio. No dar o retirar el consentimiento puede
-              afectar negativamente a determinadas características y funciones.
-            </h2>
-            <button @click="cookieLog = !cookieLog"
-              class="w-10/12 text-justify text-xs md:text-sm font-black hover:underline">
-              > Cookies Analiticas.
-            </button>
-            <Transition>
-              <div class="grid grid-cols-3 content-center w-10/12" v-if="cookieLog">
-                <h2 class="pl-2 text-sm font-bold border border-rolex-green">Nombre</h2>
-                <h2 class="pl-2 text-sm font-bold border border-rolex-green">Duración</h2>
-                <h2 class="pl-2 text-sm font-bold border border-rolex-green">Descripción</h2>
-                <h2 class="pl-2 text-sm border border-rolex-green">'rlx-consent'</h2>
-                <h2 class="pl-2 text-sm border border-rolex-green">360 Días</h2>
-                <h2 class="pl-2 text-sm border border-rolex-green">
-                  Cookie analítica de Rolex
-                </h2>
-                <h2 class="pl-2 text-sm border border-rolex-green">'rlx-marketing'</h2>
-                <h2 class="pl-2 text-sm border border-rolex-green">360 Días</h2>
-                <h2 class="pl-2 text-sm border border-rolex-green">
-                  Cookie analítica de Rolex
-                </h2>
-              </div>
-            </Transition>
+    
+    </Transition>
 
-            <h2 class="w-10/12 text-justify font-semibold text-xs md:text-sm">
-              *Puedes cambiar de decisión en cualquier en momento
-            </h2>
-          </div>
+    
+
+    <!-- Overlay -->
+    <Transition name="fade">
+      <div
+        v-if="checkOpen"
+        @click="togglePanel"
+        class="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm"
+      ></div>
+    </Transition>
+
+    <Transition name="slide-right">
+      <div
+        v-if="checkOpen"
+        class="h-screen fixed top-0 right-0 z-60 w-11/12 md:w-1/3 bg-white border-l border-rolex-green px-6"
+      >
+        <header class="flex justify-between items-center">
+          <h2 class="py-6">Preferencias de Cookies</h2>
+          <font-awesome-icon
+            :icon="['fas', 'xmark']"
+            class="text-xl cursor-pointer"
+            @click="togglePanel"
+          />
+        </header>
+        <hr />
+        <p class="text-sm pt-6">
+          Utilizamos cookies para mejorar su experiencia de navegación. Aqui
+          encontraras toda la información relacionada a los parametros que
+          utilizamos
+        </p>
+        <div class="mt-3 space-y-4 overflow-y-scroll h-[55%]">
+          <header class="bg-white border rounded-xl p-3 shadow-lg">
+            <h2>Analíticas y estadísticas</h2>
+            <p
+              class="text-xs bg-rolex-green text-white px-3 py-1 rounded-xl my-2 w-fit"
+            >
+              Rolex
+            </p>
+            <p class="text-sm font-light">
+              Cookies de análisis de Rolex que nos ayudan a entender cómo
+              interactúa con nuestros productos y servicios para mejorar su
+              experiencia de compra.
+            </p>
+          </header>
+          <header class="bg-white border rounded-xl p-3 shadow-lg">
+            <h2>Marketing</h2>
+            <p
+              class="text-xs bg-rolex-green text-white px-3 py-1 rounded-xl my-2 w-fit"
+            >
+              Rolex
+            </p>
+            <p class="text-sm font-light">
+              Cookies de marketing de Rolex que se utilizan para mostrarle
+              anuncios relevantes y medir la efectividad de nuestras campañas
+              publicitarias en redes sociales y otros sitios web.
+            </p>
+          </header>
         </div>
-        <div class="flex flex-col items-center justify-center w-1/3 gap-2 h-3/5 md:h-full">
-          <button @click="changeCookie(true)"
-            class="border-2 border-rolex-green font-semibold px-6 py-2 hover:bg-rolex-green hover:text-white duration-200 w-44 sm:w-60 md:w-80 text-xs md:text-lg">
-            Permitir todas
-          </button>
-          <button @click="changeCookie(true)"
-            class="border-2 border-rolex-green font-semibold px-6 py-2 hover:bg-rolex-green hover:text-white duration-200 w-44 sm:w-60 md:w-80 text-xs md:text-lg">
-            Permitir solo analíticas
+        <div class="flex flex-col w-full gap-2">
+          <button
+            @click="changeCookie(true)"
+            class="w-full bg-rolex-green py-2 text-white rounded border border-rolex-green duration-200 hover:bg-white hover:text-rolex-green cursor-pointer"
+          >
+            Aceptar todo
           </button>
 
-          <button @click="changeCookie(false)"
-            class="border-2 border-rolex-green font-semibold px-6 py-2 hover:bg-rolex-green hover:text-white duration-200 w-44 sm:w-60 md:w-80 text-xs md:text-lg">
-            Rechazar todas
+          <button
+            @click="changeCookie(false)"
+            class="w-full py-2 rounded border border-rolex-green duration-200 bg-white text-rolex-green cursor-pointer hover:border-gray-400"
+          >
+            Rechazar todo
           </button>
         </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
-
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
+/* Fade effect for overlay */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
-.v-enter-from,
-.v-leave-to {
+/* Slide up effect for the small banner */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(20px);
   opacity: 0;
+}
+
+/* Slide right for the preference panel */
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide-right-enter-from,
+.slide-right-leave-to {
+  transform: translateX(100%);
+}
+
+/* Scrollbar styling for a cleaner look */
+div::-webkit-scrollbar {
+  width: 4px;
+}
+div::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+div::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
 }
 </style>

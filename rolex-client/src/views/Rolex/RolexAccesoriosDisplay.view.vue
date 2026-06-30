@@ -171,12 +171,14 @@ onMounted(() => {
       location.value = "N/A";
     });
 });
+console.log(route.params.id);
 
-watch(accesories, () => {
+watch(isReady, () => {
+  const send = JSON.stringify(digitalDataLayer("cufflinks", route.params.id, "accessories model page"))
   useHead(
     {
       script: [
-        `var digitalDataLayer = ${JSON.stringify(digitalDataLayer("cufflinks", route.params.id, "accessories model page"))}; `,
+        `var digitalDataLayer = ${send}; `,
       ],
     },
     { head },

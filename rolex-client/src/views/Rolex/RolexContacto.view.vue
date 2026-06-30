@@ -6,6 +6,7 @@ import PageBanner from "../../components/banners-components/PageBanner.vue";
 import SectionNavigationCard from "../../components/cards/SectionNavigationCard.vue";
 
 import { computed, ref } from "vue";
+import router from "../../router";
 
 const activate = ref("h-0");
 const button = computed(() => {
@@ -31,7 +32,9 @@ if (day == 7) {
     dayChecker.value = "Abierto";
   }
 }
-
+const contactRoute = computed(() => {
+  return "/rolex/contacto";
+});
 function CTATrack(type) {
   let link = "";
   let track = "";
@@ -47,8 +50,8 @@ function CTATrack(type) {
       break;
 
     case "mail":
-      link = "mailto:info@mimijoyeria.com";
-      track = "";
+      link = contactRoute.value;
+      track = "contactForm";
       break;
 
     case "direction":
@@ -69,7 +72,13 @@ function CTATrack(type) {
     }, 100);
   }
 
-  window.open(link, "_blank");
+    if(type === 'mail'){
+    router.push({name:"rolex-contacto-enviar-mensaje"})
+
+  }else{
+    window.open(link,"_blank");
+
+  }
 }
 </script>
 
@@ -91,9 +100,11 @@ function CTATrack(type) {
           </template>
         </RolexHeader>
 
-        <section class="flex justify-center bg-rolex-brown-light-2 w-full pb-[20vh]">
+        <section
+          class="flex justify-center bg-rolex-brown-light-2 w-full pb-[20vh]"
+        >
           <div
-            class="flex md:w-10/12 flex-col-reverse md:flex-row items-center justify-center overflow-y-hidden h-fit md:h-[90vh] "
+            class="flex md:w-10/12 flex-col-reverse md:flex-row items-center justify-center overflow-y-hidden h-fit md:h-[90vh]"
           >
             <div class="md:w-2/3 h-full">
               <img
@@ -108,7 +119,9 @@ function CTATrack(type) {
               />
             </div>
 
-            <div class="w-full md:w-1/3 bg-white h-full flex flex-col justify-center items-center gap-2 font-helvetica font-bold py-5 text-rolex-brown">
+            <div
+              class="w-full md:w-1/3 bg-white h-full flex flex-col justify-center items-center gap-2 font-helvetica font-bold py-5 text-rolex-brown"
+            >
               <div class="w-10/12">
                 <h2>Distribuidor Oficial Rolex</h2>
                 <h2 class="text-3xl">Mimi Joyería C.A.</h2>
@@ -164,8 +177,8 @@ function CTATrack(type) {
                   </div>
                 </div>
 
-                 <div
-                  class="space-y-2 text-sm text-rolex-brown w-full  overflow-x-auto md:overflow-visible no-scrollbar"
+                <div
+                  class="space-y-2 text-sm text-rolex-brown w-full overflow-x-auto md:overflow-visible no-scrollbar"
                 >
                   <div
                     class="flex flex-row md:flex-col flex-nowrap gap-4 md:gap-y-2 pb-4 md:pb-0"
@@ -215,8 +228,6 @@ function CTATrack(type) {
                     </button>
                   </div>
                 </div>
-
-               
               </div>
             </div>
           </div>
@@ -260,18 +271,15 @@ function CTATrack(type) {
   </div>
 </template>
 
-
-
 <style lang="css">
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-
 </style>

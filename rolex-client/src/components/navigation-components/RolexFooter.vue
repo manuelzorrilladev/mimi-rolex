@@ -12,7 +12,7 @@ function scrollToTop() {
         <div  @click="scrollToTop" class=" cursor-pointer w-full flex flex-col items-center">
           
             <font-awesome-icon :icon="['fas', 'angle-up']" class="text-white" />
-            <h2 class="text-sm font-helvetica-bold text-white">Volver al inicio</h2>
+            <h2 class="text-sm font-helvetica text-white">Volver al inicio</h2>
         </div>
 
     </div>

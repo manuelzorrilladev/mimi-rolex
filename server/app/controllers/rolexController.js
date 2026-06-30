@@ -20,6 +20,164 @@ function contarGuiones(cadena) {
 
 // Show display of all watches from a single collection
 
+exports.getAllPaginatedRolexV2 = async (req, res) => {
+  try {
+    // 1. Pagination parameters for Infinite Scroll
+    const limit = 20;
+    const page = parseInt(req.query.page, 10) || 1; // Corrected radix to 10
+    const offset = (page - 1) * limit;
+
+    // 2. Extract tags string from query parameters
+    const { tags } = req.query;
+
+    // Define base includes that will always return, regardless of filters
+    const detailsInclude = {
+      model: rolex.RolexDetailsV2,
+      where: {} // Dynamic where clause for prices
+    };
+
+    const includes = [detailsInclude];
+
+    // 3. Handle filtering if tags parameter is present
+    if (tags) {
+      // Split positional string: [collection, size, material, color, minPrice, maxPrice]
+      const tagsArray = typeof tags === 'string' ? tags.split(',') : [];
+
+      // Clean empty string spaces sent by frontend
+      const collectionFilter = tagsArray[0]?.trim();
+      const sizeFilter = tagsArray[1]?.trim();
+      const materialFilter = tagsArray[2]?.trim();
+      const colorFilter = tagsArray[3]?.trim();
+
+      // Parse numerical prices safely
+      const minPrice = parseInt(tagsArray[4], 10) || 0;
+      const maxPrice = parseInt(tagsArray[5], 10) || 0;
+
+      // --- Filter 1: Collection (rolexCollections) ---
+      if (collectionFilter && collectionFilter !== '') {
+        includes.push({
+          model: rolex.RolexCollections, // Adjusted to your mentioned model structure
+          where: {
+            // Assuming your table column matches your naming strategy, replace if it uses 'name' or 'collection'
+            idName: collectionFilter
+          },
+          required: true // Force INNER JOIN to filter out records
+        });
+      } else {
+        includes.push({
+          model: rolex.RolexCollections,
+        });
+      }
+
+      // --- Filter 2: Tags (RolexTags - Size, Material, Color) ---
+      // We collect all active text tags into a single array to hit the DB efficiently
+      const activeTags = [];
+      if (sizeFilter && sizeFilter !== '') activeTags.push(sizeFilter);
+      if (materialFilter && materialFilter !== '') activeTags.push(materialFilter);
+      if (colorFilter && colorFilter !== '') activeTags.push(colorFilter);
+
+      if (activeTags.length > 0) {
+        includes.push({
+          model: rolex.RolexTags,
+          where: {
+            tag: { [Op.in]: activeTags } // Evaluates matching keywords
+          },
+          through: { attributes: [] },
+          required: true
+        });
+      } else {
+        // If no text tags are applied, include it as optional to fetch current tags
+        includes.push({
+          model: rolex.RolexTags,
+          through: { attributes: [] },
+          required: false
+        });
+      }
+
+      // --- Filter 3: Prices (RolexDetailsV2) ---
+      if (minPrice > 0 && maxPrice > 0) {
+        detailsInclude.where.precio = { [Op.between]: [minPrice, maxPrice] };
+      } else if (minPrice > 0) {
+        detailsInclude.where.precio = { [Op.gte]: minPrice };
+      } else if (maxPrice > 0) {
+        detailsInclude.where.precio = { [Op.lte]: maxPrice };
+      }
+    } else {
+      // If no query parameters at all, just map baseline optional relation
+      includes.push({
+        model: rolex.RolexTags,
+        through: { attributes: [] },
+        required: false
+      });
+
+
+      includes.push({
+        model: rolex.RolexCollections,
+      });
+    }
+
+    // 4. Query DB using distinct to protect accurate total calculations
+    const { count, rows: rolexes } = await rolex.RolexGetAllV2.findAndCountAll({
+      include: includes,
+      limit: limit,
+      offset: offset,
+      distinct: true,
+      order: [['id', 'DESC']]
+    });
+
+    // 5. Structured response payload for Vue implementation
+    return res.status(200).json({
+      totalItems: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      hasMore: page * limit < count,
+      data: rolexes
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error retrieving Rolex collection",
+      error: error.message || error
+    });
+  }
+};
+
+
+
+exports.get10RandomRolex = (req, res) => {
+  rolex.RolexGetAllV2.findAll({
+    order: db.Sequelize.literal('rand()'),
+    limit: 10,
+    include: [
+      {
+        model: rolex.RolexDetailsV2,
+        attributes: ['precio']
+      },
+      {
+        model: rolex.RolexCollections,
+        attributes: ['idName']
+      },
+      {
+        model: rolex.RolexTags,
+        where: {
+          tag: 'Grande'
+        },
+        through: { attributes: [] },
+        required: true
+      }
+    ]
+  })
+    .then((data) => { return res.send(data) })
+    .catch((error) => { return res.status(500).send({ message: "Error retrieving random Rolex pieces", error }) })
+}
+exports.getAllRolexCollections = (req, res) => {
+  rolex.RolexCollections.findAll({
+
+  })
+    .then((data) => { return res.send(data) })
+    .catch((error) => { return res.status(500).send({ message: "Error retrieving accessory", error }) })
+}
+
 exports.getCollectionDetailsV2 = (req, res) => {
 
 
@@ -28,14 +186,14 @@ exports.getCollectionDetailsV2 = (req, res) => {
     return res.status(400).send({ message: "Invalid collection id" })
   }
 
- rolex.RolexGetAllV2.findAll({
+  rolex.RolexGetAllV2.findAll({
     where: {
       RolexCollectionId: collectionId
     },
     include: [
       {
         model: rolex.RolexDetailsV2,
-        attributes: ['precio'] 
+        attributes: ['precio']
       }
     ]
   })
@@ -44,6 +202,8 @@ exports.getCollectionDetailsV2 = (req, res) => {
 
 
 }
+
+
 
 exports.getRolexDetailsV2 = async (req, res) => {
   try {

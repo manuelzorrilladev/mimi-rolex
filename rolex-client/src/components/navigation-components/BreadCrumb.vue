@@ -75,6 +75,7 @@ function handleNavigation(index) {
       </router-link>
     </div>
 
+
     <div v-for="(item, index) in breadcrumbs" :key="index">
       <div class="hidden md:flex gap-4 pr-4">
         <font-awesome-icon :icon="['fas', 'chevron-right']" class="py-1 text-white" />

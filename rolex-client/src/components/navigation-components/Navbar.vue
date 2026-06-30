@@ -35,16 +35,13 @@ const activeSearch = ref(false);
 
 
 function activateSearch() {
-  if(router != 'busqueda'){
-    activeSearch.value = !activeSearch.value;
-  
+  activeSearch.value = !activeSearch.value;
+
     if (activeSearch.value == true) {
       search.value = "h-60";
     } else {
       search.value = "h-0";
     }
-
-  }
 }
 </script>
 
@@ -218,11 +215,12 @@ function activateSearch() {
       </div>
       <div>
         <font-awesome-icon
-          :icon="['fas', 'magnifying-glass']"
+          :icon="activeSearch?['fas', 'xmark']:['fas', 'magnifying-glass']"
           class="duration-200 cursor-pointer text-rolex-green"
           @click="activateSearch()"
         />
       </div>
+    
       <!-- LOGIN ATTEMPT END -->
     </div>
 
