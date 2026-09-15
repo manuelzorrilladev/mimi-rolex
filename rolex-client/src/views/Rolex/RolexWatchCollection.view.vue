@@ -94,9 +94,9 @@ function filterItems() {
                 </div>
               </div>
             </div>
-            <div class="w-full flex justify-center py-[10vh]">
+              <div  v-if="currentPage < totalPages" class="w-full flex justify-center py-[10vh]">
               <button
-                v-if="currentPage < totalPages"
+               
                 @click="currentPage++"
                 class="bg-rolex-green text-white border w-fit border-rolex-green px-4 py-2 font-helvetica font-bold rounded-3xl hover:bg-white hover:text-rolex-green duration-200"
               >
@@ -105,10 +105,10 @@ function filterItems() {
             </div>
           </section>
   
-  
         <div
          v-if="currentData.mainSection.videoEmbed"
-          class="video-frame flex bg-rolex-brown-light-2 justify-center pb-[10vh]"
+          class="video-frame flex bg-rolex-brown-light-2 justify-center "
+          :class="currentData.mainSection.videoEmbed?'pb-[10vh]':'pb-0'"
         >
           <div class="w-11/12 aspect-w-16 aspect-h-9">
             <iframe

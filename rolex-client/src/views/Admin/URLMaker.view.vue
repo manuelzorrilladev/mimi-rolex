@@ -18,10 +18,10 @@ const copied = ref(false);
 // Listado inteligente de Fuentes y sus respectivos Medios sugeridos
 const sourceOptions = [
   { 
-    id: "instagram", 
+    id: "ig", 
     label: "Instagram",
     mediums: [
-      { value: "social_bio", label: "Enlace en Biografía (Organic)" },
+      { value: "link_in_bio", label: "Enlace en Biografía (Organic)" },
       { value: "cpc", label: "Publicación Impulsada / Anuncio (Paid)" },
       { value: "social_story", label: "Enlace en Historia" }
     ]
@@ -30,7 +30,7 @@ const sourceOptions = [
     id: "facebook", 
     label: "Facebook",
     mediums: [
-      { value: "social_bio", label: "Enlace en Información/Biografía" },
+      { value: "link_in_bio", label: "Enlace en Información/Biografía" },
       { value: "cpc", label: "Publicación Impulsada / Anuncio (Paid)" },
       { value: "social_post", label: "Post Orgánico en el Muro" }
     ]
@@ -48,6 +48,13 @@ const sourceOptions = [
     mediums: [
       { value: "newsletter", label: "Boletín Informativo (Newsletter)" },
       { value: "email_direct", label: "Firma o Correo Directo de Soporte" }
+    ]
+  },
+  { 
+    id: "meta", 
+    label: "Meta",
+    mediums: [
+      { value: "campaign_add", label: "campaña de anuncios" },
     ]
   },
   { 

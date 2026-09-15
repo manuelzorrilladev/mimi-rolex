@@ -1,12 +1,13 @@
 {
-    "1908": {
+     "1908": {
         "name": "1908",
         "headerSection": {
             "title": "Rolex Perpetual 1908 <br> Clasicismo de vanguardia",
             "text": "<strong>Elegante, clásico e incuestionablemente contemporáneo, el 1908 es una prolongación de la intrepidez original de Rolex. </strong> Heredero del patrimonio estético de la marca y de sus innumerables innovaciones en relojería, el reloj perpetúa la búsqueda de la excelencia de la marca. Este buen ejemplo de la proeza relojera de Rolex, con la certificación de Cronómetro Superlativo, lleva el clasicismo al futuro."
         },
         "mainSection": {
-            "videoEmbed": "https://www.youtube.com/embed/HIORqD-Efc8?si=XnuD8q-rGz9H_tcM",
+            "videoEmbed": false,
+            "img": true,
             "title": "El 1908 perpetúa la audacia original de Rolex",
             "text": "Desde la creación de la marca en 1908, Rolex ha mantenido la profunda convicción de su fundador, Hans Wilsdorf, para quien el futuro del reloj de pulsera era indisociable del rendimiento superlativo. El 1908 combina todos los atributos esenciales de un reloj de pulsera de cuerda automática según él: precisión cronométrica, hermeticidad, autonomía, confort y durabilidad.",
             "backgroundColor": "bg-rolex-brown-light-2"
@@ -14,35 +15,41 @@
         "sections": {
             "section1": {
                 "imgSize": "w-10/12",
+                "title": "El 1908 perpetúa la audacia original de Rolex",
+                "text": "Desde la creación de la marca en 1908, Rolex ha mantenido la profunda convicción de su fundador, Hans Wilsdorf, para quien el futuro del reloj de pulsera era indisociable del rendimiento superlativo. El 1908 combina todos los atributos esenciales de un reloj de pulsera de cuerda automática según él: precisión cronométrica, hermeticidad, autonomía, confort y durabilidad.",
+                "backgroundColor": "bg-rolex-brown-light-2"
+            },
+            "section2": {
+                "imgSize": "w-10/12",
                 "title": "Estilo clásico, perpetuamente reinventado",
                 "text": "Mientras que las innovaciones revolucionarias de Hans Wilsdorf se referían a las características técnicas del reloj de pulsera, también fueron fruto de una visión estética muy fuerte. La silueta de la caja, así como el diseño de la esfera del 1908 reinventan el espíritu clásico, pero muy moderno, de los relojes Oyster Perpetual originales. Como rasgo estilístico, su bisel sutilmente abombado y estriado atestigua la búsqueda de la delicadeza en todas sus formas.",
                 "backgroundColor": "bg-rolex-brown-light-1"
             },
-            "section2": {
+            "section3": {
                 "imgSize": "w-full",
                 "title": false,
                 "text": false,
                 "backgroundColor": "bg-rolex-brown-light-2"
             },
-            "section3": {
+            "section4": {
                 "imgSize": "w-10/12 ",
                 "title": "Un diseño elegante que vincula el pasado con el presente",
                 "text": "Con los números 3, 9 y 12 y su segundero pequeño a las 6 h, el reloj 1908, disponible en oro amarillo o blanco de 18 quilates, así como en platino 950, reformula el estilo de un Oyster Perpetual de 1931 y le confiere absoluta modernidad. La esfera es un ejemplo de elegancia y sofisticación: Los números arábigos y los índices facetados en oro de 18 quilates sobre una esfera blanco intenso o negro intenso, o una esfera azul glaciar que presenta un motivo guilloqueado grano de arroz. Protegida por un cristal de zafiro abombado, presenta una escala de los minutos «ferrocarril» sobre el contorno de la esfera. El 1908 está equipado con unas agujas de estilos distintivos: el minutero tiene forma de espada de dos filos, mientras que una aguja con un círculo perforado marca las horas.",
                 "backgroundColor": "bg-rolex-brown-light-2"
             },
-            "section4": {
+            "section5": {
                 "imgSize": "w-10/12 ",
                 "title": "Delicadeza y comodidad",
                 "text": "Los relojes 1908 están provistos de una correa de piel, a excepción de la versión en oro amarillo de 18 quilates, exclusivamente equipada con el brazalete Settimo. La correa de piel de aligátor marrón o negra presenta costuras tono sobre tono y forro verde interior, un discreto homenaje al color distintivo de la marca relojera. Fabricado en oro amarillo o blanco de 18 quilates o platino 950, su cierre Dualclasp aumenta el confort del usuario al abrazar la forma de la muñeca. El brazalete Settimo está fabricado en oro amarillo de 18 quilates y sus delicados elementos crean reflejos de luz. Equipado con un cierre invisible Crownclasp, presenta un diseño armonioso que evoca los brazaletes de inspiración joyera de algunos elegantes relojes antiguos.",
                 "backgroundColor": "bg-rolex-brown-light-2"
             },
-            "section5": {
+            "section6": {
                 "imgSize": "w-10/12 md:w-1/2",
                 "title": "Un fondo transparente para una revelación emocionante",
                 "text": "Al ofrecer un reloj que revela su movimiento a través de un fondo transparente, Rolex continúa innovando mientras mantiene su tradición relojera. El calibre 7140 cuenta con una masa oscilante recortada de oro amarillo con tres brazos, grabada con las palabras «Chronometer Perpetual», y con un rodamiento de bolas optimizado. El movimiento posee acabados extraordinarios, incluida la exclusiva decoración Rolex Côtes de Genève: una célebre decoración relojera tradicional, reinterpretada con una ranura pulida entre cada franja. La ventana, hecha de de zafiro prácticamente imposible de rayar, demuestra que, para Rolex, la estética del movimiento es tan importante como su rendimiento.",
                 "backgroundColor": "bg-rolex-brown-light-1"
             },
-            "section6": {
+            "section7": {
                 "hasVideo": true,
                 "videoEmbed": "https://www.youtube.com/embed/BpmiJOA2hEw?si=vEPB_B6lM7FekOu8",
                 "title": "El calibre 7140: rendimiento y elegancia",
@@ -60,6 +67,7 @@
         },
         "mainSection": {
             "videoEmbed": "https://www.youtube.com/embed/d2Je742R0pU?si=J5b9iWhZg9Dm_cFH",
+            "img":false,
             "title": false,
             "text": "La década de 1930 conoció una fulgurante evolución técnica de los aviones, lo que permitió inaugurar los vuelos de largo recorrido. Varios pilotos establecieron récords llevando un Oyster en la muñeca. Otros utilizaban un reloj Rolex como cronómetro de a bordo, siguiendo el ejemplo de Owen Cathcart Jones y Ken Waller que, en 1934, lograron completar un vuelo de ida y vuelta entre Londres (Gran Bretaña) y Melbourne (Australia) en un tiempo récord, a bordo de un bimotor De Havilland Comet.",
             "backgroundColor": "bg-rolex-brown-light-2"
@@ -738,7 +746,7 @@
             "text": "<strong>Relojes de buceo por excelencia, el Oyster Perpetual Submariner y el Oyster Perpetual Submariner Date encarnan el vínculo histórico que une a Rolex con el universo de la exploración submarina.</strong>Presentado en 1953, el Submariner fue el primer reloj de pulsera hermético hasta 100 metros de profundidad. El Submariner Date, dotado de la función de fecha, se presentó en 1969. La hermeticidad de ambos modelos aumentó más tarde hasta 300 metros. Reconocidos por su robustez, conquistaron también la tierra firme y se convirtieron en los relojes predilectos para una gran variedad de actividades y deportes."
         },
         "mainSection": {
-            "videoEmbed": "https://www.youtube.com/embed/mhdlwwoE_ZI?si=owKBV3wLOAr8Tqek",
+            "videoEmbed": false,
             "title": false,
             "text": false,
             "backgroundColor": "bg-rolex-brown-light-2"
@@ -746,33 +754,38 @@
         "sections": {
             "section1": {
                 "imgSize": "w-10/12",
-                "title": "El diseño del reloj de submarinismo por excelencia",
-                "text": "El diseño del Submariner, herramienta de supervivencia bajo el mar, está completamente determinado por las necesidades prácticas de los buceadores. El modelo ha ido evolucionando mediante la incorporación de elementos que mejoran su funcionalidad. <br><br>Con su caja Oyster de 41 mm, su esfera dotada de índices y agujas luminiscentes de gran tamaño, su bisel giratorio unidireccional y su brazalete Oyster, el Submariner y el Submariner Date están entre los relojes más reconocibles jamás diseñados. Elemento clave de su funcionalidad, el disco de bisel Cerachrom graduado de cerámica de alta tecnología contribuye plenamente a su fortísima identidad. Su graduación de 60 minutos permite a los submarinistas controlar con precisión el tiempo de inmersión.",
+                "title": "Desde su creación, el Submariner ha evolucionado constantemente, mejorando su hermeticidad, robustez y funcionalidad.",
+                "text":false,
                 "backgroundColor": "bg-rolex-brown-light-1"
             },
             "section2": {
-                "hasVideo": true,
-                "videoEmbed": "https://www.youtube.com/embed/ojYMAVVDnW8?si=DOxntUeGgDYKVOpY",
-                "title": "Fiabilidad, robustez y funcionalidad",
-                "text": "La caja Oyster del Submariner y el Submariner Date garantiza una hermeticidad de hasta 300 metros de profundidad. La corona Triplock, provista de un sistema de triple hermeticidad, se enrosca sólidamente a la caja y garantiza una hermeticidad total.",
+               "imgSize": "w-10/12 md:w-1/2",
+                "title": "Un verdadero reloj de submarinismo de diseño",
+                "text": "El diseño del Submariner, herramienta de supervivencia bajo el mar, está completamente determinado por las necesidades prácticas de los buceadores. El modelo ha ido evolucionando mediante la incorporación de elementos que mejoran su funcionalidad.<br><br>Con su caja Oyster de 41 mm, su esfera dotada de índices y agujas luminiscentes de gran tamaño, su bisel giratorio unidireccional y su brazalete Oyster, el Submariner y el Submariner Date están entre los relojes más reconocibles jamás diseñados. Elemento clave de su funcionalidad, el disco de bisel Cerachrom graduado de cerámica de alta tecnología contribuye plenamente a su fortísima identidad. Su graduación de 60 minutos permite a los submarinistas controlar con precisión el tiempo de inmersión.",
                 "backgroundColor": "bg-rolex-brown-light-2"
             },
             "section3": {
                 "imgSize": "w-full",
-                "title": false,
-                "text": "Diseñado para ser a la vez robusto y confortable, el brazalete Oyster está equipado con un cierre de seguridad Oysterlock que evita cualquier apertura involuntaria, y con el sistema de extensión Rolex Glidelock, que permite un ajuste preciso de la longitud del brazalete sin necesidad de herramienta alguna.<br><br>El Submariner y el Submariner Date están equipados con el calibre 3230 y el calibre 3235 respectivamente, movimientos mecánicos de cuerda automática completamente desarrollados y manufacturados por Rolex. Su arquitectura, la calidad de su fabricación y sus innovadoras características les confieren un excelente rendimiento en materia de precisión y fiabilidad. La reserva de marcha de ambos movimientos es de aproximadamente 70 horas.",
+                "title": "Fiabilidad, robustez y funcionalidad",
+                "text": "La caja Oyster del Submariner y el Submariner Date garantiza una hermeticidad de hasta 300 metros de profundidad. La corona Triplock, provista de un sistema de triple hermeticidad, se enrosca sólidamente a la caja y garantiza una mayor hermeticidad.<br><br>Diseñado para ser a la vez robusto y confortable, el brazalete Oyster está equipado con un cierre de seguridad Oysterlock que evita cualquier apertura involuntaria, y con el sistema de extensión Rolex Glidelock, que permite un ajuste preciso de la longitud del brazalete sin necesidad de herramienta alguna.",
                 "backgroundColor": "bg-rolex-brown-light-2"
             },
             "section4": {
-                "imgSize": "w-10/12 md:w-1/2",
+                "imgSize": "w-10/12",
+                "title": false,
+                "text": "El Submariner y el Submariner Date están equipados con el calibre 3230 y el calibre 3235 respectivamente, movimientos mecánicos de cuerda automática completamente desarrollados y manufacturados por Rolex. Presentan un elevado rendimiento en términos de precisión, autonomía, comodidad de uso y fiabilidad. La reserva de marcha de ambos movimientos es de aproximadamente 70 horas.",
+                "backgroundColor": "bg-rolex-brown-light-2"
+            },
+            "section5": {
+                "imgSize": "w-9/12",
                 "title": "Certificación de Cronómetro Superlativo",
                 "text": "Como todos los relojes Rolex, el Submariner y Submariner Date cuentan con la certificación de Cronómetro Superlativo. Esta denominación atestigua que cada reloj que sale de los talleres de la marca ha superado con éxito una serie de pruebas llevadas a cabo por Rolex en sus laboratorios internos. El estatus de Cronómetro Superlativo se simboliza mediante el sello verde y va acompañado de una garantía internacional de cinco años.",
                 "backgroundColor": "bg-rolex-brown-light-2"
             },
-            "section5": {
-                "imgSize": "w-10/12",
-                "title": "Llave a las profundidades",
-                "text": "Si bien el Submariner fue concebido para la exploración subacuática y el buceo, Recién salido de los talleres Rolex, el reloj tuvo un éxito inmediato y muchos profesionales de las profundidades marinas lo pusieron a prueba para la marca. Uno de estos pioneros fue Dimitri Rebikoff, un ingeniero y fotógrafo submarino francés. En su informe de 1953, Rebikoff escribió que el rendimiento del Submariner durante las pruebas había sido extraordinario: «Podemos confirmar que este reloj no solo ha resultado completamente satisfactorio en unas condiciones de inmersión extremadamente duras y especialmente fatales para el material utilizado, sino que además ha resultado ser una ayuda imprescindible para cualquier inmersión con escafandra autónoma».",
+            "section6": {
+                "imgSize": "w-9/12",
+                "title": "Clave de las profundidades",
+                "text": "El Submariner fue creado específicamente para la exploración submarina y el buceo. Recién salido de los talleres Rolex, el reloj tuvo un éxito inmediato y muchos profesionales de las profundidades marinas lo pusieron a prueba para la marca. Uno de estos pioneros fue Dimitri Rebikoff, un ingeniero y fotógrafo submarino francés. En su informe de 1953, Rebikoff escribió que el rendimiento del Submariner durante las pruebas había sido extraordinario: «Podemos confirmar que este reloj no solo ha resultado completamente satisfactorio en unas condiciones de inmersión extremadamente duras y especialmente fatales para el material utilizado, sino que además ha resultado ser una ayuda imprescindible para cualquier inmersión con escafandra autónoma».",
                 "backgroundColor": "bg-rolex-brown-light-1"
             }
         }
@@ -785,7 +798,7 @@
             "text": "<strong>Reloj del navegante por excelencia, el Oyster Perpetual Yacht‑Master simboliza la unión entre Rolex y el mundo de la vela desde los años 1950.</strong>"
         },
         "mainSection": {
-            "videoEmbed": "https://www.youtube.com/embed/qQFbDJwgHg8?si=wlyiEMeqD4ytuC14",
+            "videoEmbed": false,
             "title": "Este reloj de la categoría Profesional, que aúna a la perfección funcionalidad y estilo náutico, se desenvuelve con soltura tanto en el mar como en tierra firme.",
             "text": false,
             "backgroundColor": "bg-rolex-brown-light-2"

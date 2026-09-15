@@ -3,20 +3,30 @@ import { Carousel, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { ref } from "vue";
 import { computed } from "vue";
+import trackTokenService from "../../services/trackTokenService";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const sliderItems = [
   
   {
-    src: "explorer",
-    link: {name:'rolex-coleccion-explorer'},
-    alt: "explorer banner",
-    title: "Explorer Banner",
+    src: "deepsea",
+    link: {name:'rolex-coleccion-deepsea'},
+    alt: "deepsea banner",
+    title: "Deepsea Banner",
   },  
   {
     src: "nuevos-modelos",
     link: {name:'rolex-nuevos-modelos'},
     alt: "nuevos modelos banner",
     title: "Nuevos modelos Banner",
+  },  
+  {
+    src: "accesorios",
+    link: {name:'rolex-accesorios'},
+    alt: "accesorios",
+    title: "Accesorios Banner",
   },  
   {
     src: "showroom",
@@ -33,8 +43,14 @@ const sliderItems = [
   }
 ];
 
+
+function trackClickEvent(slide) {
+  trackTokenService.sendEvent(`${slide.title} Rolex route`, 'Click').then(()=>{
+    router.push(slide.link)
+  });
+}
+
 const currentSlide = ref(0);
-const sizes = []
 </script>
 
 <template>
@@ -54,7 +70,7 @@ const sizes = []
           class="w-full "
         >
           <slide v-for="slide in sliderItems" :key="slide">
-            <router-link :to="slide.link" class="group">
+            <button @click="trackClickEvent(slide)" class="group">
               <img
                 :src="`/assets/routes-assets/activations/${slide.src}-banner-desktop.webp`"
                 :alt="slide.alt"
@@ -65,7 +81,7 @@ const sizes = []
                 :alt="slide.alt"
                 class="w-full block md:hidden"
               />
-            </router-link>
+            </button>
           </slide>
         </carousel>
 

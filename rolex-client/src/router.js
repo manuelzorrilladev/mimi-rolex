@@ -1,5 +1,5 @@
 import { useCookies } from "@vueuse/integrations/useCookies.mjs";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, START_LOCATION } from "vue-router";
 import trackTokenService from "./services/trackTokenService";
 import { auth } from "./store/auth.module";
 import { useLoaderStore } from './store/loaderState';
@@ -677,7 +677,7 @@ const router = createRouter({
       name: "reloj",
       component: () => import("./views/Tienda/StoreRelojeria.view.vue"),
       meta: {
-        title: "  Mimi Joyería "
+        title: "Distribuidor Oficial TUDOR en Venezuela | Mimi Joyería "
       },
 
     }
@@ -687,21 +687,21 @@ const router = createRouter({
       name: "novedades",
       component: () => import("./views/Tienda/NovedadesRelojeria.view.vue"),
       meta: {
-        title: "  Mimi Joyería "
+        title: "Novedades TUDOR | Mimi Joyería "
       },
 
     }
     ,
     {
-      path: "/relojeria/tudor/:id",
+      path: "/relojeria/tudor/:id(.*)",
       name: "relojProducto",
       component: () => import("./views/Tienda/StoreRelojeriaDetail.view.vue"),
       meta: {
-        title: "  Mimi Joyería "
+        title: " Distribuidor Oficial TUDOR en Venezuela | Mimi Joyería "
       },
 
     }
- 
+
     ,
     {
       path: "/joyeria/:serie/:id",
@@ -765,7 +765,7 @@ const router = createRouter({
     }
     ,
 
-  
+
 
     {
       path: "/dashboard",
@@ -826,7 +826,7 @@ const router = createRouter({
 
 
 
- 
+
 
 
   ],
@@ -847,27 +847,33 @@ router.beforeEach((to, from, next) => {
   const store = useLoaderStore()
   const link = "https://mimijoyeria.com"
   const description = to.meta.description
-  const canonical = document.querySelector("link[rel='canonical']")
-  canonical.setAttribute('href', `${link}${to.fullPath}`);
-  if (to.name != from.name) {
+  
+  // Manejo seguro del tag canonical por si no existe en el DOM
+  let canonical = document.querySelector("link[rel='canonical']")
+  if (!canonical) {
+    canonical = document.createElement('link')
+    canonical.setAttribute('rel', 'canonical')
+    document.head.appendChild(canonical)
+  }
+  canonical.setAttribute('href', `${link}${to.fullPath}`)
+
+  if (to.name !== from.name) {
     store.change()
   }
+
   const pageType = to.meta.pageType
   if (pageType) {
     document.pageType = pageType
   }
+
   const pageFamily = to.meta.pageFamily
   if (pageFamily) {
     document.pageFamily = pageFamily
   }
 
-
-
-
-
   const title = to.meta.title
-  const titleFromParams = to.params.id;
-  document.description = description
+  const titleFromParams = to.params.id
+  document.description = description || ''
 
   if (title) {
     document.title = title
@@ -875,92 +881,84 @@ router.beforeEach((to, from, next) => {
 
   if (titleFromParams) {
     const parsedTitleFromParams = titleFromParams.charAt(0).toUpperCase() + titleFromParams.slice(1)
-
-    document.title = `${parsedTitleFromParams.replaceAll("-", " ")} - ${title}`;
+    document.title = `${parsedTitleFromParams.replaceAll("-", " ")} - ${title}`
   }
 
-    const authStore = auth()
-
+  const authStore = auth()
   if (!cookies.get('_mj_sid') && authStore.$state.status.loggedIn) {
     authStore.logout()
   }
-
-
-
-
-
-
-
-
 
   next()
 })
 
 
-router.afterEach(async (to, from, next) => {
+router.afterEach(async (to, from) => { // Corrección: afterEach NO lleva 'next'
   const store = useLoaderStore()
-  if (to.name != from.name) {
+  if (to.name !== from.name) {
     store.change()
-
   }
 
-  // 1. Evitamos disparar la métrica si la ruta de origen y destino es exactamente la misma
-  if (to.path === from.path && Object.keys(to.query).length === 0) return;
+  // 1. Evitar métricas duplicadas, pero PERMITIR la carga inicial (START_LOCATION)
+  const isInitialNavigation = from === START_LOCATION
+  const isSameRoute = to.path === from.path && Object.keys(to.query).length === 0
 
-  // 2. Saltarse el dashboard
-  if (to.path.includes('dashboard')) return;
+  if (!isInitialNavigation && isSameRoute) {
+    console.log("Ruta duplicada detectada, no se enviarán métricas.")
+    return
+  }
 
-  const locationStorage = useLocationStore() 
+  // 2. Saltarse rutas del dashboard
+  if (to.path.includes('dashboard')) return
+  const locationStorage = useLocationStore()
   const { visitorID, sessionID, isNew } = trackTokenService.getTokens()
-
-  // 3. Manejo correcto y asíncrono de la geolocalización si la sesión es nueva
-  if (isNew) {
-    locationStorage.setToInitial()
-    // Si getLocation devuelve una Promesa, esperamos a que termine para tener datos reales
-    await locationStorage.getLocation().catch(e => console.error("Error obteniendo ubicación", e))
-  }
-
-  // 4. Construcción del objeto (¡Ahora document.title ya cambió!)
-  const objectToSendToMetrics = {
-    visitorToken: visitorID,
-    sessionToken: sessionID,
-    path: to.path,
-    title: document.title || 'Sin título', 
-    referrer: document.referrer || 'direct',
-    utm_source: to.query["utm_source"],
-    utm_medium: to.query["utm_medium"],
-    utm_campaign: to.query["utm_campaign"],
-    gclid: to.query["gclid"],
-    country: locationStorage.country,
-    city: locationStorage.city
-  }
-
-  // 5. Atribución orgánica de Google
-  if (objectToSendToMetrics.referrer.includes('google.com')) {
-    objectToSendToMetrics.utm_source = 'google'
-    objectToSendToMetrics.utm_medium = 'organic'
-  }
-
-  // 6. Limpieza de indefinidos
-  for (const [key, value] of Object.entries(objectToSendToMetrics)) {
-    if (value === undefined || value === null || value === '') {
-      objectToSendToMetrics[key] = 'none'
+  console.log();
+  if (trackTokenService.checkIfWhiteList(to.query)) {
+    
+    if (isNew) {
+      locationStorage.setToInitial()
+      await locationStorage.getLocation().catch(e => console.error("Error obteniendo ubicación:", e))
     }
+
+    // 4. Construcción del payload
+    const objectToSendToMetrics = {
+      visitorToken: visitorID,
+      sessionToken: sessionID,
+      path: to.path,
+      title: document.title || 'Sin título',
+      referrer: document.referrer || 'direct',
+      utm_source: to.query["utm_source"],
+      utm_medium: to.query["utm_medium"],
+      utm_campaign: to.query["utm_campaign"],
+      gclid: to.query["gclid"],
+      country: locationStorage.country,
+      city: locationStorage.city
+    }
+
+    // 5. Atribución orgánica
+    if (objectToSendToMetrics.referrer.includes('google.com')) {
+      objectToSendToMetrics.utm_source = 'google'
+      objectToSendToMetrics.utm_medium = 'organic'
+    }
+
+    // 6. Limpieza de valores vacíos/indefinidos
+    for (const [key, value] of Object.entries(objectToSendToMetrics)) {
+      if (value === undefined || value === null || value === '') {
+        objectToSendToMetrics[key] = 'none'
+      }
+    }
+
+    console.log("Enviando a métricas:", objectToSendToMetrics)
+
+    // 7. Envío al backend
+    trackTokenService.sendVisit(objectToSendToMetrics)
+      .then(() => {
+        console.log("Visita guardada con éxito")
+      })
+      .catch((e) => {
+        console.error("Error al guardar visita:", e)
+      })
   }
-
-  console.log("Enviando a métricas:", objectToSendToMetrics)
-
-  // 7. Envío limpio al backend
-  trackTokenService.sendVisit(objectToSendToMetrics)
-    .then(() => {
-      console.log("Visita guardada con éxito");
-    })
-    .catch((e) => {
-      console.error("Error al guardar visita:", e);
-    })
-
-
-
 })
 
 export default router

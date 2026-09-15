@@ -57,7 +57,7 @@ class Store {
     }
 
     getRelojeriaDetails(id) {
-        return http.get(`/relojeria/producto/${id}`)
+        return http.get(`/relojeria/producto/${encodeURIComponent(id)}`)
     }
     
     postNewRelojeria(data) {

@@ -11,7 +11,7 @@ import { auth } from "./store/auth.module";
 import { useLoaderStore } from "./store/loaderState";
 import { useLocationStore } from "./store/locationState";
 import { useHead } from "@unhead/vue";
-
+import trackTokenService from "./services/trackTokenService.js";
 
 const route = useRoute();
 const piniaStore = auth();
@@ -32,19 +32,21 @@ const digitalDataLayer = computed(() => {
   if (route.meta.pageFamily) {
     data.page.pageFamilyName = route.meta.pageFamily;
   }
-  
+
   return data;
 });
 
 useHead({
   script: [
     {
-      id: 'rolex-datalayer-sync',
-      innerHTML: computed(() => `window.digitalDataLayer = ${JSON.stringify(digitalDataLayer.value)};`),
-    }
-  ]
+      id: "rolex-datalayer-sync",
+      innerHTML: computed(
+        () =>
+          `window.digitalDataLayer = ${JSON.stringify(digitalDataLayer.value)};`,
+      ),
+    },
+  ],
 });
-
 
 const triggerRolexTracking = () => {
   if (!route.fullPath.includes("rolex")) {
@@ -55,9 +57,9 @@ const triggerRolexTracking = () => {
   window.digitalDataLayer = digitalDataLayer.value;
   // console.log(window._satellite);
 
-  if (window._satellite && typeof window._satellite.track === 'function') {
+  if (window._satellite && typeof window._satellite.track === "function") {
     setTimeout(() => {
-      window._satellite.track('pageView');
+      window._satellite.track("pageView");
       // console.log('Rolex Tracked:', route.path);
     }, 100);
   }
@@ -68,10 +70,19 @@ watch(
   () => {
     triggerRolexTracking();
   },
-  { immediate: true }
+  { immediate: true },
 );
 
-
+function testEvent() {
+  trackTokenService
+    .sendEvent("pageView", route.path)
+    .then((response) => {
+      console.log("Event sent successfully:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error sending event:", error);
+    });
+}
 </script>
 
 <template>

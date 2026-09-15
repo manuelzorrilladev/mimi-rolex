@@ -8,7 +8,6 @@ import RolexHeader from "../../components/RolexHeader.vue";
 import rolexDataService from "../../services/rolexDataService";
 import GLOBAL_OBJECT from "../../utils/globaj";
 import RolexTemplate from "../Rolex/RolexTemplate.view.vue";
-
 const myHoverableElement = ref();
 const isHovered = useElementHover(myHoverableElement);
 
@@ -21,7 +20,6 @@ function getAllAccesories() {
     .getAllAccesories()
     .then((d) => {
       accesories.value = d.data;
-      accesories.value.pop();
       isReady.value = true;
       console.log("ready");
     })
@@ -48,14 +46,14 @@ getAllAccesories();
           <!-- {{ currentData.headerSection.sub }} -->
         </template>
         <template #title>
-          <span>Accesorios Rolex  </span>
+          <span>Accesorios Rolex </span>
         </template>
         <template #text>
           <strong>Gemelos elegantes y exclusivos de Rolex.</strong>
           <h2>
-            Estos accesorios reflejan los códigos visuales de la marca a la vez que
-            cumplen los mismos estándares de calidad y fiabilidad que los de cualquier
-            reloj Rolex.
+            Estos accesorios reflejan los códigos visuales de la marca a la vez
+            que cumplen los mismos estándares de calidad y fiabilidad que los de
+            cualquier reloj Rolex.
           </h2>
           <!-- <span v-html="currentData.headerSection.text"></span> -->
         </template>
@@ -88,6 +86,37 @@ getAllAccesories();
             </router-link>
           </div>
         </div>
+
+        <div v-else class="bg-rolex-brown-light-2 h-100 flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            style="
+              margin: auto;
+              background: none;
+              display: block;
+              shape-rendering: auto;
+            "
+            width="200px"
+            height="200px"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="xMidYMid"
+            class="animate-spin"
+          >
+            <circle
+              cx="50"
+              cy="50"
+              r="37"
+              stroke-width="8"
+              stroke="#01603a"
+              stroke-dasharray="58.119464091411174 58.119464091411174"
+              fill="none"
+              stroke-linecap="round"
+            >
+          
+            </circle>
+          </svg>
+        </div>
         <section class="bg-rolex-brown-light-1 py-[10vh]">
           <div class="flex justify-center pb-[10vh]">
             <img
@@ -112,8 +141,8 @@ getAllAccesories();
             <p
               class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
             >
-              Hay tres gemelos de elegancia discreta y atemporal disponibles, y se
-              presentan en oro amarillo, blanco o Everose de 18 quilates.
+              Hay tres gemelos de elegancia discreta y atemporal disponibles, y
+              se presentan en oro amarillo, blanco o Everose de 18 quilates.
             </p>
           </header>
         </section>
@@ -129,9 +158,10 @@ getAllAccesories();
             <p
               class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
             >
-              El logotipo de Rolex, una corona de cinco puntas, puede llevarse como
-              gemelos. Añaden un toque distinguido a las muñecas de aquellas personas para
-              las que la excelencia debe expresarse con la máxima atención al detalle.
+              El logotipo de Rolex, una corona de cinco puntas, puede llevarse
+              como gemelos. Añaden un toque distinguido a las muñecas de
+              aquellas personas para las que la excelencia debe expresarse con
+              la máxima atención al detalle.
             </p>
           </header>
           <div class="flex justify-center">
@@ -157,10 +187,11 @@ getAllAccesories();
             <p
               class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
             >
-              Inspirados en la forma del disco redondo que se encuentra en las puntas de
-              las agujas de los modelos Profesionales de Rolex, estos gemelos brillan en
-              la oscuridad gracias a su material luminiscente, el mismo que se utiliza en
-              la visualización Chromalight de los relojes Rolex.
+              Inspirados en la forma del disco redondo que se encuentra en las
+              puntas de las agujas de los modelos Profesionales de Rolex, estos
+              gemelos brillan en la oscuridad gracias a su material
+              luminiscente, el mismo que se utiliza en la visualización
+              Chromalight de los relojes Rolex.
             </p>
           </header>
 
@@ -188,10 +219,11 @@ getAllAccesories();
             <p
               class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
             >
-              Estos gemelos reúnen varios elementos característicos de los relojes Rolex.
-              En el centro, la corona de cinco puntas está grabada en un botón Cerachrom
-              de cerámica, rodeado de un acanalado que evoca el emblemático bisel que
-              aparece en los modelos Clásicos de Rolex.
+              Estos gemelos reúnen varios elementos característicos de los
+              relojes Rolex. En el centro, la corona de cinco puntas está
+              grabada en un botón Cerachrom de cerámica, rodeado de un acanalado
+              que evoca el emblemático bisel que aparece en los modelos Clásicos
+              de Rolex.
             </p>
           </header>
 

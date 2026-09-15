@@ -44,6 +44,7 @@
     "@tushargugnani/tailwind-group-peer-checked": "^1.0.0",
     "@vitejs/plugin-vue": "^4.5.2",
     "postcss": "^8.4.31",
+    "rollup-plugin-visualizer": "^7.1.1",
     "tailwindcss": "^4.1.16",
     "vite": "^5.0.8",
     "vite-plugin-compression": "^0.5.1",

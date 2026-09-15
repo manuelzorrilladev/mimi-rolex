@@ -52,7 +52,7 @@ import { RouterLink } from "vue-router";
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
         <div class="flex flex-col md:flex-row items-center justify-center md:justify-between">
-          <h3 class="text-sm text-white sm:text-center ">© 2023 Mimi Joyería™. Todos los derechos reservados.
+          <h3 class="text-sm text-white sm:text-center ">© 2023 Mimi Joyería™ - J-00164631-0. Todos los derechos reservados.
           </h3>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
               <a href="https://www.facebook.com/inversionesmimijoyeria/" class="text-white hover:text-gray-900 ">

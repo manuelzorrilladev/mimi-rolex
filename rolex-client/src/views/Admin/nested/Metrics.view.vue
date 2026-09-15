@@ -5,19 +5,36 @@ import { Bar, Chart, Grid, Line, Tooltip } from "vue3-charts";
 import DashboardCard from "../../../components/dashboard/admin/DashboardCard.vue";
 import MetricsDataService from "../../../services/metricsDataService";
 import Loading from "../../../components/global-components/Loading.vue";
-import { toPng } from 'html-to-image';
-import { jsPDF } from 'jspdf';
+// import { toPng } from "html-to-image";
+// import { jsPDF } from "jspdf";
 import { all } from "axios";
-import metricsDataService from "../../../services/metricsDataService";
 
 const check = ref(false);
 const box = ref(null);
 const isReady = ref(false);
 const isLoading = ref(true);
 const state = ref([]);
-const yearlyState = ref([]); // Almacenará el reporte anual de marketing
+const campaings = ref([]);
+const page = ref(1);
+const paginationState = ref({
+  marketingReport: {
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 10,
+    totalPages: 1,
+  },
+  entryPath: {
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 10,
+    totalPages: 1,
+  },
+});
+const events = ref([]);
+const yearlyState = ref([]);
+const byEntryPath = ref([]);
 const isLoadingYearly = ref(true);
-
+const viewToggle = ref(false);
 const years = ref([2025, 2026, 2027, 2027, 2028, 2028, 2029, 2030]);
 
 const margin = ref({
@@ -60,48 +77,68 @@ function changeDate() {
   isReady.value = false;
   searchMetrics();
   searchYearlyMetrics();
+  checkMetricsEvent();
 }
 const downloadPDF = async () => {
-  if (!box.value) return;
+  // if (!box.value) return;
 
-  try {
-    // Convertimos el elemento directamente a una imagen PNG de alta calidad.
-    // Esto procesa Tailwind v4 y oklch de forma nativa a través del motor del navegador.
-    const dataUrl = await toPng(box.value, { 
-      quality: 0.95,
-      pixelRatio: 2, // Mantiene el efecto de escala alta para que no se vea pixelado
-      backgroundColor: '#ffffff' // Asegura un fondo blanco limpio bajo las gráficas
-    });
+  // try {
+  //   const dataUrl = await toPng(box.value, {
+  //     quality: 0.95,
+  //     pixelRatio: 2, // Mantiene el efecto de escala alta para que no se vea pixelado
+  //     backgroundColor: "#ffffff", // Asegura un fondo blanco limpio bajo las gráficas
+  //   });
 
-    // Creamos el documento PDF (puedes usar 'p' para portrait o 'l' para landscape)
-    // Dado que tus gráficas son anchas (1240px), 'landscape' (horizontal) suele ser mejor opción.
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'px',
-    });
+  //   // Creamos el documento PDF (puedes usar 'p' para portrait o 'l' para landscape)
+  //   // Dado que tus gráficas son anchas (1240px), 'landscape' (horizontal) suele ser mejor opción.
+  //   const pdf = new jsPDF({
+  //     orientation: "portrait",
+  //     unit: "px",
+  //   });
 
-    const imgProperties = pdf.getImageProperties(dataUrl);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+  //   const imgProperties = pdf.getImageProperties(dataUrl);
+  //   const pdfWidth = pdf.internal.pageSize.getWidth();
+  //   const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
 
-    // Añadimos la imagen procesada al PDF
-    pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    
-    // Descargamos el archivo
-    pdf.save(`reporte-metricas-${year.value}.pdf`);
-  } catch (error) {
-    console.error('Error al generar el PDF de métricas:', error);
-  }
+  //   // Añadimos la imagen procesada al PDF
+  //   pdf.addImage(dataUrl, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+  //   // Descargamos el archivo
+  //   pdf.save(`reporte-metricas-${year.value}.pdf`);
+  // } catch (error) {
+  //   console.error("Error al generar el PDF de métricas:", error);
+  // }
 };
 
-function searchYearlyMetrics() {
+function searchYearlyMetrics(targetPage = 1,entryPath = 1) {
+
+  if (targetPage < 1 || entryPath <1) {
+    return;
+  }
+
+
+
   isLoadingYearly.value = true;
-  // Llamada al nuevo método del servicio pasando el año seleccionado
-  metricsDataService
-    .getYearlyCampaing(year.value)
+
+  MetricsDataService.getYearlyStats({
+    page: targetPage || 1,
+    entryPage: entryPath || 1,
+    limit: 10,
+    entryLimit: 10,
+    year: year.value,
+    sortBy: "totalVisits",
+  })
     .then((res) => {
-      // Soportamos si la API devuelve directamente la data o la envuelve en marketingReport
-      yearlyState.value = res.data.marketingReport || res.data;
+      yearlyState.value = res.data.marketingReport || [];
+      byEntryPath.value = res.data.entryPathReport || [];
+      console.log(res.data);
+      if (res.data.marketingReport.pagination) {
+        paginationState.value.marketingReport = yearlyState.value.pagination;
+      }
+      if (res.data.entryPathReport.pagination) {
+        paginationState.value.entryPath= byEntryPath.value.pagination;
+      }
+
       isLoadingYearly.value = false;
     })
     .catch((e) => {
@@ -109,11 +146,34 @@ function searchYearlyMetrics() {
       isLoadingYearly.value = false;
     });
 }
+function checkMetricsEvent() {
+  MetricsDataService.getEvents(month.value, year.value).then((d) => {
+    events.value = d.data || [];
+  });
+}
+
+function updateYearlyMetrics(pageValue,type) {
+  if (pageValue < 1 || pageValue > paginationState.value[type].totalPages || type === null) {
+    console.log("Out of scope");
+    return;
+  }
+  if(type === "entryPath"){
+    paginationState.value.marketingReport.currentPage = 1;
+    paginationState.value.entryPath.currentPage = pageValue;
+  } 
+
+  if(type === "marketingReport"){
+    paginationState.value.entryPath.currentPage = 1;
+    paginationState.value.marketingReport.currentPage = pageValue;
+  }
+  
+  searchYearlyMetrics(paginationState.value.marketingReport.currentPage, paginationState.value.entryPath.currentPage);
+}
 
 function searchMetrics() {
   console.log("Executing...");
   console.log(month.value, year.value);
-  MetricsDataService.getSummary(month.value, year.value).then((d) => {
+  MetricsDataService.getSummary(month.value + 1, year.value).then((d) => {
     isLoading.value = false;
     isReady.value = true;
     state.value = d.data;
@@ -127,7 +187,6 @@ function searchMetrics() {
 // CÁLCULOS DINÁMICOS DE ANCHO PARA PROTEGER LOS CHARTS DE GRANDES VOLÚMENES DE DATA
 const dynamicPagesChartWidth = computed(() => {
   if (!state.value.topPages || state.value.topPages.length === 0) return 600;
-  // Si hay más de 5 páginas (por si quitas el límite), expande horizontalmente
   return Math.max(600, state.value.topPages.length * 120);
 });
 
@@ -139,7 +198,8 @@ const dynamicSourcesChartWidth = computed(() => {
 
 onMounted(() => {
   searchMetrics();
-  searchYearlyMetrics();
+  searchYearlyMetrics(1);
+  checkMetricsEvent();
 
   const intervalId = setInterval(() => {
     window.location.href = "/dashboard/metricas";
@@ -186,7 +246,9 @@ onMounted(() => {
           v-if="isReady && !isLoading"
           class="flex flex-col justify-center gap-8"
         >
-          <div class="flex flex-col md:flex-row justify-between items-center border-b border-gray-100 py-2">
+          <div
+            class="flex flex-col md:flex-row justify-between items-center border-b border-gray-100 py-2"
+          >
             <div class="">
               <h2 class="font-black text-2xl text-gray-800 tracking-tight">
                 Resumen General
@@ -422,7 +484,7 @@ onMounted(() => {
 
             <div class="border-b border-gray-100 pb-2 mt-4 next-page">
               <h2 class="font-bold text-xl text-gray-800 tracking-tight">
-                Entorno Tecnológico de la Audiencia
+                Métricas de entorno
               </h2>
             </div>
 
@@ -559,7 +621,7 @@ onMounted(() => {
               class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm next-page"
             >
               <h3 class="font-bold text-lg text-gray-800 mb-4 tracking-tight">
-                Canales de Adquisición de Tráfico
+                Canales de Tráfico
               </h3>
               <div class="w-full overflow-x-auto rounded-xl">
                 <Chart
@@ -591,10 +653,37 @@ onMounted(() => {
               </div>
             </div>
 
-            <div class="border-b border-gray-100 pb-2 mt-4 next-page">
+            <div
+              class="border-b border-gray-100 pb-2 mt-4 next-page flex justify-between"
+            >
               <h2 class="font-bold text-xl text-gray-800 tracking-tight">
                 Métricas Estratégicas de Campañas Anuales (UTM) — {{ year }}
               </h2>
+              <div class="flex gap-2">
+                <h2
+                  :class="
+                    viewToggle
+                      ? 'bg-white  border border-rolex-green rounded-xl'
+                      : ''
+                  "
+                  class="p-2 hover:underline"
+                  @click="viewToggle = true"
+                >
+                  Por link de entrada
+                </h2>
+
+                <h2
+                  :class="
+                    !viewToggle
+                      ? 'bg-white  border border-rolex-green rounded-xl'
+                      : ''
+                  "
+                  class="p-2 hover:underline"
+                  @click="viewToggle = false"
+                >
+                  Por fuente de tráfico
+                </h2>
+              </div>
             </div>
 
             <section
@@ -613,14 +702,18 @@ onMounted(() => {
                   No se detectaron campañas UTM activas en el año {{ year }}.
                 </p>
               </div>
-              <div v-else class="overflow-x-auto">
+              <div v-else class="overflow-x-auto overflow-y-scroll h-screen">
                 <table
+                  v-if="viewToggle"
                   class="min-w-full divide-y divide-gray-200 text-left text-sm"
                 >
                   <thead class="bg-gray-50/70 font-bold text-rolex-green">
                     <tr>
                       <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
                         Fuente (Source)
+                      </th>
+                      <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
+                        Link de destino
                       </th>
                       <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
                         Medio (Medium)
@@ -644,12 +737,15 @@ onMounted(() => {
                     class="divide-y divide-gray-100 bg-white text-gray-600"
                   >
                     <tr
-                      v-for="(camp, index) in yearlyState"
+                      v-for="(camp, index) in byEntryPath.data"
                       :key="index"
                       class="hover:bg-gray-50/60 transition-colors"
                     >
                       <td class="px-6 py-4 font-semibold text-gray-900">
                         {{ camp.utm_source }}
+                      </td>
+                      <td class="px-6 py-4 font-semibold text-gray-900">
+                        {{ camp.entry_path }}
                       </td>
                       <td class="px-6 py-4">
                         <span
@@ -674,7 +770,152 @@ onMounted(() => {
                     </tr>
                   </tbody>
                 </table>
+                <table
+                  v-else
+                  class="min-w-full divide-y divide-gray-200 text-left text-sm"
+                >
+                  <thead class="bg-gray-50/70 font-bold text-rolex-green">
+                    <tr>
+                      <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
+                        Fuente (Source)
+                      </th>
+
+                      <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
+                        Medio (Medium)
+                      </th>
+                      <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
+                        Campaña (Campaign)
+                      </th>
+                      <th
+                        class="px-6 py-3.5 text-xs uppercase tracking-wider text-center"
+                      >
+                        Visitas Totales
+                      </th>
+                      <th
+                        class="px-6 py-3.5 text-xs uppercase tracking-wider text-center"
+                      >
+                        Visitantes Únicos
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="divide-y divide-gray-100 bg-white text-gray-600"
+                  >
+                    <tr
+                      v-for="(camp, index) in yearlyState.data"
+                      :key="index"
+                      class="hover:bg-gray-50/60 transition-colors"
+                    >
+                      <td class="px-6 py-4 font-semibold text-gray-900">
+                        {{ camp.utm_source }}
+                      </td>
+
+                      <td class="px-6 py-4">
+                        <span
+                          class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md font-medium text-xs tracking-wide"
+                        >
+                          {{ camp.utm_medium }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 text-gray-500 italic font-medium">
+                        {{ camp.utm_campaign }}
+                      </td>
+                      <td
+                        class="px-6 py-4 text-center font-bold text-rolex-green text-base"
+                      >
+                        {{ camp.totalVisits }}
+                      </td>
+                      <td
+                        class="px-6 py-4 text-center font-semibold text-gray-800"
+                      >
+                        {{ camp.uniqueVisitors }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+              <div v-if="viewToggle" class="flex justify-end items-center gap-2">
+                <button class="p-2 border-rolex-green border group" @click="updateYearlyMetrics(paginationState.entryPath.currentPage - 1,'entryPath')"
+                    :disabled="paginationState.entryPath.currentPage === 1">
+                  <font-awesome-icon
+                    :icon="['fas', 'chevron-left']"
+                    class="text-gray-400 group-hover:text-rolex-green transition-colors"
+                    
+                  />
+                </button>
+                {{ paginationState.entryPath.currentPage }}
+                <button class="p-2 border-rolex-green border group" @click="updateYearlyMetrics(paginationState.entryPath.currentPage + 1,'entryPath')" >
+                  <font-awesome-icon
+                    :icon="['fas', 'chevron-right']"
+                    class="text-gray-400 group-hover:text-rolex-green transition-colors"
+                    
+                  />
+                </button>
+              </div>
+              <div v-else class="flex justify-end items-center gap-2">
+                <button class="p-2 border-rolex-green border group" @click="updateYearlyMetrics(paginationState.marketingReport.currentPage - 1,'marketingReport')"
+                    :disabled="paginationState.marketingReport.currentPage === 1">
+                  <font-awesome-icon
+                    :icon="['fas', 'chevron-left']"
+                    class="text-gray-400 group-hover:text-rolex-green transition-colors"
+                    
+                  />
+                </button>
+                {{ paginationState.marketingReport.currentPage }}
+                <button class="p-2 border-rolex-green border group" @click="updateYearlyMetrics(paginationState.marketingReport.currentPage + 1,'marketingReport')" >
+                  <font-awesome-icon
+                    :icon="['fas', 'chevron-right']"
+                    class="text-gray-400 group-hover:text-rolex-green transition-colors"
+                    
+                  />
+                </button>
+              </div>
+            </section>
+
+            <div
+              class="border-b border-gray-100 pb-2 mt-4 next-page flex justify-between"
+            >
+              <h2 class="font-bold text-xl text-gray-800 tracking-tight">
+                Registro de eventos — {{ month }}/{{ year }}
+              </h2>
+            </div>
+            <section
+              class="w-full border border-gray-100 bg-white rounded-2xl p-2 shadow-sm mb-6 overflow-hidden"
+            >
+              <table
+                class="min-w-full divide-y divide-gray-200 text-left text-sm"
+              >
+                <thead class="bg-gray-50/70 font-bold text-rolex-green">
+                  <tr>
+                    <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
+                      Evento
+                    </th>
+
+                    <th class="px-6 py-3.5 text-xs uppercase tracking-wider">
+                      Veces realizadas
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 bg-white text-gray-600">
+                  <tr
+                    v-for="(camp, index) in events.events"
+                    :key="index"
+                    class="hover:bg-gray-50/60 transition-colors"
+                  >
+                    <td class="px-6 py-4 font-semibold text-gray-900">
+                      {{ camp.event_name }}
+                    </td>
+
+                    <td class="px-6 py-4">
+                      <span
+                        class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md font-medium text-xs tracking-wide"
+                      >
+                        {{ camp.total }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </section>
           </div>
         </div>
