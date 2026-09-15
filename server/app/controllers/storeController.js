@@ -240,6 +240,48 @@ exports.findR = (req, res) => {
 };
 
 
+// exports.findDetailR = (req, res) => {
+//     // Validate request
+//     if (!req.params.id) {
+//         res.status(400).send({
+//             message: "Content can not be empty!"
+//         });
+//         return;
+//     }
+
+//     Store.Watchmaking.findAll({
+//         where: {
+//             serie: req.params.id
+//         },
+//         include: Store.TudorCollection
+//     })
+//         .then(data => {
+//             data[0].dataValues.img = []
+
+//             for (let index = 1; index <= data[0].dataValues.cantidadImagenes; index++) {
+//                 data[0].dataValues.img.push(`${storagePath}/store-products/${data[0].dataValues.serie}-${index}.webp`)
+//             }
+//             res.send(data)
+
+
+//         })
+//         .catch(err => {
+
+//             res.status(500).json({
+
+//                 message:
+//                     err.message || "Some error occurred while retrieving tutorials."
+
+//             });
+//         });
+// };
+
+// ===============
+
+
+
+// SHOPPING CART 
+
 exports.findDetailR = (req, res) => {
     // Validate request
     if (!req.params.id) {
@@ -256,33 +298,38 @@ exports.findDetailR = (req, res) => {
         include: Store.TudorCollection
     })
         .then(data => {
-            data[0].dataValues.img = []
-
-            for (let index = 1; index <= data[0].dataValues.cantidadImagenes; index++) {
-                data[0].dataValues.img.push(`${storagePath}/store-products/${data[0].dataValues.serie}-${index}.webp`)
+            // 1. Validar que la consulta devolvió al menos un registro
+            if (!data || data.length === 0) {
+                return res.status(404).send({
+                    message: `No se encontró el producto con el número de serie: ${req.params.id}`
+                });
             }
-            res.send(data)
 
+            // 2. Convertir la instancia de Sequelize a un objeto JavaScript plano para manipularlo de forma segura
+            const product = data[0].get({ plain: true });
 
+            // 3. Sanitizar el código de serie para el nombre de la imagen (reemplazar '/' por '_')
+            // Esto evita que las URLs de las imágenes se rompan si el serial contiene barras
+            const safeSerie = product.serie ? product.serie.replace(/\//g, '_') : '';
+
+            product.img = [];
+
+            // 4. Generar el arreglo de imágenes
+            const cantidad = product.cantidadImagenes || 0;
+            for (let index = 1; index <= cantidad; index++) {
+                product.img.push(`${storagePath}/store-products/${safeSerie}-${index}.webp`);
+            }
+
+            // 5. Devolver la respuesta en el formato original (arreglo con el producto procesado)
+            res.send([product]);
         })
         .catch(err => {
-
             res.status(500).json({
-
                 message:
                     err.message || "Some error occurred while retrieving tutorials."
-
             });
         });
 };
-
-// ===============
-
-
-
-// SHOPPING CART 
-
-
 
 exports.addWatchToCart = async (req, res) => {
     // Validate request

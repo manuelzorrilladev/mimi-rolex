@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op
 
 const storagePath = process.env.STORAGE_PATH
 
-const collectionsArray = ["item", "cosmograph-daytona", "1908", "yacht-master", "sky-dweller", "gmt-master-ii", "explorer", "oyster-perpetual", "day-date", "datejust", "lady-datejust", "air-king", "submariner", "sea-dweller", "deepsea", "land-dweller"]
+const collectionsArray = ["item", "cosmograph-daytona", "1908", "yacht-master", "sky-dweller", "gmt-master-ii", "explorer", "oyster-perpetual", "day-date", "datejust", "lady-datejust", "air-king", "submariner", "sea-dweller", "deepsea", "land-dweller","cufflinks","desktop","explorer-ii", "yacht-master-ii"]
 
 
 function contarGuiones(cadena) {
