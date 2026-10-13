@@ -12,7 +12,7 @@ import RolexHeader from '../../components/RolexHeader.vue'
 import SearchBar from '../../components/SearchBar.vue'
 import PageBanner from '../../components/banners-components/PageBanner.vue'
 
-import router from '../../router'
+import router from '../../router/router'
 
 
 import RolexDataServices from '../../services/rolexDataService.js'

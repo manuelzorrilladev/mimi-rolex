@@ -79,7 +79,9 @@ getAllAccesories();
                 <p class="font-helvetica font-bold text-[16px] md:text-[24px]">
                   {{ item.nombre }}
                 </p>
-                <p class="font-helvetica font-extralight text-[12px] md:text-[16px]">
+                <p
+                  class="font-helvetica font-extralight text-[12px] md:text-[16px]"
+                >
                   {{ item.sub }}
                 </p>
               </div>
@@ -87,7 +89,10 @@ getAllAccesories();
           </div>
         </div>
 
-        <div v-else class="bg-rolex-brown-light-2 h-100 flex items-center justify-center">
+        <div
+          v-else
+          class="bg-rolex-brown-light-2 h-100 flex items-center justify-center"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -112,9 +117,7 @@ getAllAccesories();
               stroke-dasharray="58.119464091411174 58.119464091411174"
               fill="none"
               stroke-linecap="round"
-            >
-          
-            </circle>
+            ></circle>
           </svg>
         </div>
         <section class="bg-rolex-brown-light-1 py-[10vh]">
@@ -236,6 +239,83 @@ getAllAccesories();
             <img
               src="/assets/routes-assets/accesorios/accesorios-4-mobile.webp"
               alt="article-5-mobile"
+              class="md:hidden block w-10/12"
+            />
+          </div>
+        
+        </section>
+        <section class="bg-rolex-brown-light-1">
+          <header
+            class="flex flex-col gap-8 font-helvetica font-bold justify-around items-center text-rolex-brown h-fit py-[10vh]"
+          >
+            <h1 class="text-2xl md:text-5xl w-10/12 md:w-1/2">
+              Relojes de sobremesa <br />
+
+              Hora de interior
+            </h1>
+
+            <p
+              class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
+            >
+              Inspirados directamente en los modelos emblemáticos de la marca,
+              los relojes de sobremesa reinterpretan la estética de los relojes
+              Rolex para un entorno de interior mediante un savoir-faire
+              interno.
+            </p>
+          </header>
+
+          <div class="flex justify-center">
+            <img
+              src="/assets/routes-assets/accesorios/accesorios-5.webp"
+              alt="article-6"
+              class="hidden md:block w-9/12"
+            />
+            <img
+              src="/assets/routes-assets/accesorios/accesorios-5-mobile.webp"
+              alt="article-6-mobile"
+              class="md:hidden block w-10/12"
+            />
+          </div>
+        </section>
+        <section class="bg-rolex-brown-light-2">
+          <header
+            class="flex flex-col gap-8 font-helvetica font-bold justify-around items-center text-rolex-brown h-fit py-[10vh]"
+          >
+            <h1 class="text-2xl md:text-5xl w-10/12 md:w-1/2">
+              Reloj de calendario <br />
+              Honrando al Submariner
+            </h1>
+
+            <p
+              class="w-10/12 md:w-1/2 text-xl font-helvetica font-light text-justify md:text-left"
+            >
+              Este reloj de sobremesa Rolex con calendario secular reinterpreta
+              fielmente el diseño del Submariner Date. Muestra la hora y la
+              fecha mediante un disco de bisel monobloque Cerachrom graduado 60
+              minutos, además de una visualización Chromalight que emite una
+              tenue luz azul en la oscuridad.
+              <br /><br />
+              Su caja hemisférica de acero inoxidable se sitúa sobre una base
+              con forma de anillo que permite que el objeto se oriente en
+              cualquier dirección.
+              <br /><br />
+              Equipado con el calibre 8335, un exclusivo movimiento de cuarzo
+              que incorpora un calendario secular. Este mecanismo se ajusta
+              automáticamente durante meses con 28, 30 o 31 días, reconoce los
+              años bisiestos —en los que febrero tiene 29 días— e incluso tiene
+              en cuenta situaciones excepcionales que no son años bisiestos.
+            </p>
+          </header>
+
+          <div class="flex justify-center">
+            <img
+              src="/assets/routes-assets/accesorios/accesorios-6.webp"
+              alt="article-7"
+              class="hidden md:block w-1/2"
+            />
+            <img
+              src="/assets/routes-assets/accesorios/accesorios-6-mobile.webp"
+              alt="article-6-mobile"
               class="md:hidden block w-10/12"
             />
           </div>

@@ -6,7 +6,7 @@ import {
 } from "@vueuse/core";
 import axios from "axios";
 import { ref, watch } from "vue";
-import router from "../../router";
+import router from "../../router/router";
 import paymentDataServices from "../../services/paymentDataServices";
 import StoreDataService from "../../services/storeDataService";
 import { auth } from "../../store/auth.module";

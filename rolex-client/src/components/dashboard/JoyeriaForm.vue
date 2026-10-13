@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import router from '../../router'
+import router from '../../router/router'
 import { auth } from '../../store/auth.module'
 import storeDataService from '../../services/storeDataService'
 import { RouterLink } from 'vue-router'

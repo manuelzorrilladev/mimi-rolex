@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op
 
 const storagePath = process.env.STORAGE_PATH
 
-const collectionsArray = ["item", "cosmograph-daytona", "1908", "yacht-master", "sky-dweller", "gmt-master-ii", "explorer", "oyster-perpetual", "day-date", "datejust", "lady-datejust", "air-king", "submariner", "sea-dweller", "deepsea", "land-dweller","cufflinks","desktop","explorer-ii", "yacht-master-ii"]
+const collectionsArray = ["item", "cosmograph-daytona", "1908", "yacht-master", "sky-dweller", "gmt-master-ii", "explorer", "oyster-perpetual", "day-date", "datejust", "lady-datejust", "air-king", "submariner", "sea-dweller", "deepsea", "land-dweller", "cufflinks", "desktop", "explorer-ii", "yacht-master-ii"]
 
 
 function contarGuiones(cadena) {
@@ -17,6 +17,56 @@ function contarGuiones(cadena) {
   return contador;
 }
 
+
+exports.getAllRolexForTest = async (req, res) => {
+  try {
+    const rolexResponseObject = []
+    const watchList = await rolex.RolexGetAllV2.findAll({
+      select: ['modelo', 'id']
+    })
+
+
+    for (let i = 0; i < watchList.length; i++) {
+      const parsedName = watchList[i]
+      const rolexId = watchList[i].id
+      let getHeaders = await rolex.RolexHeadersV2.findByPk(rolexId)
+      const itemObject ={}
+  
+
+      const objects = [
+        `${storagePath}/rolex-relojes-new/${parsedName.modelo}-showcase.webp`,
+
+        `${storagePath}/rolex-relojes-new/${parsedName.modelo}-slider-1.webp`,
+
+        `${storagePath}/rolex-relojes-new/${parsedName.modelo}-slider-2.webp`,
+
+        `${storagePath}/rolex-relojes-new/${parsedName.modelo}-slider-3.webp`,
+
+        `${storagePath}/rolex-relojes-new/${getHeaders.imagen1}.webp`,
+
+        `${storagePath}/rolex-relojes-new/${getHeaders.imagen2}.webp`,
+
+        `${storagePath}/rolex-relojes-new/${getHeaders.imagen3}.webp`
+
+          `${storagePath}/rolex-relojes-new/${getHeaders.imagen1}-mobile.webp`,
+
+        `${storagePath}/rolex-relojes-new/${getHeaders.imagen2}-mobile.webp`,
+
+        `${storagePath}/rolex-relojes-new/${getHeaders.imagen3}-mobile.webp`,
+      ]
+
+
+      rolexResponseObject.push(objects)
+    }
+
+
+
+
+    return res.status(200).json({ data: rolexResponseObject })
+  } catch (error) {
+    return res.status(500)
+  }
+}
 
 // Show display of all watches from a single collection
 

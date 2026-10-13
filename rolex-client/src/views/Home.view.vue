@@ -11,7 +11,7 @@ const target = useTemplateRef("target");
 const targetIsVisible = useElementVisibility(target);
 
 const links = [
-  "/rolex/deepsea",
+  "/rolex/lady-datejust",
   "/rolex/accesorios",
   "/novedades/tudor"
 ];

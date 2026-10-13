@@ -6,7 +6,7 @@ import PageBanner from "../../components/banners-components/PageBanner.vue";
 import SectionNavigationCard from "../../components/cards/SectionNavigationCard.vue";
 
 import { computed, ref } from "vue";
-import router from "../../router";
+import router from "../../router/router";
 
 const activate = ref("h-0");
 const button = computed(() => {

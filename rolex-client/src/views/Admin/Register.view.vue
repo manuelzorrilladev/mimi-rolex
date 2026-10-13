@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
-import router from "../../router";
+import router from "../../router/router";
 import uuid from "uuid-random";
 
 import { auth } from "../../store/auth.module";

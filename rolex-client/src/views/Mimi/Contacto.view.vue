@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-import router from "../../router";
+import router from "../../router/router";
 
 import PageBanner from "../../components/banners-components/PageBanner.vue";
 import Loading from "../../components/global-components/Loading.vue";

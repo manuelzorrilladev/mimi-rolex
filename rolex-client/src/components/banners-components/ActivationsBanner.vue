@@ -11,17 +11,12 @@ const router = useRouter();
 const sliderItems = [
   
   {
-    src: "deepsea",
-    link: {name:'rolex-coleccion-deepsea'},
-    alt: "deepsea banner",
-    title: "Deepsea Banner",
+    src: "lady-datejust",
+    link: {name:'rolex-coleccion-lady-datejust'},
+    alt: "lady-datejust banner",
+    title: "Lady Datejust Banner",
   },  
-  {
-    src: "nuevos-modelos",
-    link: {name:'rolex-nuevos-modelos'},
-    alt: "nuevos modelos banner",
-    title: "Nuevos modelos Banner",
-  },  
+  
   {
     src: "accesorios",
     link: {name:'rolex-accesorios'},
@@ -29,18 +24,12 @@ const sliderItems = [
     title: "Accesorios Banner",
   },  
   {
-    src: "showroom",
-    link: {name:'rolex-en-mimi-joyeria'},
-    alt: "showroom",
-    title: "Showroom Banner",
+    src: "oyster-story",
+    link: {name:'rolex-oyster-story'},
+    alt: "oyster-story",
+    title: "Oyster Story Banner",
   },  
 
-  {
-    src: "watchmaking",
-    link: {name:'rolex-watchmaking'},
-    alt: "watchmaking-banner",
-    title: "Watchmaking",
-  }
 ];
 
 

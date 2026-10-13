@@ -3,7 +3,7 @@ import { computed, ref, watch } from "vue";
 import allRoutes from "../../data/allRoutes.json";
 import searchResults from "../../data/searchResults.json";
 import { useRoute } from "vue-router";
-import router from "../../router";
+import router from "../../router/router";
 import { useAsyncState } from "@vueuse/core";
 import routesDataServices from "../../services/routesDataServices";
 

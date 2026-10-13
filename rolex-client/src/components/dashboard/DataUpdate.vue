@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { RouterLink } from 'vue-router';
-import router from '../../router'
+import router from '../../router/router'
 
 import { auth } from '../../store/auth.module'
 import { Form, Field, ErrorMessage } from "vee-validate";

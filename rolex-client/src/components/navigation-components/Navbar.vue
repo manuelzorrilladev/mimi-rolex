@@ -3,7 +3,7 @@ import { useWindowSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { computed, ref} from "vue";
 import { RouterLink,useRoute } from "vue-router";
-import router from "../../router";
+import router from "../../router/router";
 import { auth } from "../../store/auth.module";
 import SearchBar from "../form-components/SearchBar.vue";
 import MobileNavbar from "./MobileNavbar.vue";

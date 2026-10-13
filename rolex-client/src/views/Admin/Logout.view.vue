@@ -1,6 +1,6 @@
 <script setup>
 import { Head } from "@unhead/vue/components";
-import router from "../../router";
+import router from "../../router/router";
 import { auth } from "../../store/auth.module";
 
 const piniaStore = auth();

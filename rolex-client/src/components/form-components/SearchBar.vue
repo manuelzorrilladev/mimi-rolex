@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import searchResults from "../../data/searchResults.json";
-import router from "../../router";
+import router from "../../router/router";
 import Search from "../../services/routesDataServices";
 
 const emit = defineEmits(["activateSearch"]);

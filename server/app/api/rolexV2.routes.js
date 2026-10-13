@@ -9,6 +9,7 @@ module.exports = app =>{
     router.get("/rolex/getAllCollections", rolex.getAllRolexCollections)
     router.get("/rolex/get10Random", rolex.get10RandomRolex)
     router.get("/rolex/:id", rolex.getRolexDetailsV2)
+    router.get("/rolex/test/getAllForTest",rolex.getAllRolexForTest)
 
     router.get("/rolex-accesories/getAll",rolex.getAllAccesories)
 

@@ -5,7 +5,7 @@ import RolexTemplate from '../Rolex/RolexTemplate.view.vue'
 import PageBanner from '../../components/banners-components/PageBanner.vue'
 import RolexHeader from '../../components/RolexHeader.vue'
 import TwoSectionCard from '../../components/cards/TwoSectionCard.vue'
-import router from '../../router';
+import router from '../../router/router';
 
 
 
@@ -128,9 +128,9 @@ import router from '../../router';
                         <br>
                         <br>
                         <div class="flex flex-col gap-2">
-                            <a class="hover:underline" href="tel:+582123008741" target="_blank">
+                            <a class="hover:underline" href="tel:+582123008742" target="_blank">
                                 <font-awesome-icon :icon="['fas', 'phone']" />
-                                +58 212-3008741
+                                +58 212-3008742
                             </a>
 
                             <a class="hover:underline" href="https://www.google.com/search?q=mimi+joyeria+tolon&safe=active&tbm=lcl&sxsrf=APq-WBtw-L08B7QjE6PVaxs8NYJe6ANHEw%3A1647306940476&ei=vOgvYvnRHMKKwbkP6ty6-Ag&oq=mimi+joyeria&gs_l=psy-ab.3.3.35i39k1j0i512i263i20k1j0i512k1l3j0i67k1j0i512k1j0i512i457k1j0i512k1.7898.9421.0.12531.12.10.0.0.0.0.366.1623.0j1j3j2.6.0....0...1c.1.64.psy-ab..6.6.1620...0i512i433k1j0i512i433i131k1j0i512i10k1.0.twsPXA4dw3U"

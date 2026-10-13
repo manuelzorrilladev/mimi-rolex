@@ -14,8 +14,7 @@ import axios from "axios";
 import NewContactForm from "../../components/form-components/NewContactForm.vue";
 import SectionNavigationCard from "../../components/cards/SectionNavigationCard.vue";
 import { injectHead, useHead } from "@unhead/vue";
-import digitalDataLayer from "../../utils/digitalDataLayer";
-import router from "../../router";
+import router from "../../router/router";
 const head = injectHead();
 const deskWatchDetails = ref({
   esfera: "Lacada negra",
@@ -174,15 +173,7 @@ onMounted(() => {
 console.log(route.params.id);
 
 watch(isReady, () => {
-  const send = JSON.stringify(digitalDataLayer("cufflinks", route.params.id, "accessories model page"))
-  useHead(
-    {
-      script: [
-        `var digitalDataLayer = ${send}; `,
-      ],
-    },
-    { head },
-  );
+
   messageInfo.value.message = `Estoy interesado(a) en el accesorio Rolex ${accesories.value.modelo}`;
 });
 </script>

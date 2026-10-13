@@ -1,5 +1,5 @@
 <script setup>
-import router from '../../router'
+import router from '../../router/router'
 
 function reload() {
     router.go()

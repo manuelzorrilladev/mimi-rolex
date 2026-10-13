@@ -70,22 +70,9 @@ import Button from '../../components/global-components/Button.vue';
 
 
 
-                <TwoSectionCard img-src="mantenimiento/mantenimiento-3" alt-text="mantenimiento-rolex-1" type="reverse"
-                    img-size="w-10/12">
-                  <template #optional>
-                    <img src="/assets/routes-assets/mantenimiento/Rolex-service-plaque.webp" alt="" class="w-36">
-                  </template>
-                    <template #title>
-                        Su centro de servicio autorizado
-                    </template>
-                    <template #text>
-                        Nuestros centros, a la vanguardia de la tecnología, cuentan con relojeros que han recibido formación basada en unos estrictos criterios de excelencia que Rolex evalúa con regularidad. Desde el ajuste de la longitud del brazalete a la reparación completa, todas las operaciones relacionadas con el mantenimiento de un reloj Rolex pueden confiarse a Mimi Joyería
-                    </template>
-
-
-                </TwoSectionCard>
+             
                 <header
-                    class="bg-rolex-brown-light-2 flex flex-col gap-8 font-helvetica font-bold justify-around items-center  text-rolex-brown h-fit pb-[10vh]">
+                    class="bg-rolex-brown-light-2 flex flex-col gap-8 font-helvetica font-bold justify-around items-center  text-rolex-brown h-fit py-[10vh]">
                     <h1 class="text-2xl md:text-5xl w-10/12 md:w-1/2">
                         Procedimiento del servicio Rolex
                     </h1>

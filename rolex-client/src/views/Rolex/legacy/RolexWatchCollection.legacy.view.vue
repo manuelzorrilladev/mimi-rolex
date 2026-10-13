@@ -5,7 +5,7 @@ import { useAsyncState } from '@vueuse/core'
 
 import RolexDataServices from '../../services/rolexDataService'
 
-import router from '../../router'
+import router from '../../router/router'
 
 
 import RolexTemplate from './RolexTemplate.view.vue'

@@ -1,29 +1,26 @@
 <script setup>
+import { Head } from "@unhead/vue/components";
 import { useAsyncState } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
-import { injectHead, useHead } from "@unhead/vue";
-import { Head } from "@unhead/vue/components";
-import { Carousel, Slide } from "vue3-carousel";
 import { useRoute } from "vue-router";
+import { Carousel, Slide } from "vue3-carousel";
 
-import "vue3-carousel/dist/carousel.css";
-import collectionsID from "../../data/collectionsID.json";
-import SectionNavigationCard from "../../components/cards/SectionNavigationCard.vue";
-import RolexDataServices from "../../services/rolexDataService";
-import RolexTemplate from "./RolexTemplate.view.vue";
-import router from "../../router";
-import axios from "axios";
 import { useElementHover, useWindowSize } from "@vueuse/core";
-import Button from "../../components/global-components/Button.vue";
+import axios from "axios";
+import "vue3-carousel/dist/carousel.css";
+import SectionNavigationCard from "../../components/cards/SectionNavigationCard.vue";
 import NewContactForm from "../../components/form-components/NewContactForm.vue";
+import Button from "../../components/global-components/Button.vue";
+import collectionsID from "../../data/collectionsID.json";
+import router from "../../router/router";
 import mailDataService from "../../services/mailDataService";
-import digitalDataLayer from "../../utils/digitalDataLayer";
+import RolexDataServices from "../../services/rolexDataService";
 import GLOBAL_OBJECT from "../../utils/globaj";
-const { width, height } = useWindowSize();
+import RolexTemplate from "./RolexTemplate.view.vue";
+const { width } = useWindowSize();
 const isDesktop = computed(() => width.value > 768);
 const currentSlide = ref(0);
 
-const head = injectHead();
 const myHoverableElement = ref();
 const isHovered = useElementHover(myHoverableElement);
 const sliderItems = (item, modelo) => {
@@ -44,6 +41,7 @@ function isVisible(item) {
 const storageRoute = ref(GLOBAL_OBJECT.STORAGE_URL + "rolex-relojes-new/");
 
 const route = useRoute();
+console.log(route.params);
 const currentRoute = route.params.id;
 const location = ref(null);
 const name = ref(currentRoute);
@@ -155,14 +153,7 @@ function sendMessage() {
 
 watch(isReady, () => {
   console.log(family.value.idName);
-  useHead(
-    {
-      script: [
-        `var digitalDataLayer = ${JSON.stringify(digitalDataLayer(family.value.idName, rmc.value))}; `,
-      ],
-    },
-    { head },
-  );
+
   messageInfo.value.message = `Estoy interesado en el ${watchName.value}. Referencia: ${rmc.value}`;
 });
 

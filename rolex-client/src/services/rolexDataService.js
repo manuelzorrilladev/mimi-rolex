@@ -1,7 +1,7 @@
 import http from '../http-commons'
 
 class Rolex {
- 
+
 
   getByCollection(id) {
     // getCollectionDetailsV2
@@ -13,7 +13,7 @@ class Rolex {
     return http.get(`/v2/rolex/getAll/${page}?tags=${query}`);
   }
 
-  get10RandomRolex(){
+  get10RandomRolex() {
     return http.get('/v2/rolex/get10Random')
   }
   getAllCollections() {
@@ -26,13 +26,18 @@ class Rolex {
 
   }
 
-  getAllAccesories(){
+  getAllAccesories() {
     return http.get('/v2/rolex-accesories/getAll')
   }
 
-  getIndividualAccesories(code){
+  getIndividualAccesories(code) {
     return http.get(`/v2/rolex-accesories/get/${code}`)
   }
+
+
+  // getAllForTest() {
+  //   return http.get('/v2/rolex/test/getAllForTest')
+  // }
 
 
 }

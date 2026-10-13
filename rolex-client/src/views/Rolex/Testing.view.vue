@@ -11,7 +11,7 @@ const state = ref([])
 
 
 onMounted(()=>{
-  rolexDataService.getTesting().then((d)=>{
+  rolexDataService.getAllForTest().then((d)=>{
     state.value = d.data
     isReady.value = true
   })
@@ -23,26 +23,29 @@ onMounted(()=>{
   <div id="new-models">
     <RolexTemplate>
       <template #content>
-        <div v-if="isReady" class="grid grid-cols-4">
-          <div  v-for="item in state" :key="item.id" class="border border-black">
-            <h2>{{item.id}} - {{ item.modelo }}</h2>
-            {{ item["rolex-headers-v2"].imagen1 }} <br>
-            {{ item["rolex-headers-v2"].imagen2 }} <br>
-            {{ item["rolex-headers-v2"].imagen3 }}
+        <!-- <div v-if="isReady" class="grid grid-cols-4">
+          <div  v-for="item in state.data" :key="item.id" class="border border-black">
+            <h2>{{item.info.id}} - {{ item.info.modelo }}</h2>
+              <img :src="item.main" class="w-24">
+           <p>Slider</p>
+              <img v-for="img in item.slider" :key="img" :src="img" class="w-24">
+
             <div class="flex">
 
               <h2>Desktop</h2>
-              <img v-for="img in item.imgArray" :key="img" :src="img.imgDesktop" class="w-24">
+              <img v-for="img in item.headers.desktop" :key="img" :src="img" class="w-24">
             </div>
             <div class="flex">
               <h2>Mobile</h2>
-              <img v-for="img in item.imgArray" :key="img" :src="img.imgMobile" class="w-24">
+              <img v-for="img in item.headers.mobile" :key="img" :src="img" class="w-24">
 
             </div>
         
           </div>
-          {{ state }}
-        </div>
+        </div> -->
+        <h2>TestingRoute</h2>
+        {{ state }}
+     
       </template>
     </RolexTemplate>
   </div>

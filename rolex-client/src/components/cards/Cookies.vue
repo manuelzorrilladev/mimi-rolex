@@ -2,8 +2,8 @@
 import { useCookies } from "@vueuse/integrations/useCookies";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import GLOBAL_OBJECT from "../../utils/globaj";
-import router from "../../router";
+import GLOBAL_OBJECT from "../../utils/globaj"; // assets.adobedtm.com/7e3b3fa0902e/db4a1bdd4eaa/launch-384bfb3a027c.min.js
+import router from "../../router/router";
 
 const route = useRoute();
 const cookies = useCookies(["rlx-consent", "rlx-marketing"]);
@@ -45,7 +45,7 @@ const hasConsent = computed(
 
 const isRolexRoute = computed(() => {
   return (
-    route.fullPath.includes("rolex") && route.name !== "rolex-nuevos-modelos"
+    route.fullPath.includes("rolex") 
   );
 });
 
@@ -90,6 +90,7 @@ function changeCookie(value) {
   checkOpen.value = false;
 
 }
+
 </script>
 
 <template>

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useAsyncState } from '@vueuse/core'
 
-import router from '../../router'
+import router from '../../router/router'
 import { RouterLink, useRoute } from 'vue-router';
 
 import 'vue3-carousel/dist/carousel.css'

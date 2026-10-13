@@ -1,6 +1,7 @@
 <script setup>
+import { useHead } from "@unhead/vue";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, watch } from "vue";
+import { computed, watch } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import Cookies from "./components/cards/Cookies.vue";
 import PageLoader from "./components/global-components/PageLoader.vue";
@@ -9,9 +10,6 @@ import Navbar from "./components/navigation-components/Navbar.vue";
 import ShoppingPop from "./components/payout-components/ShoppingPop.vue";
 import { auth } from "./store/auth.module";
 import { useLoaderStore } from "./store/loaderState";
-import { useLocationStore } from "./store/locationState";
-import { useHead } from "@unhead/vue";
-import trackTokenService from "./services/trackTokenService.js";
 
 const route = useRoute();
 const piniaStore = auth();
@@ -73,16 +71,7 @@ watch(
   { immediate: true },
 );
 
-function testEvent() {
-  trackTokenService
-    .sendEvent("pageView", route.path)
-    .then((response) => {
-      console.log("Event sent successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending event:", error);
-    });
-}
+
 </script>
 
 <template>

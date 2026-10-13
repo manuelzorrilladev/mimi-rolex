@@ -10,7 +10,7 @@ import RolexHeader from "../../components/RolexHeader.vue";
 import RolexDataServices from "../../services/rolexDataService";
 import RolexTemplate from "../Rolex/RolexTemplate.view.vue";
 import PageLoader from '../../components/global-components/PageLoader.vue';
-import router from "../../router";
+import router from "../../router/router";
 
 const route = useRoute();
 const currentRoute = route.fullPath.substring(7);
@@ -71,7 +71,7 @@ function filterItems() {
           </template>
         </RolexHeader>
   
-        <section class="bg-rolex-brown-light-2 text-rolex-brown">
+        <section class="bg-rolex-brown-light-2 text-rolex-brown pb-[10vh]">
             <div class="w-full flex justify-center">
               <h1
                 class="text-3xl md:text-5xl font-helvetica font-bold text-center py-[10vh] w-10/12"

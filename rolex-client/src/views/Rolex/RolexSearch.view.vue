@@ -4,7 +4,7 @@ import RolexTemplate from "../Rolex/RolexTemplate.view.vue";
 import allRoutes from "../../data/allRoutes.json";
 import { useRoute, RouterLink } from "vue-router";
 import searchResults from "../../data/searchResults.json";
-import router from "../../router";
+import router from "../../router/router";
 import routesDataServices from "../../services/routesDataServices";
 import { useAsyncState } from "@vueuse/core";
 
