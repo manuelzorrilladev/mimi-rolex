@@ -41,8 +41,20 @@ function isVisible(item) {
 const storageRoute = ref(GLOBAL_OBJECT.STORAGE_URL + "rolex-relojes-new/");
 
 const route = useRoute();
-console.log(route.params);
-const currentRoute = route.params.id;
+
+const collectionName = computed(() => {
+  const slug = route.params.slug || '';
+  // Busca el patrón del ID al final (ej: m123456-0001) y extrae todo lo anterior
+  const match = slug.match(/^(.*?)-(m[a-z0-9]+-[a-z0-9]+)$/i);
+  return match ? match[1] : '';
+});
+
+const watchId = computed(() => {
+  const slug = route.params.slug || '';
+  const match = slug.match(/^(.*?)-(m[a-z0-9]+-[a-z0-9]+)$/i);
+  return match ? match[2] : '';
+});
+const currentRoute = route.params.slug;
 const location = ref(null);
 const name = ref(currentRoute);
 const family = ref("");
@@ -234,6 +246,7 @@ function downloadBrochure(link) {
               )} en Mimi Joyería, Distribuidor Oficial Rolex autorizado para vender y realizar el mantenimiento de los relojes Rolex.`"
             />
           </Head>
+
           <section class="relative md:h-[85vh]">
             <div
               v-if="isDesktop"

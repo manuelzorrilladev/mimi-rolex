@@ -76,13 +76,18 @@ getAllAccesories();
                 class="w-full md:w-1/2 lg:w-[55%] xl:w-[60%] duration-200 ease-in-out group-hover:scale-110"
               />
               <div class="w-9/12 h-32">
-                <p class="font-helvetica font-bold text-[16px] md:text-[24px]">
+                <p class="font-helvetica font-bold text-[16px] md:text-[24px] ">
                   {{ item.nombre }}
                 </p>
                 <p
-                  class="font-helvetica font-extralight text-[12px] md:text-[16px]"
+                  class="font-helvetica font-extralight text-[12px] md:text-[16px] "
                 >
                   {{ item.sub }}
+                </p>
+                <p
+                  class=" font-light text-[12px] md:text-[16px] "
+                >
+                  ${{ (item.precio).toLocaleString("en-US") }}
                 </p>
               </div>
             </router-link>

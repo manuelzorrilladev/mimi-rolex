@@ -43,10 +43,15 @@ export function buildRolexDigitalData(route) {
    * id             -> productRMC
    */
   if (route.name === "relojes-rolex") {
-    data.page.pageFamilyName = route.params.collectionName;
+    const slug = route.params.slug || '';
+    const match = slug.match(/^(.*?)-(m[a-z0-9]+-[a-z0-9]+)$/i);
+    const collectionName = match[1] || '';
+    const watchId = match[2] || '';
 
+
+    data.page.pageFamilyName = collectionName;
     data.products = {
-      productRMC: route.params.id,
+      productRMC: watchId,
     };
   }
 
